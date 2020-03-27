@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CardGmae</string>
+    <string name="restart">restart</string>
+    <string name="flips_fmt">Flips: %d</string>
+    <string name="restrartTitle">Restart</string>
+    <string name="restartMessage">리스타트 하시겠습니까?</string>
+    <string name="restartNo">no</string>
+    <string name="restartYes">Yes</string>
+
+</resources>
