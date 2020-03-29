@@ -23,19 +23,24 @@ public class MainActivity extends AppCompatActivity {
             R.id.b_10,R.id.b_11,R.id.b_12,R.id.b_13,
             R.id.b_20,R.id.b_21,R.id.b_22,R.id.b_23,
             R.id.b_30,R.id.b_31,R.id.b_32,R.id.b_33,
+            R.id.b_40,R.id.b_41,R.id.b_42,R.id.b_43,
+            R.id.b_50,R.id.b_51,R.id.b_52,R.id.b_53,
     };
     private static final int[] IMAGE_RES_BACK_IDS={
-            R.mipmap.back1,R.mipmap.back2,R.mipmap.back3,R.mipmap.back4,
-            R.mipmap.back5,R.mipmap.back6,R.mipmap.back7,R.mipmap.back8,
-            R.mipmap.back9,R.mipmap.back10,R.mipmap.back11,R.mipmap.back12,
-            R.mipmap.back13,R.mipmap.back14,R.mipmap.back15,R.mipmap.back16,
+            R.mipmap.card_back1,R.mipmap.card_back2,R.mipmap.card_back3,R.mipmap.card_back4,
+            R.mipmap.card_back5,R.mipmap.card_back6,R.mipmap.card_back7,R.mipmap.card_back8,
+            R.mipmap.card_back9,R.mipmap.card_back10,R.mipmap.card_back11,R.mipmap.card_back12,
+            R.mipmap.card_back13,R.mipmap.card_back14,R.mipmap.card_back15,R.mipmap.card_back16,
+            R.mipmap.card_back17,R.mipmap.card_back18,R.mipmap.card_back19,R.mipmap.card_back20,
+            R.mipmap.card_back21,R.mipmap.card_back22,R.mipmap.card_back23,R.mipmap.card_back24,
     };
     private static final int[] IMAGE_RES_FRONT_IDS={
             R.mipmap.card1,R.mipmap.card2,R.mipmap.card3,R.mipmap.card4,
             R.mipmap.card5,R.mipmap.card6,R.mipmap.card7,R.mipmap.card8,
+            R.mipmap.card9,R.mipmap.card10,R.mipmap.card11,R.mipmap.card12,
     };
     private ImageButton lastButton;
-    private int filps;
+    private int flips;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             btn.setEnabled(true);
         }
         lastButton=null;
-        filps=0;
+        flips =0;
         sowScore();
     }
 
@@ -68,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.scoreTexView);
         Resources res = getResources();
         String fmt = res.getString(R.string.flips_fmt);
-        String text = String.format(fmt, filps);
+        String text = String.format(fmt, flips);
         textView.setText(text);
     }
 
@@ -111,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         lastButton.setEnabled(true);
         lastButton=btn;
 
-        filps++;
+        flips++;
         sowScore();
     }
 

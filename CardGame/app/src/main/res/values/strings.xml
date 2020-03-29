@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CardGmae</string>
+    <string name="app_name">2015182005_김동석_CardGmae</string>
     <string name="restart">restart</string>
     <string name="flips_fmt">Flips: %d</string>
     <string name="restrartTitle">Restart</string>
