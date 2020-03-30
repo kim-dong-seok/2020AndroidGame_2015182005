@@ -41,13 +41,23 @@ public class MainActivity extends AppCompatActivity {
     };
     private ImageButton lastButton;
     private int flips;
+    private TextView scoreTextView;
+    private String scoreFormatSting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        connectViews();
+
         startGame();
+    }
+
+    private void connectViews() {
+        scoreTextView = findViewById(R.id.scoreTexView);
+        Resources res = getResources();
+        scoreFormatSting = res.getString(R.string.flips_fmt);
     }
 
     private void startGame() {
@@ -70,11 +80,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sowScore() {
-        TextView textView = findViewById(R.id.scoreTexView);
-        Resources res = getResources();
-        String fmt = res.getString(R.string.flips_fmt);
-        String text = String.format(fmt, flips);
-        textView.setText(text);
+        String text = String.format(scoreFormatSting, flips);
+        scoreTextView.setText(text);
     }
 
     private int[] shuffleButtonIds() {
@@ -86,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
             buttonIds[i]=buttonIds[r];
             buttonIds[r]=temp;
         }
-
         return  buttonIds;
     }
 
