@@ -9,6 +9,7 @@ import java.util.Random;
 
 public class GameWorld {
     private static final int BALL_COUNT = 10;
+    private Fighter fighter;
 
     public  static  GameWorld get(){
         if(singleton==null){
@@ -34,6 +35,8 @@ public class GameWorld {
             objects.add(new Ball(res,x,y,dx,dy));
         }
         objects.add(new Plane(res,500,500,0.0f,0.0f));
+        fighter = new Fighter(res, 200, 700);
+        objects.add(fighter);
     }
 
     public void draw(Canvas canvas) {
@@ -62,5 +65,9 @@ public class GameWorld {
     }
     public int getBottom(){
         return rect.bottom;
+    }
+
+    public void doAction() {
+        fighter.fire();
     }
 }

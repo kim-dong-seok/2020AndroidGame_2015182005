@@ -11,6 +11,7 @@ import kr.ac.kpu.game.exgame.R;
 public class Plane implements GameObject{
 
     private static Bitmap bitmap;
+    private static int halfSize;
     private final float dy;
     private final float dx;
     private final Matrix matrix;
@@ -22,13 +23,14 @@ public class Plane implements GameObject{
     public Plane(Resources res, float x, float y, float dx, float dy){
         if(bitmap==null){
             bitmap= BitmapFactory.decodeResource(res, R.mipmap.plane_240);
+            halfSize=bitmap.getHeight()/2;
         }
         this.x=x;
         this.y=y;
         this.dy=dy;
         this.dx=dx;
         this.matrix=new Matrix();
-        matrix.preTranslate(x,y);
+        matrix.preTranslate(x-halfSize,y-halfSize);
     }
 
     public void update(){

@@ -26,8 +26,6 @@ public class GameView extends View {
     private Rect rect;
     private Paint mainPaint;
 
-    private boolean moves;
-
     private GameWorld gameWorld;
 
 
@@ -69,13 +67,11 @@ public class GameView extends View {
     }
 
     public void update() {
-        if(moves){
-            gameWorld.update();
-        }
+        gameWorld.update();
+
     }
 
     public void doAction() {
-        moves=!moves;
-        Log.d(TAG,"Now moves:"+moves);
+        gameWorld.doAction();
     }
 }
