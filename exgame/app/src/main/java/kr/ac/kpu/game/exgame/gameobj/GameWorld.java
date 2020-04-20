@@ -1,8 +1,10 @@
 package kr.ac.kpu.game.exgame.gameobj;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -10,6 +12,7 @@ import java.util.Random;
 public class GameWorld {
     private static final int BALL_COUNT = 10;
     private Fighter fighter;
+    private View view;
 
     public  static  GameWorld get(){
         if(singleton==null){
@@ -24,7 +27,9 @@ public class GameWorld {
     private GameWorld(){
     }
 
-    public void initResources(Resources res){
+    public void initResources(View view){
+        this.view=view;
+        Resources res = view.getResources();
         objects=new ArrayList<>();
         Random rand= new Random();
         for(int i=0;i<BALL_COUNT;i++){
@@ -35,7 +40,7 @@ public class GameWorld {
             objects.add(new Ball(res,x,y,dx,dy));
         }
         objects.add(new Plane(res,500,500,0.0f,0.0f));
-        fighter = new Fighter(res, 200, 700);
+        fighter = new Fighter( 200, 700);
         objects.add(fighter);
     }
 
@@ -49,6 +54,8 @@ public class GameWorld {
         for(GameObject o: objects){
             o.update();
         }
+        objects.removeAll(trash);
+        trash.clear();
     }
 
     public void setRect(Rect rect) {
@@ -69,5 +76,27 @@ public class GameWorld {
 
     public void doAction() {
         fighter.fire();
+    }
+
+    public Resources getResources() {
+        return view.getResources();
+    }
+
+    public void add(final GameObject obj) {
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                objects.add(obj);
+            }
+        });
+    }
+
+    private ArrayList<GameObject>trash=new ArrayList<>();
+    public void remove(GameObject obj) {
+        trash.add(obj);
+    }
+
+    public Context getContext() {
+        return view.getContext();
     }
 }

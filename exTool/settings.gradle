@@ -1,0 +1,2 @@
+rootProject.name='exTool'
+include ':app'

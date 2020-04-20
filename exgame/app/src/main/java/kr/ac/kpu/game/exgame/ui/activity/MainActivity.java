@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import kr.ac.kpu.game.exgame.R;
+import kr.ac.kpu.game.exgame.sound.SoundEffects;
 import kr.ac.kpu.game.exgame.ui.view.GameView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SoundEffects se= SoundEffects.get();
+        se.init(this);
+        se.loadAll();
         gameView=findViewById(R.id.gameView);
         postUpdate();
     }

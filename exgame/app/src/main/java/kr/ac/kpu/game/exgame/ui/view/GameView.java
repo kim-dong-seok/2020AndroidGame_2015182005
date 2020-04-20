@@ -46,7 +46,7 @@ public class GameView extends View {
 
         rect=new Rect();
         gameWorld=GameWorld.get();
-        gameWorld.initResources(getResources());
+        gameWorld.initResources(this);
 
     }
 
