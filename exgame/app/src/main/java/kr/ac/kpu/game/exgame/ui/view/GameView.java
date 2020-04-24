@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Choreographer;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -20,13 +21,16 @@ import kr.ac.kpu.game.exgame.gameobj.Ball;
 import kr.ac.kpu.game.exgame.gameobj.GameObject;
 import kr.ac.kpu.game.exgame.gameobj.GameWorld;
 import kr.ac.kpu.game.exgame.gameobj.Plane;
+import kr.ac.kpu.game.exgame.util.IndexTimer;
 
 public class GameView extends View {
     private static final String TAG = GameView.class.getSimpleName();
+    public static final int FRAME_RATE_SECONDS = 10;
     private Rect rect;
     private Paint mainPaint;
 
     private GameWorld gameWorld;
+    private IndexTimer timer;
 
 
     public GameView(Context context) {
@@ -48,6 +52,21 @@ public class GameView extends View {
         gameWorld=GameWorld.get();
         gameWorld.initResources(this);
 
+
+        timer=new IndexTimer(FRAME_RATE_SECONDS,1);
+        postFrameCallback();
+
+    }
+
+    private void postFrameCallback() {
+        Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
+            @Override
+            public void doFrame(long frameTimeNanos) {
+                update(frameTimeNanos);
+                invalidate();
+                postFrameCallback();
+            }
+        });
     }
 
     @Override
@@ -66,9 +85,15 @@ public class GameView extends View {
         gameWorld.draw(canvas);
     }
 
-    public void update() {
-        gameWorld.update();
-
+    private int count;
+    public void update(long frameTimeNanos) {
+        gameWorld.update(frameTimeNanos);
+        count++;
+        if(timer.done()){
+                Log.d(TAG,"Frame Count="+((float)count/FRAME_RATE_SECONDS));
+                count=0;
+                timer.reset();
+        }
     }
 
     public void doAction() {

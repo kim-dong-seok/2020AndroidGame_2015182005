@@ -10,14 +10,16 @@ import kr.ac.kpu.game.exgame.R;
 
 public class Plane implements GameObject{
 
+    public static final int BULLET_FIRE_INTERVAL_NSEC = 100_000_000;
     private static Bitmap bitmap;
     private static int halfSize;
     private final float dy;
     private final float dx;
-    private final Matrix matrix;
+    //private final Matrix matrix;
 
     private float x;
     private float y;
+    private long lastFire;
 
 
     public Plane(Resources res, float x, float y, float dx, float dy){
@@ -29,17 +31,30 @@ public class Plane implements GameObject{
         this.y=y;
         this.dy=dy;
         this.dx=dx;
-        this.matrix=new Matrix();
-        matrix.preTranslate(x-halfSize,y-halfSize);
+//        this.matrix=new Matrix();
+//        matrix.preTranslate(x-halfSize,y-halfSize);
     }
 
     public void update(){
 //        x+=dx;
 //        y+=dy;
-        matrix.postRotate(5.0f,x,y);
+//        matrix.postRotate(5.0f,x,y);
+        GameWorld gw=GameWorld.get();
+        long now=gw.getCurrentTimeNanos();
+        long elapsed=now-lastFire;
+        if(elapsed> BULLET_FIRE_INTERVAL_NSEC){
+            fire();
+            lastFire=now;
+        }
     }
+
+    private void fire() {
+        Bullet bullet=new Bullet(x,y-halfSize);
+        GameWorld.get().add(GameWorld.Layer.missile,bullet);
+    }
+
     public void draw(Canvas canvas){
-        canvas.drawBitmap(bitmap,matrix,null);
+        canvas.drawBitmap(bitmap,x,y-halfSize,null);
     }
 
 }

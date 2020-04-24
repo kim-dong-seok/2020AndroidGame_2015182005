@@ -2,6 +2,8 @@ package kr.ac.kpu.game.exgame.util;
 
 import android.util.Log;
 
+import kr.ac.kpu.game.exgame.gameobj.GameWorld;
+
 public class IndexTimer {
     private static final String TAG = IndexTimer.class.getSimpleName();
     private final int count;
@@ -11,23 +13,23 @@ public class IndexTimer {
     public IndexTimer(int count, int framesPerSecond) {
         this.count=count;
         this.fps= framesPerSecond;
-        this.time=System.currentTimeMillis();
+        this.time= GameWorld.get().getCurrentTimeNanos();
         
     }
     public int getIndex(){
-        long elapsed= System.currentTimeMillis()-time;
-        int index=(int)((elapsed*fps+500)/1000);
+        long elapsed=  GameWorld.get().getCurrentTimeNanos()-time;
+        int index=(int)((elapsed*fps+500000000)/1000000000);
         //Log.d(TAG,"e*f="+(elapsed*fps)+"index="+index);
         return index %count;
     }
 
     public void reset() {
-        this.time=System.currentTimeMillis();
+        this.time= GameWorld.get().getCurrentTimeNanos();
     }
 
     public boolean done() {
-        long elapsed= System.currentTimeMillis()-time;
-        int index=(int)((elapsed*fps+500)/1000);
+        long elapsed= GameWorld.get().getCurrentTimeNanos()-time;
+        int index=(int)((elapsed*fps+500000000)/1000000000);
         return index>=count;
     }
 }

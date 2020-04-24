@@ -38,7 +38,8 @@ public class Fighter implements GameObject{
         int speed=halfSize/10;
         GameWorld gw=GameWorld.get();
         FireBall fb=new FireBall(fx,fy,speed);
-        gw.add(fb);
+        GameWorld.get().add(GameWorld.Layer.missile,fb);
+        //gw.add(fb);
 
 
     }
