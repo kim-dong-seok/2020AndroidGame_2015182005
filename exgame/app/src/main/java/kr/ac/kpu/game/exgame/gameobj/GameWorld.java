@@ -4,17 +4,22 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class GameWorld {
     private static final int BALL_COUNT = 10;
     private Fighter fighter;
     private View view;
+    private EnemyGenerator enemyGenerator=new EnemyGenerator();
     private long frameTimeNanos;
     private long timeDiffNanos;
+    private Plane plane;
+    private RecyclePool recyclePool=new RecyclePool();
 
     public  static  GameWorld get(){
         if(singleton==null){
@@ -28,9 +33,29 @@ public class GameWorld {
 
     private GameWorld(){
     }
+    public RecyclePool getRecyclePool(){
+        return this.recyclePool;
+    }
+    public ArrayList<GameObject> objectsAt(Layer layer) {
+        return layers.get(layer.ordinal());
+    }
+
+//    HashMap<Class,ArrayList<GameObject>> recyclePool=new
+
+    public boolean onTouchEvent(MotionEvent event) {
+        int action=event.getAction();
+        if(action==MotionEvent.ACTION_DOWN){
+            doAction();
+            plane.head(event.getX(),event.getY());
+        }
+        else if (action==MotionEvent.ACTION_MOVE){
+            plane.head(event.getX(),event.getY());
+        }
+        return true;
+    }
 
     public enum Layer{
-        bg,missile,enemy,player,ui,COUNT
+        bg,missile,enemy,player,ui,COUNT,
     }
     public void initResources(View view){
         this.view=view;
@@ -52,11 +77,13 @@ public class GameWorld {
             add(Layer.missile,new Ball(res,x,y,dx,dy));
             //objects.add(new Ball(res,x,y,dx,dy));
         }
+
         float playerY=rect.bottom-100;
-        add(Layer.player,new Plane(res,500,playerY,0.0f,0.0f));
+        plane=new Plane(res,500,playerY,0.0f,0.0f);
+        add(Layer.player,plane);
         //objects.add(new Plane(res,500,500,0.0f,0.0f));
         fighter=new Fighter( 200, 700);
-        add(Layer.enemy, fighter);
+        add(Layer.player, fighter);
     }
 
     protected ArrayList<ArrayList<GameObject>> layers;
@@ -92,6 +119,7 @@ public class GameWorld {
         if(rect==null){
             return;
         }
+        enemyGenerator.update();
         for(ArrayList<GameObject> objects:layers) {
 
             for (GameObject o : objects) {
@@ -120,6 +148,10 @@ public class GameWorld {
                 }
             }
             trash.remove(tIndex);
+            if(tobj instanceof Recyclable){
+                ((Recyclable) tobj).recycle();
+                getRecyclePool().add(tobj);
+            }
         }
     }
 

@@ -59,7 +59,7 @@ public class FrameAnimationBitmap{
         int size=frameWidth;
         int halfWidth=size/2;
         int halfHeight=height/2;
-        Rect rectSrc=new Rect(size*index,0,size*(index+1),size);
+        Rect rectSrc=new Rect(size*index,0,size*(index+1),height);
         RectF rectDsl=new RectF(x-halfWidth,y-halfHeight,x+halfWidth,y+halfHeight);
         canvas.drawBitmap(bitmap,rectSrc,rectDsl,null);
         //canvas.drawBitmap(bitmap,x-halfHeight,y-halfHeight,null);
@@ -75,5 +75,9 @@ public class FrameAnimationBitmap{
 
     public void reset() {
         indexTimer.reset();
+    }
+
+    public int getWidth() {
+        return frameWidth;
     }
 }

@@ -49,12 +49,15 @@ public class Plane implements GameObject{
     }
 
     private void fire() {
-        Bullet bullet=new Bullet(x,y-halfSize);
+        Bullet bullet=Bullet.get(x,y-halfSize);
         GameWorld.get().add(GameWorld.Layer.missile,bullet);
     }
 
     public void draw(Canvas canvas){
-        canvas.drawBitmap(bitmap,x,y-halfSize,null);
+        canvas.drawBitmap(bitmap,x-halfSize,y-halfSize,null);
     }
 
+    public void head(float x, float y) {
+        this.x=x;
+    }
 }

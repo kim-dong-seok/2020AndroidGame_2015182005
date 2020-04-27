@@ -51,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
 //        },GAMEVIEW_UPDATE_INTERVAL_MSEC);
 //    }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if(event.getAction()==MotionEvent.ACTION_DOWN){
-            gameView.doAction();
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        if(event.getAction()==MotionEvent.ACTION_DOWN){
+//            gameView.doAction();
+//        }
+//        return true;
+//    }
 }

@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Choreographer;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -96,7 +97,12 @@ public class GameView extends View {
         }
     }
 
-    public void doAction() {
-        gameWorld.doAction();
+//    public void doAction() {
+//        gameWorld.doAction();
+//    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return gameWorld.onTouchEvent(event);
     }
 }
