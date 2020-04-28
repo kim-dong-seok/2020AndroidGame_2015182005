@@ -44,3 +44,4 @@
       클릭시 게임진행이 멈추며 사용 가능한 아이템, 스킬 목록을 보여준다.
     
 6. 클래스 구성도
+   ![sadsadfw](https://user-images.githubusercontent.com/43131612/80442336-a01a8f80-8947-11ea-84de-00c9f0c996d0.JPG)
