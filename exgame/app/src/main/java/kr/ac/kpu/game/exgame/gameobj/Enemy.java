@@ -27,6 +27,7 @@ public class Enemy implements GameObject ,BoxCollidable,Recyclable{
     private int speed;
     private int life;
     private Paint paint=new Paint();
+    private int score;
 
     private Enemy(){
         Log.d(TAG,"new"+this);
@@ -48,6 +49,7 @@ public class Enemy implements GameObject ,BoxCollidable,Recyclable{
         e.y = -e.height;
         e.speed = speed;
         e.life=(level+1)*100;
+        e.score=(level+1)*100;
 
         e.paint.setColor(Color.BLACK);
         e.paint.setTextSize(50);
@@ -86,6 +88,7 @@ public class Enemy implements GameObject ,BoxCollidable,Recyclable{
         if(life<=0){
             GameWorld gw = GameWorld.get();
             gw.remove(this);
+            gw.addScore(this.score);
         }
     }
 

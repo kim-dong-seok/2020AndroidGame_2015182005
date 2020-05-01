@@ -1,9 +1,12 @@
 package kr.ac.kpu.game.exgame.gameobj;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.media.MediaPlayer;
+import android.util.Log;
+import android.view.animation.BounceInterpolator;
 
 import kr.ac.kpu.game.exgame.R;
 import kr.ac.kpu.game.exgame.sound.SoundEffects;
@@ -21,10 +24,23 @@ public class Fighter implements GameObject{
     private float x;
     private float y;
 
+    public void setScale(float scale){
+        //Log.v(TAG,"setScale"+this.scale);
+        this.scale=scale;
+    }
+    private float scale;
+    //private long firedOn;
+
     public void fire() {
         if (state != State.idle) {
             return;
         }
+
+       //firedOn=GameWorld.get().getCurrentTimeNanos();
+        ObjectAnimator oa=ObjectAnimator.ofFloat(this,"scale",1.0f,2.0f);
+        oa.setDuration(300);
+        oa.setInterpolator(new BounceInterpolator());
+        oa.start();
         state = State.shoot;
         fabShoot.reset();
      //   mediaPlayer.start();
@@ -82,7 +98,12 @@ public class Fighter implements GameObject{
             fabIdle.draw(canvas, x , y);
         }
         else {
+            //float now=GameWorld.get().getCurrentTimeNanos();
+            //float scale= (float) (1+(now-firedOn)/1_000_000_000.0);
+            canvas.save();
+            canvas.scale(scale,scale,x,y);
             fabShoot.draw(canvas, x +shootOffset, y );
+            canvas.restore();
         }
     }
 }

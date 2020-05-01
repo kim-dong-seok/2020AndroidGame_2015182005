@@ -5,12 +5,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.RectF;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 import kr.ac.kpu.game.exgame.R;
+import kr.ac.kpu.game.exgame.util.CollisionHelper;
 
-public class Plane implements GameObject{
+public class Plane implements GameObject, BoxCollidable{
 
     public static final int BULLET_FIRE_INTERVAL_NSEC = 100_000_000;
+    private static final String TAG = Plane.class.getSimpleName();
     private static Bitmap bitmap;
     private static int halfSize;
     private final float dy;
@@ -20,6 +26,7 @@ public class Plane implements GameObject{
     private float x;
     private float y;
     private long lastFire;
+
 
 
     public Plane(Resources res, float x, float y, float dx, float dy){
@@ -46,6 +53,20 @@ public class Plane implements GameObject{
             fire();
             lastFire=now;
         }
+        ArrayList<GameObject> enemies=gw.objectsAt(GameWorld.Layer.enemy);
+        for (GameObject e:enemies){
+            if(!(e instanceof Enemy)) {
+                Log.e(TAG,"Object at Layer.enemy is: "+e);
+                continue;
+            }
+            Enemy enemy= (Enemy) e;
+            if(CollisionHelper.collides(enemy,this)){
+                gw.endGame();
+//                enemy.decreaseLife(this.power);
+//                toBeDeleted=true;
+                break;
+            }
+        }
     }
 
     private void fire() {
@@ -60,4 +81,13 @@ public class Plane implements GameObject{
     public void head(float x, float y) {
         this.x=x;
     }
+    public void getBox(RectF rect) {
+        int hw=bitmap.getWidth()/2;
+        int hh=bitmap.getHeight()/2;
+        rect.left=x-hw;
+        rect.right=x+hw;
+        rect.top=y-hh;
+        rect.bottom=y+hh;
+    }
+
 }

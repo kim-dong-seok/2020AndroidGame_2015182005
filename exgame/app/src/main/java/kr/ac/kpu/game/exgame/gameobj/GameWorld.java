@@ -1,18 +1,27 @@
 package kr.ac.kpu.game.exgame.gameobj;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
+import android.nfc.Tag;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
+
+import kr.ac.kpu.game.exgame.R;
 
 public class GameWorld {
     private static final int BALL_COUNT = 10;
+    private static final String PREF_KEY_HIGHSCORE = "highscore";
+    private static final String TAG = GameWorld.class.getSimpleName();
     private Fighter fighter;
     private View view;
     private EnemyGenerator enemyGenerator=new EnemyGenerator();
@@ -20,6 +29,19 @@ public class GameWorld {
     private long timeDiffNanos;
     private Plane plane;
     private RecyclePool recyclePool=new RecyclePool();
+    private ScoreObject scoreObject;
+    private ScoreObject highScoreObject;
+    private static final String PREFS_NAME="scorePrefs";
+
+//    private int scoreValue;
+//    private ObjectAnimator scoreAnimator;
+//
+//    public void setScoreDisplay(int scoreDisplay) {
+//        this.scoreDisplay = scoreDisplay;
+//    }
+//
+//    private int scoreDisplay;
+//    private Paint scorePaint=new Paint();
 
     public  static  GameWorld get(){
         if(singleton==null){
@@ -45,6 +67,10 @@ public class GameWorld {
     public boolean onTouchEvent(MotionEvent event) {
         int action=event.getAction();
         if(action==MotionEvent.ACTION_DOWN){
+            if(playState==PlayState.gameOver){
+                startGame();
+                return false;
+            }
             doAction();
             plane.head(event.getX(),event.getY());
         }
@@ -52,6 +78,44 @@ public class GameWorld {
             plane.head(event.getX(),event.getY());
         }
         return true;
+    }
+
+    private void startGame() {
+        playState=PlayState.normal;
+        scoreObject.reset();
+
+        SharedPreferences prefs=view.getContext().getSharedPreferences(PREFS_NAME,Context.MODE_PRIVATE);
+        int highScore=prefs.getInt(PREF_KEY_HIGHSCORE,0);
+        highScoreObject.setScore(highScore);
+    }
+
+    public void addScore(int score) {
+        scoreObject.addScore(score);
+//        if(value>highScore){
+//
+//        }
+        //하이스코어 비교
+//        scoreValue+=score;
+//        scoreAnimator.setIntValues(scoreDisplay,scoreValue);
+//        scoreAnimator.setDuration(500);
+//        scoreAnimator.start();
+    }
+    private enum PlayState{
+        normal,paused,gameOver
+    }
+    private PlayState playState=PlayState.normal;
+    public void endGame() {
+        playState=PlayState.gameOver;
+        int score=scoreObject.getScore();
+        Log.v(TAG,"score"+score);
+        SharedPreferences prefs=view.getContext().getSharedPreferences(PREFS_NAME,Context.MODE_PRIVATE);
+        int highScore=prefs.getInt(PREF_KEY_HIGHSCORE,0);
+        if(score>highScore) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt(PREF_KEY_HIGHSCORE,score);
+            editor.commit();
+        }
+
     }
 
     public enum Layer{
@@ -84,6 +148,15 @@ public class GameWorld {
         //objects.add(new Plane(res,500,500,0.0f,0.0f));
         fighter=new Fighter( 200, 700);
         add(Layer.player, fighter);
+
+        scoreObject =new ScoreObject(800,100, R.mipmap.number_64x84);
+        add(Layer.ui,scoreObject);
+        highScoreObject =new ScoreObject(800,20,R.mipmap.number_24x32);
+        add(Layer.ui,highScoreObject);
+//        scorePaint.setTextSize(50);
+//        scorePaint.setColor(Color.BLACK);
+//        scoreAnimator =ObjectAnimator.ofInt(this,"scoreDisplay",0);
+        startGame();
     }
 
     protected ArrayList<ArrayList<GameObject>> layers;
@@ -101,6 +174,7 @@ public class GameWorld {
                 o.draw(canvas);
             }
         }
+//        canvas.drawText("Score:"+scoreDisplay,100,100,scorePaint);
     }
     public  long getTimeDiffNanos(){
         return timeDiffNanos;
@@ -117,6 +191,9 @@ public class GameWorld {
         this.timeDiffNanos=frameTimeNanos-this.frameTimeNanos;
         this.frameTimeNanos=frameTimeNanos;
         if(rect==null){
+            return;
+        }
+        if(playState!=PlayState.normal){
             return;
         }
         enemyGenerator.update();
