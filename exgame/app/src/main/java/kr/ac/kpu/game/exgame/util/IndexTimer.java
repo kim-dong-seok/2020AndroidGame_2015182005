@@ -1,8 +1,6 @@
 package kr.ac.kpu.game.exgame.util;
 
-import android.util.Log;
-
-import kr.ac.kpu.game.exgame.gameobj.GameWorld;
+import kr.ac.kpu.game.exgame.game.framework.GameWorld;
 
 public class IndexTimer {
     private static final String TAG = IndexTimer.class.getSimpleName();

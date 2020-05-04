@@ -1,33 +1,28 @@
 package kr.ac.kpu.game.exgame.ui.view;
 
+import android.app.Service;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Choreographer;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
-
-import kr.ac.kpu.game.exgame.R;
-import kr.ac.kpu.game.exgame.gameobj.Ball;
-import kr.ac.kpu.game.exgame.gameobj.GameObject;
-import kr.ac.kpu.game.exgame.gameobj.GameWorld;
-import kr.ac.kpu.game.exgame.gameobj.Plane;
+import kr.ac.kpu.game.exgame.game.framework.GameWorld;
 import kr.ac.kpu.game.exgame.util.IndexTimer;
+import kr.ac.kpu.game.exgame.game.res.bitmap.SharedBitmap;
 
 public class GameView extends View {
     private static final String TAG = GameView.class.getSimpleName();
     public static final int FRAME_RATE_SECONDS = 10;
-    private Rect rect;
+    private Rect mainRect;
     private Paint mainPaint;
 
     private GameWorld gameWorld;
@@ -41,16 +36,21 @@ public class GameView extends View {
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
         initResources();
     }
 
     private void initResources() {
+        WindowManager wm= (WindowManager) getContext().getSystemService(Service.WINDOW_SERVICE);
+        Point size=new Point();
+        wm.getDefaultDisplay().getSize(size);
+        mainRect=new Rect(0,0,size.x,size.y);
+
+        SharedBitmap.setResources(getResources());
         mainPaint=new Paint();
         mainPaint.setColor(0xFFFFEEEE);
 
-        rect=new Rect();
         gameWorld=GameWorld.get();
+        gameWorld.setRect(mainRect);
         gameWorld.initResources(this);
 
 
@@ -70,19 +70,19 @@ public class GameView extends View {
         });
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        rect.left=getPaddingLeft();
-        rect.top=getPaddingTop();
-        rect.right=getWidth()-getPaddingRight();
-        rect.bottom=getHeight()-getPaddingBottom();
-        gameWorld.setRect(rect);
-    }
+//    @Override
+//    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+//        super.onSizeChanged(w, h, oldw, oldh);
+//        mainRect.left=getPaddingLeft();
+//        mainRect.top=getPaddingTop();
+//        mainRect.right=getWidth()-getPaddingRight();
+//        mainRect.bottom=getHeight()-getPaddingBottom();
+//        gameWorld.setRect(mainRect);
+//    }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawRect(rect,mainPaint);
+        canvas.drawRect(mainRect,mainPaint);
         gameWorld.draw(canvas);
     }
 
@@ -98,7 +98,7 @@ public class GameView extends View {
     }
 
 //    public void doAction() {
-//        gameWorld.doAction();
+//            gameWorld.doAction();
 //    }
 
     @Override

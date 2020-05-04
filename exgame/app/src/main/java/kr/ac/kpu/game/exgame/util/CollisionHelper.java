@@ -2,7 +2,7 @@ package kr.ac.kpu.game.exgame.util;
 
 import android.graphics.RectF;
 
-import kr.ac.kpu.game.exgame.gameobj.BoxCollidable;
+import kr.ac.kpu.game.exgame.game.iface.BoxCollidable;
 
 public class CollisionHelper {
     private static RectF r1=new RectF();

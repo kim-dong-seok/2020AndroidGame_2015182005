@@ -4,14 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Configuration;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 
-import kr.ac.kpu.game.exgame.R;
-import kr.ac.kpu.game.exgame.sound.SoundEffects;
+import kr.ac.kpu.game.exgame.game.world.MainWorld;
+import kr.ac.kpu.game.exgame.game.res.sound.SoundEffects;
 import kr.ac.kpu.game.exgame.ui.view.GameView;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
+        MainWorld.create();
         gameView=new GameView(this);
         setContentView(gameView);
 
