@@ -175,4 +175,11 @@ public abstract class GameWorld {
     public Context getContext() {
         return view.getContext();
     }
+
+    public void pause() {
+    }
+
+    public void resume() {
+
+    }
 }

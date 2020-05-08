@@ -20,6 +20,7 @@ public class Plane implements GameObject, BoxCollidable {
 
     public static final int BULLET_FIRE_INTERVAL_NSEC = 100_000_000;
     private static final String TAG = Plane.class.getSimpleName();
+    private static final int SPEED = 100;
     private static Bitmap bitmap;
     private static int halfSize;
     private final float dy;
@@ -29,7 +30,7 @@ public class Plane implements GameObject, BoxCollidable {
     private float x;
     private float y;
     private long lastFire;
-
+    private Joystick joystick;
 
 
     public Plane(Resources res, float x, float y, float dx, float dy){
@@ -49,12 +50,22 @@ public class Plane implements GameObject, BoxCollidable {
 //        x+=dx;
 //        y+=dy;
 //        matrix.postRotate(5.0f,x,y);
+
+
         MainWorld gw = MainWorld.get();
         long now=gw.getCurrentTimeNanos();
         long elapsed=now-lastFire;
         if(elapsed> BULLET_FIRE_INTERVAL_NSEC){
             fire();
             lastFire=now;
+        }
+
+        int xdir= joystick.getHorzDirection();
+        x+=xdir*SPEED*gw.getTimeDiffInSecond();
+        if(x<0){
+            x=0;
+        }else if(x>gw.getRight()){
+            x=gw.getRight();
         }
         ArrayList<GameObject> enemies=gw.objectsAt(MainWorld.Layer.enemy);
         for (GameObject e:enemies){
@@ -81,9 +92,9 @@ public class Plane implements GameObject, BoxCollidable {
         canvas.drawBitmap(bitmap,x-halfSize,y-halfSize,null);
     }
 
-    public void head(float x, float y) {
-        this.x=x;
-    }
+//    public void head(float x, float y) {
+//        this.x=x;
+//    }
     public void getBox(RectF rect) {
         int hw=bitmap.getWidth()/2;
         int hh=bitmap.getHeight()/2;
@@ -93,4 +104,7 @@ public class Plane implements GameObject, BoxCollidable {
         rect.bottom=y+hh;
     }
 
+    public void setJoystick(Joystick joystick) {
+        this.joystick=joystick;
+    }
 }

@@ -16,6 +16,7 @@ import kr.ac.kpu.game.exgame.game.iface.GameObject;
 import kr.ac.kpu.game.exgame.game.obj.Ball;
 import kr.ac.kpu.game.exgame.game.obj.EnemyGenerator;
 import kr.ac.kpu.game.exgame.game.obj.Fighter;
+import kr.ac.kpu.game.exgame.game.obj.Joystick;
 import kr.ac.kpu.game.exgame.game.obj.Plane;
 import kr.ac.kpu.game.exgame.game.obj.ScoreObject;
 import kr.ac.kpu.game.exgame.game.obj.bg.ImageScrollBackground;
@@ -23,15 +24,16 @@ import kr.ac.kpu.game.exgame.game.obj.bg.TileScrollBackground;
 
 public class MainWorld extends GameWorld {
     private static final int BALL_COUNT = 10;
-    private static final String PREF_KEY_HIGHSCORE = "highscore";
+    public static final String PREFS_NAME="scorePrefs";
+    public static final String PREF_KEY_HIGHSCORE = "highscore";
     private static final String TAG = MainWorld.class.getSimpleName();
     private Fighter fighter;
     private EnemyGenerator enemyGenerator=new EnemyGenerator();
     private Plane plane;
     private ScoreObject scoreObject;
     private ScoreObject highScoreObject;
-    private static final String PREFS_NAME="scorePrefs";
     private PlayState playState=PlayState.normal;
+    private Joystick joystick;
 
     public static void create() {
         if(singleton==null){
@@ -86,6 +88,12 @@ public class MainWorld extends GameWorld {
         //        scorePaint.setTextSize(50);
 //        scorePaint.setColor(Color.BLACK);
 //        scoreAnimator =ObjectAnimator.ofInt(this,"scoreDisplay",0);
+
+        joystick=new Joystick(300,rect.bottom-200);
+        add(Layer.ui, joystick);
+
+        plane.setJoystick(joystick);
+
         startGame();
     }
 
@@ -144,6 +152,7 @@ public class MainWorld extends GameWorld {
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        joystick.onTouchEvent(event);
         int action=event.getAction();
         if(action==MotionEvent.ACTION_DOWN){
             if(playState== MainWorld.PlayState.gameOver){
@@ -151,10 +160,10 @@ public class MainWorld extends GameWorld {
                 return false;
             }
             doAction();
-            plane.head(event.getX(),event.getY());
+//            plane.head(event.getX(),event.getY());
         }
         else if (action==MotionEvent.ACTION_MOVE){
-            plane.head(event.getX(),event.getY());
+//            plane.head(event.getX(),event.getY());
         }
         return true;
     }

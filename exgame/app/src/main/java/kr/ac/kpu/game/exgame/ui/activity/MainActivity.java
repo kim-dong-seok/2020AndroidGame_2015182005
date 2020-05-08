@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 
+import kr.ac.kpu.game.exgame.game.framework.GameWorld;
 import kr.ac.kpu.game.exgame.game.world.MainWorld;
 import kr.ac.kpu.game.exgame.game.res.sound.SoundEffects;
 import kr.ac.kpu.game.exgame.ui.view.GameView;
@@ -36,6 +37,20 @@ public class MainActivity extends AppCompatActivity {
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         Log.d(TAG,"new Configuration"+newConfig);
         super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onPause() {
+        gameView.pause();
+ //       GameWorld.get().pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        gameView.resume();
+ //       GameWorld.get().resume();
+        super.onResume();
     }
 
     //    private void postUpdate() {

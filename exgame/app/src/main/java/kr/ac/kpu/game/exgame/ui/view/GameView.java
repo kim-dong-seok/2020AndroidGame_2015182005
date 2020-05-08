@@ -27,6 +27,7 @@ public class GameView extends View {
 
     private GameWorld gameWorld;
     private IndexTimer timer;
+    private boolean paused;
 
 
     public GameView(Context context) {
@@ -60,6 +61,9 @@ public class GameView extends View {
     }
 
     private void postFrameCallback() {
+        if(paused){
+            return;
+        }
         Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
             @Override
             public void doFrame(long frameTimeNanos) {
@@ -104,5 +108,13 @@ public class GameView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return gameWorld.onTouchEvent(event);
+    }
+
+    public void pause() {
+        this.paused=true;
+    }
+
+    public void resume() {
+        this.paused=false;
     }
 }
