@@ -25,7 +25,7 @@ public class MainScene extends GameScene {
     private Player player;
     private ScoreObject scoreObject;
     private GameTimer timer;
-
+    private Button jumpButton;
     @Override
     protected int getLayerCount() {
         return Layer.COUNT.ordinal();
@@ -39,6 +39,9 @@ public class MainScene extends GameScene {
             scoreObject.add(100);
             timer.reset();
         }
+        if(jumpButton.isPressed()&&player.getState()==0){
+            player.jump();
+        }
     }
 
     @Override
@@ -50,7 +53,7 @@ public class MainScene extends GameScene {
         Random rand = new Random();
         int mdpi_100 = UiBridge.x(100);
 
-        player = new Player(mdpi_100, mdpi_100*3, 50, 50);
+        player = new Player(mdpi_100, mdpi_100*3, 100, 100);
         gameWorld.add(Layer.player.ordinal(), player);
         gameWorld.add(Layer.bg.ordinal(), new CityBackground());
         int screenWidth = UiBridge.metrics.size.x;
@@ -64,7 +67,8 @@ public class MainScene extends GameScene {
         int cx = UiBridge.metrics.center.x;
         int y = UiBridge.metrics.center.y;
 //        y += UiBridge.y(100);
-        gameWorld.add(Layer.ui.ordinal(), new Button(cx, y, R.mipmap.btn_tutorial, R.mipmap.blue_round_btn, R.mipmap.red_round_btn));
+        jumpButton=new Button(50, 900, R.mipmap.btn_tutorial, R.mipmap.blue_round_btn, R.mipmap.red_round_btn);
+        gameWorld.add(Layer.ui.ordinal(),jumpButton );
         y += UiBridge.y(100);
     }
 }
