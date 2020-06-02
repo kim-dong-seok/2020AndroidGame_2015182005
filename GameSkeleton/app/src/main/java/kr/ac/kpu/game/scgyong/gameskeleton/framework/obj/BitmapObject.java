@@ -32,6 +32,8 @@ public class BitmapObject extends GameObject {
         this.height = height;
     }
 
+
+
     @Override
     public float getRadius() {
         return this.width / 2;

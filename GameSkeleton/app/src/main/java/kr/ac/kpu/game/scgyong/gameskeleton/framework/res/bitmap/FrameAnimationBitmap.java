@@ -15,24 +15,15 @@ public class FrameAnimationBitmap {
     private int frameWidth;
     private int frames;
     private int fps;
+    private int resId;
+    private int frameCount;
     private Rect srcRect = new Rect();
     private RectF dstRect = new RectF();
     private GameTimer timer;
 
 
     public FrameAnimationBitmap(int resId, int framesPerSecond, int frameCount) {
-        this.sbmp = SharedBitmap.load(resId);
-        this.fps = framesPerSecond;
-        if (frameCount == 0) {
-            this.frameWidth = sbmp.getHeight();
-            frameCount = sbmp.getWidth() / this.frameWidth;
-        } else {
-            this.frameWidth = sbmp.getWidth() / frameCount;
-        }
-        this.frames = frameCount;
-        this.timer = new GameTimer(frames, framesPerSecond);
-        srcRect.top = 0;
-        srcRect.bottom = sbmp.getHeight();
+        setBitmapChange(resId, framesPerSecond,frameCount);
     }
 
     public void draw(Canvas canvas, float x, float y) {
@@ -53,6 +44,23 @@ public class FrameAnimationBitmap {
     }
     public void setBitmapResource(int resId) {
         sbmp = SharedBitmap.load(resId);
+    }
+
+    public void setBitmapChange(int resId, int framesPerSecond, int frameCount){
+        this.sbmp = SharedBitmap.load(resId);
+        this.fps = framesPerSecond;
+        this.resId=resId;
+        this.frameCount=frameCount;
+        if (frameCount == 0) {
+            this.frameWidth = sbmp.getHeight();
+            frameCount = sbmp.getWidth() / this.frameWidth;
+        } else {
+            this.frameWidth = sbmp.getWidth() / frameCount;
+        }
+        this.frames = frameCount;
+        this.timer = new GameTimer(frames, framesPerSecond);
+        srcRect.top = 0;
+        srcRect.bottom = sbmp.getHeight();
     }
 
     public void reset() {

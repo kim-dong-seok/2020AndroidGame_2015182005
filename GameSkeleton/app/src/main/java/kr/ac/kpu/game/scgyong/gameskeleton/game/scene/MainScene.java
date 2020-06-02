@@ -2,8 +2,6 @@ package kr.ac.kpu.game.scgyong.gameskeleton.game.scene;
 
 import android.graphics.RectF;
 
-import java.util.Random;
-
 import kr.ac.kpu.game.scgyong.gameskeleton.R;
 import kr.ac.kpu.game.scgyong.gameskeleton.framework.main.GameScene;
 import kr.ac.kpu.game.scgyong.gameskeleton.framework.main.GameTimer;
@@ -11,7 +9,7 @@ import kr.ac.kpu.game.scgyong.gameskeleton.framework.main.UiBridge;
 import kr.ac.kpu.game.scgyong.gameskeleton.framework.obj.BitmapObject;
 import kr.ac.kpu.game.scgyong.gameskeleton.framework.obj.ScoreObject;
 import kr.ac.kpu.game.scgyong.gameskeleton.framework.obj.ui.Button;
-import kr.ac.kpu.game.scgyong.gameskeleton.game.obj.Ball;
+import kr.ac.kpu.game.scgyong.gameskeleton.game.obj.Arrow;
 import kr.ac.kpu.game.scgyong.gameskeleton.game.obj.CityBackground;
 import kr.ac.kpu.game.scgyong.gameskeleton.game.obj.Player;
 
@@ -19,13 +17,15 @@ public class MainScene extends GameScene {
     private static final String TAG = MainScene.class.getSimpleName();
 
     public enum Layer {
-        bg, enemy, player, ui, COUNT
+        bg, enemy, player,arrow, ui, COUNT
     }
 
     private Player player;
     private ScoreObject scoreObject;
     private GameTimer timer;
     private Button jumpButton;
+    private Button sAttackButton;
+    private Button lAttackButton;
     @Override
     protected int getLayerCount() {
         return Layer.COUNT.ordinal();
@@ -42,6 +42,14 @@ public class MainScene extends GameScene {
         if(jumpButton.isPressed()&&player.getState()==0){
             player.jump();
         }
+        if(sAttackButton.isPressed()&&player.getState()==0){
+            player.shortAttack();
+        }
+        if(lAttackButton.isPressed()&&player.getState()==0){
+            player.longAttack();
+            gameWorld.add(Layer.arrow.ordinal(), new Arrow(player.getX(),player.getY()));
+
+        }
     }
 
     @Override
@@ -50,7 +58,6 @@ public class MainScene extends GameScene {
     }
 
     private void initObjects() {
-        Random rand = new Random();
         int mdpi_100 = UiBridge.x(100);
 
         player = new Player(mdpi_100, mdpi_100*3, 100, 100);
@@ -67,8 +74,12 @@ public class MainScene extends GameScene {
         int cx = UiBridge.metrics.center.x;
         int y = UiBridge.metrics.center.y;
 //        y += UiBridge.y(100);
-        jumpButton=new Button(50, 900, R.mipmap.btn_tutorial, R.mipmap.blue_round_btn, R.mipmap.red_round_btn);
+        jumpButton=new Button(100, 900, R.mipmap.jump_button, R.mipmap.blue_round_btn, R.mipmap.red_round_btn);
         gameWorld.add(Layer.ui.ordinal(),jumpButton );
+        sAttackButton=new Button(1000, 900, R.mipmap.jump_button, R.mipmap.blue_round_btn, R.mipmap.red_round_btn);
+        gameWorld.add(Layer.ui.ordinal(),sAttackButton );
+        lAttackButton=new Button(1200, 900, R.mipmap.jump_button, R.mipmap.blue_round_btn, R.mipmap.red_round_btn);
+        gameWorld.add(Layer.ui.ordinal(),lAttackButton );
         y += UiBridge.y(100);
     }
 }

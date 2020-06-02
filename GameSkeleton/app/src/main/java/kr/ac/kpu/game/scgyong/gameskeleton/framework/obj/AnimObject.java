@@ -11,7 +11,8 @@ public class AnimObject extends GameObject {
     private static final String TAG = AnimObject.class.getSimpleName();
     protected final FrameAnimationBitmap fab;
     protected final RectF dstRect;
-    protected final int width, height;
+    protected int width;
+    protected int height;
 
     public AnimObject(float x, float y, int width, int height, int resId, int fps, int count) {
         fab = new FrameAnimationBitmap(resId, fps, count);
@@ -35,6 +36,22 @@ public class AnimObject extends GameObject {
     @Override
     public float getRadius() {
         return this.width / 2;
+    }
+
+    public void changeBitmap(int width, int height,int resId, int fps, int count){
+        fab.setBitmapChange(resId, fps, count);
+        if (width == 0) {
+            width = UiBridge.x(fab.getWidth());
+        } else if (width < 0) {
+            width = UiBridge.x(fab.getWidth()) * -width / 100;
+        }
+        this.width = width;
+        if (height == 0) {
+            height = UiBridge.x(fab.getHeight());
+        } else if (height < 0) {
+            height = UiBridge.x(fab.getHeight()) * -height / 100;
+        }
+        this.height = height;
     }
 
     public void draw(Canvas canvas) {
