@@ -39,7 +39,7 @@ public class Button extends BitmapObject implements Touchable {
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if (this.bgNormal.getBounds().contains((int)e.getX(), (int)e.getY())) {
-                    Log.d(TAG, "Down");
+                    //Log.d(TAG, "Down");
                     captureTouch();
                     capturing = true;
                     pressed = true;
@@ -50,12 +50,12 @@ public class Button extends BitmapObject implements Touchable {
                 pressed = this.bgNormal.getBounds().contains((int)e.getX(), (int)e.getY());
                 break;
             case MotionEvent.ACTION_UP:
-                Log.d(TAG, "Up");
+                //Log.d(TAG, "Up");
                 releaseTouch();
                 capturing = false;
                 pressed = false;
                 if (this.bgNormal.getBounds().contains((int)e.getX(), (int)e.getY())) {
-                    Log.d(TAG, "TouchUp Inside");
+                    //Log.d(TAG, "TouchUp Inside");
                 }
                 return true;
         }

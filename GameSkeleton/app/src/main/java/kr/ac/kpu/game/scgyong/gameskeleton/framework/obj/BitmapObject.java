@@ -9,7 +9,7 @@ import kr.ac.kpu.game.scgyong.gameskeleton.framework.res.bitmap.SharedBitmap;
 
 public class BitmapObject extends GameObject {
     private static final String TAG = BitmapObject.class.getSimpleName();
-    protected final SharedBitmap sbmp;
+    protected SharedBitmap sbmp;
     protected final RectF dstRect;
     protected final int width, height;
 

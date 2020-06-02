@@ -11,7 +11,7 @@ import kr.ac.kpu.game.scgyong.gameskeleton.framework.iface.Touchable;
 
 public class GameWorld {
     private static final String TAG = GameWorld.class.getSimpleName();
-    protected RecyclePool recyclePool;
+    protected RecyclePool recyclePool=new RecyclePool();
     protected ArrayList<ArrayList<GameObject>> layers;
     protected ArrayList<GameObject> trash = new ArrayList<>();
     protected Touchable capturingObject;
@@ -19,7 +19,7 @@ public class GameWorld {
     public GameWorld(int layerCount) {
         layers = new ArrayList<>(layerCount);
         for (int i = 0; i < layerCount; i++) {
-            Log.d(TAG, "Adding layer " + i);
+            //Log.d(TAG, "Adding layer " + i);
             layers.add(new ArrayList<GameObject>());
         }
     }
@@ -74,17 +74,20 @@ public class GameWorld {
             }
         });
     }
-
+    public void remove(GameObject obj) {
+        trash.add(obj);
+        Log.d(TAG,"removeobj"+obj);
+    }
     public RecyclePool getRecyclePool() {
         return recyclePool;
     }
 
     public void captureTouch(Touchable obj) {
-        Log.d(TAG, "Capture: " + obj);
+       // Log.d(TAG, "Capture: " + obj);
         capturingObject = obj;
     }
     public void releaseTouch() {
-        Log.d(TAG, "Release: " + capturingObject);
+        //Log.d(TAG, "Release: " + capturingObject);
         capturingObject = null;
     }
     public boolean onTouchEvent(MotionEvent event) {

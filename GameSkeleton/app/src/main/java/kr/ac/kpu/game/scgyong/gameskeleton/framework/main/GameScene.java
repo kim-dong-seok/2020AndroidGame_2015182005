@@ -13,9 +13,6 @@ GameScene {
 
     protected static GameScene topGameScene;
 
-    public GameWorld getGameWorld() {
-        return gameWorld;
-    }
 
     protected GameWorld gameWorld;
 
@@ -23,6 +20,9 @@ GameScene {
     protected GameScene() {
         int layerCount = getLayerCount();
         gameWorld = new GameWorld(layerCount);
+    }
+    public GameWorld getGameWorld() {
+        return gameWorld;
     }
 
     public static GameScene getTop() {

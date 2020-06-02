@@ -5,6 +5,7 @@ import android.graphics.RectF;
 import kr.ac.kpu.game.scgyong.gameskeleton.R;
 import kr.ac.kpu.game.scgyong.gameskeleton.framework.main.GameScene;
 import kr.ac.kpu.game.scgyong.gameskeleton.framework.main.GameTimer;
+import kr.ac.kpu.game.scgyong.gameskeleton.framework.main.GameWorld;
 import kr.ac.kpu.game.scgyong.gameskeleton.framework.main.UiBridge;
 import kr.ac.kpu.game.scgyong.gameskeleton.framework.obj.BitmapObject;
 import kr.ac.kpu.game.scgyong.gameskeleton.framework.obj.ScoreObject;
@@ -31,6 +32,7 @@ public class MainScene extends GameScene {
         return Layer.COUNT.ordinal();
     }
 
+
     @Override
     public void update() {
         super.update();
@@ -47,7 +49,8 @@ public class MainScene extends GameScene {
         }
         if(lAttackButton.isPressed()&&player.getState()==0){
             player.longAttack();
-            gameWorld.add(Layer.arrow.ordinal(), new Arrow(player.getX(),player.getY()));
+            Arrow arrow=Arrow.get(player.getX(),player.getY());
+            gameWorld.add(Layer.arrow.ordinal(),arrow);
 
         }
     }
