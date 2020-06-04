@@ -4,8 +4,9 @@ import android.util.Log;
 
 import java.util.Random;
 
-import kr.ac.kpu.game.kim2015182005.finalproject.game.framework.GameWorld;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.world.MainWorld;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameScene;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameWorld;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.MainScene;
 
 public class EnemyGenerator {
     private static final String TAG = EnemyGenerator.class.getSimpleName();
@@ -26,8 +27,9 @@ public class EnemyGenerator {
     }
 
     public void update() {
-        GameWorld gw = GameWorld.get();
-        long now = gw.getCurrentTimeNanos();
+        GameScene gs=GameScene.getTop();
+        GameWorld gw = gs.getGameWorld();
+        long now = gs.get();
         if (lastGenerated == 0) {
             lastGenerated = now;
             return;

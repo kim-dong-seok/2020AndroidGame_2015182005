@@ -51,6 +51,7 @@ public class Arrow extends BitmapObject implements Recyclable  {
         float seconds = GameTimer.getTimeDiffSeconds();
         x += dx * seconds;
 
+        //Log.d(TAG,"dx="+ dx * seconds);
         boolean toBeDeleted=false;
 
         if(!toBeDeleted){

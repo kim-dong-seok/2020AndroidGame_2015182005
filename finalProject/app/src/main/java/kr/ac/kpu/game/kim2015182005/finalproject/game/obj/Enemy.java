@@ -1,104 +1,84 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.game.obj;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.util.Log;
-
 import kr.ac.kpu.game.kim2015182005.finalproject.R;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.framework.GameWorld;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.iface.BoxCollidable;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.iface.GameObject;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.iface.Recyclable;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.res.bitmap.FrameAnimationBitmap;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.world.MainWorld;
-//import kr.ac.kpu.game.scgyong.blocksample.R;
-//import kr.ac.kpu.game.scgyong.blocksample.util.FrameAnimationBitmap;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.iface.Recyclable;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameTimer;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
 
-public class Enemy implements GameObject, BoxCollidable, Recyclable {
-    public static final int FRAMES_PER_SECOND = 12;
+public class Enemy extends AnimObject implements Recyclable {
     private static final String TAG = Enemy.class.getSimpleName();
-    public static int[] RES_IDS = {
-            R.mipmap.enemy_01, R.mipmap.enemy_02, R.mipmap.enemy_03, R.mipmap.enemy_04,
-            R.mipmap.enemy_05, R.mipmap.enemy_06, R.mipmap.enemy_07, R.mipmap.enemy_08,
-            R.mipmap.enemy_09, R.mipmap.enemy_10, R.mipmap.enemy_11, R.mipmap.enemy_12,
-            R.mipmap.enemy_13, R.mipmap.enemy_14, R.mipmap.enemy_15, R.mipmap.enemy_16,
-            R.mipmap.enemy_17, R.mipmap.enemy_18, R.mipmap.enemy_19, R.mipmap.enemy_20,
-    };
-    private FrameAnimationBitmap fab;
-    private int height;
-    private float x, y;
-    private int speed;
-    private int life;
-    private Paint paint=new Paint();
-    private int score;
+    private float dx, dy;
+    private int state;
+    private int jumpState;
+    private int befState;
+    private int hp;
+    private float jumpY,originY,originX;
 
-    private Enemy(){
-        Log.d(TAG,"new"+this);
+    public Enemy(float x, float y, float dx, float dy, int resId,int fps,int count) {
+        super(x, y, 95, 180, resId, fps, count);
+        this.dx = dx;
+        this.dy = dy;
+        this.hp=20;
+        this.state=0;
+        this.jumpState=0;
     }
-    public static Enemy get(int x, int level, int speed) {
-        level--;
-        if (level >= RES_IDS.length) {
-            level = RES_IDS.length - 1;
-        }
-        int resId = RES_IDS[level];
-        GameWorld gw = GameWorld.get();
-        Enemy e=(Enemy) gw.getRecyclePool().get(Enemy.class);
-        if(e==null) {
-            e = new Enemy();
-        }
-        e.fab =new FrameAnimationBitmap( resId, FRAMES_PER_SECOND, 0);
-        e.height = e.fab.getHeight();
-        e.x = x;
-        e.y = -e.height;
-        e.speed = speed;
-        e.life=(level+1)*100;
-        e.score=(level+1)*100;
 
-        e.paint.setColor(Color.BLACK);
-        e.paint.setTextSize(50);
-        return e;
-    }
     @Override
+    public float getRadius() {
+        return this.width / 4;
+    }
+
+    public int getHp(){
+        return hp;
+    }
+    public int getState(){
+        return state;
+    }
+    public int getJumpState(){
+        return jumpState;
+    }
+
+    public void shortAttack(){
+        befState=this.state;
+        originX=this.x;
+        this.x+=50;
+        state=3;
+        changeBitmap(290,170,R.mipmap.tressa_right_short_attack,10,4);
+    }
+    public void longAttack(){
+        befState=this.state;
+        originX=this.x;
+        state=4;
+        changeBitmap(111,165,R.mipmap.tressa_right_long_attack,15,7);
+    }
+    public void jump(){
+        jumpState=1;
+        originY=y;
+        jumpY=y-dy*3;
+    }
     public void update() {
-//        Log.d(TAG, "update() - " + this);
-//        Log.d(TAG, "update() x=" + x + " y=" + y + " - " + this);
-        GameWorld gw = GameWorld.get();
-        y += speed * gw.getTimeDiffInSecond();
-        if (y > gw.getBottom() + height) {
-            gw.remove(this);
+        float seconds = GameTimer.getTimeDiffSeconds();
+        if (jumpState==1) {
+            y -= dy *4* seconds;
+            if(y<jumpY) {
+                y=jumpY;
+                jumpState=2;
+            }
         }
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-//        Log.d(TAG, "x=" + x + " y=" + y + " - " + this);
-        fab.draw(canvas, x, y);
-        canvas.drawText(String.valueOf(life),x-height/4,y+height/3,paint);
-    }
-
-    @Override
-    public void getBox(RectF rect) {
-        int hw=fab.getWidth()/2;
-        int hh=fab.getHeight()/2;
-        rect.left=x-hw;
-        rect.right=x+hw;
-        rect.top=y-hh;
-        rect.bottom=y+hh;
-    }
-
-    public void decreaseLife(int power) {
-        this.life-=power;
-        if(life<=0){
-            //GameWorld gw = GameWorld.get();
-            MainWorld gw = MainWorld.get();
-            gw.remove(this);
-            gw.addScore(this.score);
+        if(jumpState==2){
+            y += dy *5* seconds;
+            if(y>originY) {
+                y=originY;
+                jumpState=0;
+            }
         }
-    }
+        if(fab.done()&&(state==3||state==4)){
+            this.state=0;
+            this.x=originX;
+            changeBitmap(95, 180, R.mipmap.tressa_right_move, 7, 6);
+        }
 
-    @Override
+    }
     public void recycle() {
 
     }
