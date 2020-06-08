@@ -5,7 +5,6 @@ import android.util.Log;
 public class GameTimer {
     private static final long NANOS_IN_ONE_SECOND = 1_000_000_000;
     private static final float NANOS_IN_ONE_SECOND_FLOAT = 1_000_000_000f;
-    private static final String TAG = GameTimer.class.getSimpleName();
     private static long currentTimeNanos;
     private static long diffNanos;
 

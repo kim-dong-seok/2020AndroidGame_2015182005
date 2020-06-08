@@ -140,5 +140,4 @@ public class TiledMap {
         // for debug
         canvas.drawText("Y=" + y, 100, 100, paint);
     }
-
 }

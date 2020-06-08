@@ -38,19 +38,7 @@ public class Enemy extends AnimObject implements Recyclable {
         return jumpState;
     }
 
-    public void shortAttack(){
-        befState=this.state;
-        originX=this.x;
-        this.x+=50;
-        state=3;
-        changeBitmap(290,170,R.mipmap.tressa_right_short_attack,10,4);
-    }
-    public void longAttack(){
-        befState=this.state;
-        originX=this.x;
-        state=4;
-        changeBitmap(111,165,R.mipmap.tressa_right_long_attack,15,7);
-    }
+
     public void jump(){
         jumpState=1;
         originY=y;
@@ -72,11 +60,7 @@ public class Enemy extends AnimObject implements Recyclable {
                 jumpState=0;
             }
         }
-        if(fab.done()&&(state==3||state==4)){
-            this.state=0;
-            this.x=originX;
-            changeBitmap(95, 180, R.mipmap.tressa_right_move, 7, 6);
-        }
+
 
     }
     public void recycle() {

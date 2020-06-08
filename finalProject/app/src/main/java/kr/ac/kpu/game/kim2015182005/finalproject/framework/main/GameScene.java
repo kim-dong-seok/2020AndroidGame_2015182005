@@ -6,13 +6,15 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-public abstract class
-GameScene {
+public abstract class GameScene {
     private static final String TAG = GameScene.class.getSimpleName();
     private static ArrayList<GameScene> sceneStack = new ArrayList<>();
 
     protected static GameScene topGameScene;
 
+    public GameWorld getGameWorld() {
+        return gameWorld;
+    }
 
     protected GameWorld gameWorld;
 
@@ -20,9 +22,6 @@ GameScene {
     protected GameScene() {
         int layerCount = getLayerCount();
         gameWorld = new GameWorld(layerCount);
-    }
-    public GameWorld getGameWorld() {
-        return gameWorld;
     }
 
     public static GameScene getTop() {
@@ -78,12 +77,16 @@ GameScene {
 
     public void update() { gameWorld.update(); }
     public void draw(Canvas canvas) { gameWorld.draw(canvas); }
-    public void enter() { Log.v(TAG, "enter()"); }
-    public void exit() { Log.v(TAG, "exit()"); }
-    public void pause() { Log.v(TAG, "pause()"); }
-    public void resume() { Log.v(TAG, "resume()"); }
+    public void enter() { Log.v(TAG, "enter() - " + getClass().getSimpleName()); }
+    public void exit() { Log.v(TAG, "exit() - " + getClass().getSimpleName()); }
+    public void pause() { Log.v(TAG, "pause() - " + getClass().getSimpleName()); }
+    public void resume() { Log.v(TAG, "resume() - " + getClass().getSimpleName()); }
 
     public boolean onTouchEvent(MotionEvent event) {
         return gameWorld.onTouchEvent(event);
+    }
+
+    public void onBackPressed() {
+        pop();
     }
 }

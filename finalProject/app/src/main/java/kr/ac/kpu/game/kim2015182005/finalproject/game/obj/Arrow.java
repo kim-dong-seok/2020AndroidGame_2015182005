@@ -60,7 +60,7 @@ public class Arrow extends BitmapObject implements Recyclable  {
             }
         }
         if(toBeDeleted){
-            gs.getGameWorld().remove(this);
+            remove();
         }
     }
     public void recycle() {

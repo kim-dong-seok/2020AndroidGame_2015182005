@@ -43,13 +43,11 @@ public class FirstScene extends GameScene {
             scoreObject.add(100);
             timer.reset();
         }
-        if(startButton.isPressed()){
-            new MainScene().run();
-        }
     }
 
     @Override
     public void enter() {
+        super.enter();
         initObjects();
     }
 
@@ -78,10 +76,16 @@ public class FirstScene extends GameScene {
 //        y += UiBridge.y(100);
         gameWorld.add(Layer.ui.ordinal(), new Button(cx, y, R.mipmap.btn_tutorial, R.mipmap.blue_round_btn, R.mipmap.red_round_btn));
         y += UiBridge.y(100);
-        startButton =new Button(cx, y, R.mipmap.btn_start_game, R.mipmap.blue_round_btn, R.mipmap.red_round_btn);
-        gameWorld.add(Layer.ui.ordinal(), startButton);
+        Button button = new Button(cx, y, R.mipmap.btn_start_game, R.mipmap.blue_round_btn, R.mipmap.red_round_btn);
+        button.setOnClickRunnable(new Runnable() {
+            @Override
+            public void run() {
+                MainScene scene = new MainScene();
+                scene.push();
+            }
+        });
+        gameWorld.add(Layer.ui.ordinal(), button);
         y += UiBridge.y(100);
         gameWorld.add(Layer.ui.ordinal(), new Button(cx, y, R.mipmap.btn_highscore, R.mipmap.blue_round_btn, R.mipmap.red_round_btn));
-
     }
 }

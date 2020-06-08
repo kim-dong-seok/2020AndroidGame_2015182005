@@ -10,7 +10,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.res.tile.TiledMap;
 
 public class TileScrollBackground extends GameObject {
     private final TiledMap map;
-//    private final int pageSize;
+    //    private final int pageSize;
     private int speed;
     private float scrollX;
     private float scrollY;

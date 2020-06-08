@@ -16,6 +16,7 @@ public class RecyclePool {
             map.put(clazz, list);
         }
         list.add(obj);
+//        Log.d(TAG, "Adding " + obj);
     }
     public Object get(Class clazz) {
         ArrayList<Object> list = map.get(clazz);
@@ -28,6 +29,7 @@ public class RecyclePool {
         }
         if (obj != null) {
 //            Log.d(TAG, "Reusing obj " + obj);
+//            Log.d(TAG, "Recycling " + obj);
             return obj;
         }
 

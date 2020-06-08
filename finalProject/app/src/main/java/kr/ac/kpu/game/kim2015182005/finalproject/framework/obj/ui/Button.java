@@ -14,6 +14,7 @@ public class Button extends BitmapObject implements Touchable {
     private final NinePatchDrawable bgNormal;
     private final NinePatchDrawable bgPress;
     private boolean capturing, pressed;
+    private Runnable onClickRunnable;
 
     public Button(float x, float y, int resId, int bgNormalResId, int bgPressResId) {
         super(x, y, 0, 0, resId);
@@ -31,15 +32,13 @@ public class Button extends BitmapObject implements Touchable {
         bg.draw(canvas);
         super.draw(canvas);
     }
-    public boolean isPressed(){
-        return pressed;
-    }
+
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if (this.bgNormal.getBounds().contains((int)e.getX(), (int)e.getY())) {
-                    //Log.d(TAG, "Down");
+                    Log.d(TAG, "Down");
                     captureTouch();
                     capturing = true;
                     pressed = true;
@@ -50,16 +49,22 @@ public class Button extends BitmapObject implements Touchable {
                 pressed = this.bgNormal.getBounds().contains((int)e.getX(), (int)e.getY());
                 break;
             case MotionEvent.ACTION_UP:
-                //Log.d(TAG, "Up");
+                Log.d(TAG, "Up");
                 releaseTouch();
                 capturing = false;
                 pressed = false;
                 if (this.bgNormal.getBounds().contains((int)e.getX(), (int)e.getY())) {
-                    //Log.d(TAG, "TouchUp Inside");
+                    Log.d(TAG, "TouchUp Inside");
+                    if (onClickRunnable != null) {
+                        onClickRunnable.run();
+                    }
                 }
                 return true;
         }
-
         return false;
+    }
+
+    public void setOnClickRunnable(Runnable runnable) {
+        this.onClickRunnable = runnable;
     }
 }

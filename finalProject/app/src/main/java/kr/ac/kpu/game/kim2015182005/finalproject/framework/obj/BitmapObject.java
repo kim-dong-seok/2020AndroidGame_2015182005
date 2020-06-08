@@ -3,15 +3,17 @@ package kr.ac.kpu.game.kim2015182005.finalproject.framework.obj;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.iface.BoxCollidable;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.res.bitmap.SharedBitmap;
 
-public class BitmapObject extends GameObject {
+public class BitmapObject extends GameObject implements BoxCollidable {
     private static final String TAG = BitmapObject.class.getSimpleName();
     protected SharedBitmap sbmp;
     protected final RectF dstRect;
-    protected final int width, height;
+    protected int width;
+    protected int height;
 
     public BitmapObject(float x, float y, int width, int height, int resId) {
         sbmp = SharedBitmap.load(resId);
@@ -32,8 +34,6 @@ public class BitmapObject extends GameObject {
         this.height = height;
     }
 
-
-
     @Override
     public float getRadius() {
         return this.width / 2;
@@ -47,5 +47,15 @@ public class BitmapObject extends GameObject {
         dstRect.right = x + halfWidth;
         dstRect.bottom = y + halfHeight;
         canvas.drawBitmap(sbmp.getBitmap(), null, dstRect, null);
+    }
+
+    @Override
+    public void getBox(RectF rect) {
+        int hw = width / 2;
+        int hh = height / 2;
+        rect.left = x - hw;
+        rect.top = y - hh;
+        rect.right = x + hw;
+        rect.bottom = y + hh;
     }
 }

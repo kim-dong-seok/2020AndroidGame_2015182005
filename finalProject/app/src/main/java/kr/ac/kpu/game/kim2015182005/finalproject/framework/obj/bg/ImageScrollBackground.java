@@ -11,7 +11,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.res.bitmap.SharedBitm
 
 public class ImageScrollBackground extends GameObject {
     private final SharedBitmap sbmp;
-//    private final int pageSize;
+    //    private final int pageSize;
     private int speed;
     private float scrollX;
     private float scrollY;
