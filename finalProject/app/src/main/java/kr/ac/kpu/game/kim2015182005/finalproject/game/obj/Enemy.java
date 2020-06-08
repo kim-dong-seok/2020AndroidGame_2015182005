@@ -54,10 +54,13 @@ public class Enemy extends AnimObject implements Recyclable, BoxCollidable {
         Enemy enemy = (Enemy) rpool.get(Enemy.class);
         if (enemy == null) {
             enemy = new Enemy(x, y, width, height);
+            enemy.atk=20;
+            enemy.hp=100;
         } else {
             enemy.x = x;
             enemy.y = y;
             enemy.atk=20;
+            enemy.hp=100;
             enemy.width = width;
             enemy.height = height;
             enemy.fab = new FrameAnimationBitmap(R.mipmap.mikk_left_move, 7, 7);

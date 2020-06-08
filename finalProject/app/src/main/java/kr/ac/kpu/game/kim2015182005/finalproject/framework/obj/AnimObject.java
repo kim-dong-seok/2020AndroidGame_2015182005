@@ -1,6 +1,8 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.framework.obj;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.RectF;
 
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
@@ -18,7 +20,6 @@ public class AnimObject extends GameObject {
         fab = new FrameAnimationBitmap(resId, fps, count);
         this.x = x;
         this.y = y;
-        this.hp=100;
         this.dstRect = new RectF();
         if (width == 0) {
             width = UiBridge.x(fab.getWidth());
@@ -46,6 +47,11 @@ public class AnimObject extends GameObject {
         dstRect.top = y - halfHeight;
         dstRect.right = x + halfWidth;
         dstRect.bottom = y + halfHeight;
+        Paint pnt = new Paint();
+        pnt.setTextSize(100);
+        pnt.setColor(Color.RED);
+        canvas.drawText(String.valueOf(this.hp), this.x,this.y-height,pnt);
         fab.draw(canvas, dstRect, null);
+
     }
 }

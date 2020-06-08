@@ -78,7 +78,7 @@ public class TextMap {
         switch (ch) {
             case '5':
                 layer = MainScene.Layer.enemy;
-                obj = Enemy.get(x, y, blockSize*2, blockSize*4);
+                obj = Enemy.get(x, y, blockSize*2, blockSize*3);
                 break;
             case '1': case '2': case '3': case '4':
                 layer = MainScene.Layer.item;

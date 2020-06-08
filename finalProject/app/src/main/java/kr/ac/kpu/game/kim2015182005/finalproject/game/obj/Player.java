@@ -34,7 +34,6 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
     private int state = 0;
     private int jumpState;
     private int befState;
-    private int hp;
     private int sAtk;
     private int lAtk;
     private float jumpY, originY, originX;
@@ -166,8 +165,8 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
                 }
             }else if(CollisionHelper.collides(this, enemy)&&state!=2){
                 int eAtk=enemy.getAtk();
-                hp-=eAtk;
-                Log.d(TAG,"hp"+hp);
+                this.hp-=eAtk;
+                Log.d(TAG,"hp"+this.hp);
                 //Log.d(TAG,"hp"+this.hp);
                 enemy.remove();
             }
