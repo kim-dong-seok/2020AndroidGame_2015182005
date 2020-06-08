@@ -46,8 +46,8 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
         hp=200;
         sAtk=50;
         fabJump = new FrameAnimationBitmap(R.mipmap.tressa_right_jump, 9, 9);
-        fabSA = new FrameAnimationBitmap(R.mipmap.tressa_right_short_attack, 7, 4);
-        fabLA = new FrameAnimationBitmap(R.mipmap.tressa_right_long_attack, 10, 7);
+        fabSA = new FrameAnimationBitmap(R.mipmap.tressa_right_short_attack, 1, 4);
+        fabLA = new FrameAnimationBitmap(R.mipmap.tressa_right_long_attack, 4, 7);
     }
 
     public enum AnimState {

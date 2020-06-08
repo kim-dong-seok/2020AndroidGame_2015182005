@@ -63,7 +63,7 @@ public class Enemy extends AnimObject implements Recyclable, BoxCollidable {
             enemy.hp=100;
             enemy.width = width;
             enemy.height = height;
-            enemy.fab = new FrameAnimationBitmap(R.mipmap.mikk_left_move, 7, 7);
+            enemy.fab = new FrameAnimationBitmap(R.mipmap.mikk_left_move, 6, 6);
         }
         enemy.score = SCORE_MULTIPLIER ;
         return enemy;
