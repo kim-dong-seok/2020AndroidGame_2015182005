@@ -58,7 +58,7 @@ public class MainScene extends GameScene {
 
 
     public enum Layer {
-        bg, platform, item, obstacle, player, ui, COUNT
+        bg, platform, item, obstacle,arrow,enemy, player, ui, COUNT
     }
 
     private Player player;

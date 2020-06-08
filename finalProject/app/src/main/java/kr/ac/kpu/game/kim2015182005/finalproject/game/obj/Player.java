@@ -2,6 +2,7 @@ package kr.ac.kpu.game.kim2015182005.finalproject.game.obj;
 
 import android.graphics.RectF;
 import android.util.Log;
+import android.util.LogPrinter;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -34,6 +35,8 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
     private int jumpState;
     private int befState;
     private int hp;
+    private int sAtk;
+    private int lAtk;
     private float jumpY, originY, originX;
 
     public Player(float x, float y) {
@@ -41,14 +44,17 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
         base = y;
         originX=x;
         fabNormal = fab;
+        hp=200;
+        sAtk=50;
         fabJump = new FrameAnimationBitmap(R.mipmap.tressa_right_jump, 9, 9);
-        fabSA = new FrameAnimationBitmap(R.mipmap.tressa_right_short_attack, 4, 4);
-        fabLA = new FrameAnimationBitmap(R.mipmap.tressa_right_long_attack, 7, 7);
+        fabSA = new FrameAnimationBitmap(R.mipmap.tressa_right_short_attack, 7, 4);
+        fabLA = new FrameAnimationBitmap(R.mipmap.tressa_right_long_attack, 10, 7);
     }
 
     public enum AnimState {
         normal, jump, djump, sattack, lattack
     }
+
     public void setAnimState(AnimState state) {
         if (state == AnimState.normal) {
             fab = fabNormal;
@@ -120,7 +126,7 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
         laReload-=1;
 
         checkItemCollision();
-
+        checkEnemyCollision();
     }
 
     private void checkItemCollision() {
@@ -138,6 +144,35 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
         }
     }
 
+    private void checkEnemyCollision() {
+
+        ArrayList<GameObject> enemys = MainScene.get().getGameWorld().objectsAtLayer(MainScene.Layer.enemy.ordinal());
+        for (GameObject obj : enemys) {
+            if (!(obj instanceof Enemy)) {
+                continue;
+            }
+            Enemy enemy = (Enemy) obj;
+            if (CollisionHelper.collides(this, enemy)&&state==2) {
+                int ehp=enemy.getHp();
+                ehp-=sAtk;
+
+                if(ehp<=0){
+                    enemy.remove();
+                    MainScene.get().addScore(enemy.getScore());
+                }else{
+
+                    enemy.setHp(ehp);
+                    enemy.setX(enemy.getX()+UiBridge.x(100));
+                }
+            }else if(CollisionHelper.collides(this, enemy)&&state!=2){
+                int eAtk=enemy.getAtk();
+                hp-=eAtk;
+                Log.d(TAG,"hp"+hp);
+                //Log.d(TAG,"hp"+this.hp);
+                enemy.remove();
+            }
+        }
+    }
     public void jump(){
 
     }
@@ -184,7 +219,7 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
             setAnimState(AnimState.sattack);
             x+=UiBridge.x(30);
             width=UiBridge.x(174);
-            saReload=100;
+            saReload=60;
             fab.reset();
             state=2;
             }
@@ -193,9 +228,11 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
         else if(c==3){
             if(laReload<=0){
             setAnimState(AnimState.lattack);
-            laReload=200;
+            laReload=100;
             fab.reset();
             state=3;
+            MainScene scene = MainScene.get();
+            scene.getGameWorld().add(MainScene.Layer.arrow.ordinal(), new Arrow(x,y));
             }
         }
         }

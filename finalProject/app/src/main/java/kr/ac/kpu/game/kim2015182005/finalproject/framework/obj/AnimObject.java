@@ -13,11 +13,12 @@ public class AnimObject extends GameObject {
     protected final RectF dstRect;
     protected int width;
     protected int height;
-
+    protected int hp;
     public AnimObject(float x, float y, int width, int height, int resId, int fps, int count) {
         fab = new FrameAnimationBitmap(resId, fps, count);
         this.x = x;
         this.y = y;
+        this.hp=100;
         this.dstRect = new RectF();
         if (width == 0) {
             width = UiBridge.x(fab.getWidth());
