@@ -22,7 +22,6 @@ public class GameView extends View {
     private static final int FPS_SECONDS = 10;
     private GameTimer timer;
     private int frameCount;
-
     public GameView(Context context) {
         super(context);
 

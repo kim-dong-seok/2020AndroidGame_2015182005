@@ -15,6 +15,7 @@ public class Button extends BitmapObject implements Touchable {
     private final NinePatchDrawable bgPress;
     private boolean capturing, pressed;
     private Runnable onClickRunnable;
+    private boolean runOnDown;
 
     public Button(float x, float y, int resId, int bgNormalResId, int bgPressResId) {
         super(x, y, 0, 0, resId);
@@ -32,7 +33,13 @@ public class Button extends BitmapObject implements Touchable {
         bg.draw(canvas);
         super.draw(canvas);
     }
-
+    @Override
+    public void move(float dx, float dy) {
+        super.move(dx, dy);
+        int left = (int)this.x - this.width / 2, top = (int)this.y - this.height / 2;
+        this.bgNormal.setBounds(left, top, left + this.width, top + this.height);
+        this.bgPress.setBounds(left, top, left + this.width, top + this.height);
+    }
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         switch (e.getAction()) {
@@ -63,8 +70,14 @@ public class Button extends BitmapObject implements Touchable {
         }
         return false;
     }
-
     public void setOnClickRunnable(Runnable runnable) {
+        setOnClickRunnable(false, runnable);
+//        this.runOnDown = false;
+//        this.onClickRunnable = runnable;
+    }
+
+    public void setOnClickRunnable(boolean runOnDown, Runnable runnable) {
+        this.runOnDown = runOnDown;
         this.onClickRunnable = runnable;
     }
 }

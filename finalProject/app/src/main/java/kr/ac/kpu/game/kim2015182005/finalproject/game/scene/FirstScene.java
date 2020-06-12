@@ -62,7 +62,8 @@ public class FirstScene extends GameScene {
 //        start_bgm=pool.load(,R.raw.bg_bgm,1);
 //        pool.play(start_bgm,1,1,0,0,1);
 
-
+        MediaPlayer m = MediaPlayer.create(UiBridge.getView().getContext() , R.raw.main );
+        m.start();
         int mdpi_100 = UiBridge.x(100);
         gameWorld.add(Layer.bg.ordinal(),new BitmapObject(UiBridge.metrics.center.x,UiBridge.metrics.center.y,UiBridge.metrics.size.x,UiBridge.metrics.size.y,R.mipmap.main));
         int screenWidth = UiBridge.metrics.size.x;

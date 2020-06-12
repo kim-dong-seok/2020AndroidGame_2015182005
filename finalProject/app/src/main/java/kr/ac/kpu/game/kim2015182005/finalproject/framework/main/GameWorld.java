@@ -1,11 +1,13 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.framework.main;
 
 import android.graphics.Canvas;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import kr.ac.kpu.game.kim2015182005.finalproject.R;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.iface.Recyclable;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.iface.Touchable;
 
@@ -16,12 +18,14 @@ public class GameWorld {
     protected ArrayList<GameObject> trash = new ArrayList<>();
     protected Touchable capturingObject;
 
+
     public GameWorld(int layerCount) {
         layers = new ArrayList<>(layerCount);
         for (int i = 0; i < layerCount; i++) {
             Log.d(TAG, "Adding layer " + i);
             layers.add(new ArrayList<GameObject>());
         }
+
     }
 
     public ArrayList<GameObject> objectsAtLayer(int layer) {
