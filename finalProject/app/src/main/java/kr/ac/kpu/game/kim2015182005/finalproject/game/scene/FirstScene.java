@@ -22,7 +22,6 @@ public class FirstScene extends GameScene {
     public enum Layer {
         bg, enemy, player, ui, COUNT
     }
-
     private Ball ball;
     private ScoreObject scoreObject;
     private GameTimer timer;
@@ -55,8 +54,8 @@ public class FirstScene extends GameScene {
 //        start_bgm=pool.load(,R.raw.bg_bgm,1);
 //        pool.play(start_bgm,1,1,0,0,1);
 
-        MediaPlayer m = MediaPlayer.create(UiBridge.getView().getContext() , R.raw.main );
-        m.start();
+        mediaPlayer = MediaPlayer.create(UiBridge.getView().getContext() , R.raw.main );
+        mediaPlayer.start();
         int mdpi_100 = UiBridge.x(100);
         gameWorld.add(Layer.bg.ordinal(),new BitmapObject(UiBridge.metrics.center.x,UiBridge.metrics.center.y,UiBridge.metrics.size.x,UiBridge.metrics.size.y,R.mipmap.main));
         int screenWidth = UiBridge.metrics.size.x;
@@ -73,8 +72,10 @@ public class FirstScene extends GameScene {
         tm.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-                MainScene scene = new MainScene();
+                mediaPlayer.release();
+                SecondScene scene = new SecondScene();
                 scene.push();
+
             }
         });
         gameWorld.add(Layer.ui.ordinal(), tm);

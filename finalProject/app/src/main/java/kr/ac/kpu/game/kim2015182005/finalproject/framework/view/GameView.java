@@ -28,6 +28,7 @@ public class GameView extends View {
         init();
     }
 
+
     private void init() {
 
         UiBridge.setView(this);

@@ -38,7 +38,6 @@ public class UiBridge {
         display.getSize(size);
         DisplayMetrics dm = new DisplayMetrics();
         display.getMetrics(dm);
-        size.y -= getStatusBarHeight();
         metrics.size = size;
         metrics.center = new Point(size.x / 2, size.y / 2);
         metrics.oneInch = dm.densityDpi; //400dpi, 120 400 * 120 / 160

@@ -100,6 +100,7 @@ public class MainScene extends GameScene {
     public void exit() {
 //        GyroSensor.get().destroy();
         super.exit();
+
     }
 
     private void initObjects() {

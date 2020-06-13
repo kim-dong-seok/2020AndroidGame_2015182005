@@ -1,12 +1,12 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.framework.main;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.iface.Touchable;
 
 public class GameObject {
     protected float x, y;
-
     public float getX() {
         return x;
     }

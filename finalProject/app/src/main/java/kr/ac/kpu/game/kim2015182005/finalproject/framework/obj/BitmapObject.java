@@ -1,6 +1,7 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.framework.obj;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.RectF;
 
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.iface.BoxCollidable;
@@ -14,9 +15,10 @@ public class BitmapObject extends GameObject implements BoxCollidable {
     protected final RectF dstRect;
     protected int width;
     protected int height;
-
+    private Paint paint;
     public BitmapObject(float x, float y, int width, int height, int resId) {
         sbmp = SharedBitmap.load(resId);
+        paint=new Paint();
         this.x = x;
         this.y = y;
         this.dstRect = new RectF();
@@ -46,9 +48,15 @@ public class BitmapObject extends GameObject implements BoxCollidable {
         dstRect.top = y - halfHeight;
         dstRect.right = x + halfWidth;
         dstRect.bottom = y + halfHeight;
-        canvas.drawBitmap(sbmp.getBitmap(), null, dstRect, null);
+        canvas.drawBitmap(sbmp.getBitmap(), null, dstRect, paint);
     }
+    public void alpha(int x){
 
+        paint.setAlpha(x);
+    }
+    public int getAlpha(){
+        return paint.getAlpha();
+    }
     @Override
     public void getBox(RectF rect) {
         int hw = width / 2;

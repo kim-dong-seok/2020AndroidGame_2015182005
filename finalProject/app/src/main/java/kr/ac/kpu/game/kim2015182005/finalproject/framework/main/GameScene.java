@@ -1,6 +1,7 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.framework.main;
 
 import android.graphics.Canvas;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -11,12 +12,12 @@ public abstract class GameScene {
     private static ArrayList<GameScene> sceneStack = new ArrayList<>();
 
     protected static GameScene topGameScene;
-
     public GameWorld getGameWorld() {
         return gameWorld;
     }
-
+    public MediaPlayer  mediaPlayer;
     protected GameWorld gameWorld;
+
 
     abstract protected int getLayerCount();
     protected GameScene() {
