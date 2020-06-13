@@ -1,27 +1,20 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.game.scene;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Point;
 import android.graphics.RectF;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.util.Log;
-import android.view.MotionEvent;
-
-import java.util.Random;
 
 import kr.ac.kpu.game.kim2015182005.finalproject.R;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameScene;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameTimer;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.FlashTextObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ScoreObject;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.TextObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ui.Button;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ui.TouchManager;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Ball;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.CityBackground;
 
 public class FirstScene extends GameScene {
     private static final String TAG = FirstScene.class.getSimpleName();
@@ -73,16 +66,18 @@ public class FirstScene extends GameScene {
         int cx = UiBridge.metrics.center.x;
         int y = UiBridge.metrics.center.y;
 //        y += UiBridge.y(100);
-
         y += UiBridge.y(100);
-        Button button = new Button(cx, y, R.mipmap.btn_start_game, R.mipmap.blue_round_btn, R.mipmap.red_round_btn);
-        button.setOnClickRunnable(new Runnable() {
+        FlashTextObject fto = new FlashTextObject("Touch To Start", UiBridge.metrics.center.x,y);
+        gameWorld.add(Layer.bg.ordinal(), fto);
+        TouchManager tm = new TouchManager(0, 0,UiBridge.metrics.size.x,UiBridge.metrics.size.y);
+        tm.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
                 MainScene scene = new MainScene();
                 scene.push();
             }
         });
-        gameWorld.add(Layer.ui.ordinal(), button);
+        gameWorld.add(Layer.ui.ordinal(), tm);
+
     }
 }
