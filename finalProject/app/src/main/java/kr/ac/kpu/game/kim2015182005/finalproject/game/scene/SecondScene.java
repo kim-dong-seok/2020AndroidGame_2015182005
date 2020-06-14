@@ -1,5 +1,6 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.game.scene;
 
+import android.app.Dialog;
 import android.graphics.RectF;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -107,15 +108,16 @@ public class SecondScene extends GameScene {
         int y = UiBridge.metrics.center.y;
 //        y += UiBridge.y(100);
         y += UiBridge.y(100);
-        TouchManager tm = new TouchManager(0, 0,UiBridge.metrics.size.x,UiBridge.metrics.size.y);
+        TouchManager tm = new TouchManager(UiBridge.metrics.size.x/4, UiBridge.metrics.size.y/4,UiBridge.metrics.size.x/4*3,UiBridge.metrics.size.y/4*3);
         tm.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG,"터치~~~~~~~~~~~~~~~");
+                DialogScene scene = new DialogScene();
+                scene.push();
 
             }
         });
-
+        gameWorld.add(SecondScene.Layer.ui.ordinal(), tm);
 
 
         Button jumpButton = new Button(cx-UiBridge.x(300), cy+UiBridge.y(150), R.mipmap.btn_jump, R.mipmap.blue_round_btn, R.mipmap.red_round_btn);

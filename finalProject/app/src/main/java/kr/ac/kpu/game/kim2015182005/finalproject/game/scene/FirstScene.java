@@ -76,6 +76,8 @@ public class FirstScene extends GameScene {
                 //mediaPlayer.release();
                 SecondScene scene = new SecondScene();
                 scene.push();
+                DialogScene scene1 = new DialogScene();
+                scene1.push();
 
             }
         });

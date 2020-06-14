@@ -18,6 +18,15 @@ public abstract class GameScene {
     public MediaPlayer  mediaPlayer;
     protected GameWorld gameWorld;
 
+    public boolean isTransparent() {
+        return transparent;
+    }
+
+    public void setTransparent(boolean transparent) {
+        this.transparent = transparent;
+    }
+
+    protected boolean transparent;
 
     abstract protected int getLayerCount();
     protected GameScene() {
