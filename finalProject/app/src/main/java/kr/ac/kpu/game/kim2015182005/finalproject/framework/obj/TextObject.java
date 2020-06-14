@@ -2,9 +2,11 @@ package kr.ac.kpu.game.kim2015182005.finalproject.framework.obj;
 
 import android.animation.ObjectAnimator;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
@@ -16,7 +18,6 @@ public class TextObject extends GameObject {
     private ObjectAnimator scoreAnimator = ObjectAnimator.ofInt(this, "displayedScore", 0, 1);
     private String text;
     private float x,y,w;
-    private Paint paint;
     public TextObject(String text, float x,float y) {
         this.text=text;
         this.x=x;
@@ -26,10 +27,7 @@ public class TextObject extends GameObject {
        // scoreAnimator.setDuration(SCORE_INCREASE_DURATION);
     }
 
-    @Override
-    public void update() {
 
-    }
 
     @Override
     public void draw(Canvas canvas) {
@@ -38,5 +36,12 @@ public class TextObject extends GameObject {
     }
     public void setSize(int size) {
         paint.setTextSize(size);
+    }
+    public void setColor(String color) {
+        paint.setColor(Color.parseColor(color));
+    }
+
+    public void setBold() {
+        paint.setTypeface(Typeface.DEFAULT_BOLD);
     }
 }

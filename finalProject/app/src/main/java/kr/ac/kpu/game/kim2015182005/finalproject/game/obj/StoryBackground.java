@@ -1,36 +1,41 @@
-package kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.bg;
+package kr.ac.kpu.game.kim2015182005.finalproject.game.obj;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 
 import kr.ac.kpu.game.kim2015182005.finalproject.R;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameTimer;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.res.bitmap.SharedBitmap;
 
-public class MapBackground extends GameObject {
+public class StoryBackground extends GameObject {
     private static final String TAG = BitmapObject.class.getSimpleName();
     protected SharedBitmap sbmp;
     protected final RectF dstRect;
+    private  Paint tPaint;
     private Rect srcRect;
-    private int oy;
-    private int ox;
-    private int ny;
-    private int nx;
+    private float ny;
+    private float nx;
+    private float my;
+    private float mx;
     protected int width;
     protected int height;
+    private int chNum;
 
-    public MapBackground(float x, float y, int width, int height,int nx,int ny, int resId) {
+    public StoryBackground(float x, float y, int width, int height, int resId,int num) {
+        this.paint=new Paint();
+        tPaint=new Paint();
         sbmp = SharedBitmap.load(resId);
         this.x = x;
         this.y = y;
-        this.nx = nx;
-        this.ny = ny;
-        this.ox=nx;
-        this.oy=ny;
+        this.nx = x;
+        this.ny = y;
+        this.chNum=num;
         this.dstRect = new RectF();
         this.srcRect=new Rect();
         if (width == 0) {
@@ -49,28 +54,28 @@ public class MapBackground extends GameObject {
 
     }
     public void update(){
-        if(ox>nx){
-            ox-=2;
-            if(ox<=nx){
-                ox=nx;
+        if(x>nx){
+            x-=mx/85;
+            if(x<=nx){
+                x=nx;
             }
         }
-        if(ox<nx){
-            ox+=2;
-            if(ox>=nx){
-                ox=nx;
+        if(x<nx){
+            x+=-mx/85;
+            if(x>=nx){
+                x=nx;
             }
         }
-        if(oy>ny){
-            oy-=2;
-            if(oy<=ny){
-                oy=ny;
+        if(y>ny){
+            y-=my/85;
+            if(y<=ny){
+                y=ny;
             }
         }
-        if(oy<ny){
-            oy+=2;
-            if(oy>=ny){
-                oy=ny;
+        if(y<ny){
+            y+=-my/85;
+            if(y>=ny){
+                y=ny;
             }
         }
     }
@@ -81,17 +86,21 @@ public class MapBackground extends GameObject {
         dstRect.top = y - halfHeight;
         dstRect.right = x + halfWidth;
         dstRect.bottom = y + halfHeight;
-        srcRect.left = ox - 160;
-        srcRect.top = oy - 120;
-        srcRect.right = ox + 160;
-        srcRect.bottom = oy + 120;
-        canvas.drawBitmap(sbmp.getBitmap(), srcRect, dstRect, null);
+        canvas.drawBitmap(sbmp.getBitmap(),null, dstRect, paint);
+        tPaint.setColor(Color.WHITE);
+        tPaint.setTextSize(50);
+        for(int i=0;i<10;++i){
+            int id = UiBridge.getResources().getIdentifier("profile_story_"+chNum+i, "string", UiBridge.getView().getContext().getPackageName());
+            canvas.drawText(UiBridge.getResources().getString(id),x- halfWidth/2-UiBridge.x(10),y- halfHeight/3*2+(i*60)-UiBridge.y(10),tPaint);
+        }
     }
     public boolean posCheck(){
-        return (this.ox==nx&&this.oy==ny);
+        return (this.x==nx&&this.y==ny);
     }
-    public void setNewPos(int nx ,int ny){
+    public void setNewPos(float nx ,float ny){
         this.nx=nx;
         this.ny = ny;
+        mx=x-nx;
+        my=y-ny;
     }
 }

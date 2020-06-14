@@ -16,7 +16,13 @@ public class AnimObject extends GameObject {
     protected int width;
     protected int height;
     protected int hp;
+
     public AnimObject(float x, float y, int width, int height, int resId, int fps, int count) {
+        paint=new Paint();
+        this.alphaNum=0;
+        this.flashDone=true;
+        this.flashOn=false;
+        this.flash=false;
         fab = new FrameAnimationBitmap(resId, fps, count);
         this.x = x;
         this.y = y;
@@ -35,6 +41,9 @@ public class AnimObject extends GameObject {
         this.height = height;
     }
 
+
+
+
     @Override
     public float getRadius() {
         return this.width / 2;
@@ -51,7 +60,7 @@ public class AnimObject extends GameObject {
         pnt.setTextSize(100);
         pnt.setColor(Color.RED);
         //canvas.drawText(String.valueOf(this.hp), this.x,this.y-height,pnt);
-        fab.draw(canvas, dstRect, null);
+        fab.draw(canvas, dstRect, paint);
 
     }
 }

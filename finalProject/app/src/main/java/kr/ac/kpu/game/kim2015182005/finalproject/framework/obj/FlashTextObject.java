@@ -3,6 +3,7 @@ package kr.ac.kpu.game.kim2015182005.finalproject.framework.obj;
 import android.animation.ObjectAnimator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
@@ -40,7 +41,9 @@ public class FlashTextObject extends GameObject {
 
         paint.setAlpha(alpha);
     }
-
+    public void setBold() {
+        paint.setTypeface(Typeface.DEFAULT_BOLD);
+    }
     @Override
     public void draw(Canvas canvas) {
         w=paint.measureText(text);

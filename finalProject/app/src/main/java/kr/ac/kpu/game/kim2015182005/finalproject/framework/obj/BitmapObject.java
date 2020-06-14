@@ -15,13 +15,17 @@ public class BitmapObject extends GameObject implements BoxCollidable {
     protected final RectF dstRect;
     protected int width;
     protected int height;
-    private Paint paint;
+
     public BitmapObject(float x, float y, int width, int height, int resId) {
         sbmp = SharedBitmap.load(resId);
-        paint=new Paint();
+        this.paint=new Paint();
         this.x = x;
         this.y = y;
         this.dstRect = new RectF();
+        this.alphaNum=0;
+        this.flashDone=true;
+        this.flashOn=false;
+        this.flash=false;
         if (width == 0) {
             width = UiBridge.x(sbmp.getWidth());
         } else if (width < 0) {
@@ -50,13 +54,7 @@ public class BitmapObject extends GameObject implements BoxCollidable {
         dstRect.bottom = y + halfHeight;
         canvas.drawBitmap(sbmp.getBitmap(), null, dstRect, paint);
     }
-    public void alpha(int x){
 
-        paint.setAlpha(x);
-    }
-    public int getAlpha(){
-        return paint.getAlpha();
-    }
     @Override
     public void getBox(RectF rect) {
         int hw = width / 2;

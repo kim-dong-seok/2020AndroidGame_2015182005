@@ -54,8 +54,8 @@ public class FirstScene extends GameScene {
 //        start_bgm=pool.load(,R.raw.bg_bgm,1);
 //        pool.play(start_bgm,1,1,0,0,1);
 
-        mediaPlayer = MediaPlayer.create(UiBridge.getView().getContext() , R.raw.main );
-        mediaPlayer.start();
+        //mediaPlayer = MediaPlayer.create(UiBridge.getView().getContext() , R.raw.main );
+        //mediaPlayer.start();
         int mdpi_100 = UiBridge.x(100);
         gameWorld.add(Layer.bg.ordinal(),new BitmapObject(UiBridge.metrics.center.x,UiBridge.metrics.center.y,UiBridge.metrics.size.x,UiBridge.metrics.size.y,R.mipmap.main));
         int screenWidth = UiBridge.metrics.size.x;
@@ -67,12 +67,13 @@ public class FirstScene extends GameScene {
 //        y += UiBridge.y(100);
         y += UiBridge.y(100);
         FlashTextObject fto = new FlashTextObject("Touch To Start", UiBridge.metrics.center.x,y);
+        fto.setBold();
         gameWorld.add(Layer.bg.ordinal(), fto);
         TouchManager tm = new TouchManager(0, 0,UiBridge.metrics.size.x,UiBridge.metrics.size.y);
         tm.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-                mediaPlayer.release();
+                //mediaPlayer.release();
                 SecondScene scene = new SecondScene();
                 scene.push();
 
