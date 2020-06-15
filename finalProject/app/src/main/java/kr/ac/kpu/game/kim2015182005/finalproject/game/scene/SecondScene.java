@@ -21,6 +21,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ui.TouchManager;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.BGBlack;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Ball;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.CharacterBackground;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.MovingButton;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Player;
 
 public class SecondScene extends GameScene {
@@ -94,10 +95,7 @@ public class SecondScene extends GameScene {
         SecondScene.get().getGameWorld().add(FirstScene.Layer.bg.ordinal(),hint_bg1);
         hint_bg2=new BGBlack(0,UiBridge.metrics.size.y-screenHight/10+UiBridge.y(2),UiBridge.metrics.size.x,UiBridge.metrics.size.y,"#000000");
         SecondScene.get().getGameWorld().add(FirstScene.Layer.bg.ordinal(),hint_bg2);
-        hint_text=new TextObject("이야기를 시작할 주인공을 선택해주세요.",UiBridge.metrics.center.x-UiBridge.x(110),UiBridge.metrics.size.y-UiBridge.y(5));
-        hint_text.setColor("#9a958a");
-        hint_text.setSize(50);
-        hint_text.setBold();
+        hint_text=new TextObject("이야기를 시작할 주인공을 선택해주세요.",UiBridge.metrics.center.x-UiBridge.x(150),UiBridge.metrics.size.y-UiBridge.y(5),50,"#9a958a",true);
         SecondScene.get().getGameWorld().add(FirstScene.Layer.bg.ordinal(),hint_text);
 
         int screenWidth = UiBridge.metrics.size.x;
@@ -112,16 +110,17 @@ public class SecondScene extends GameScene {
         tm.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
+
+
                 DialogScene scene = new DialogScene();
                 scene.push();
-
             }
         });
         gameWorld.add(SecondScene.Layer.ui.ordinal(), tm);
 
 
-        Button jumpButton = new Button(cx-UiBridge.x(300), cy+UiBridge.y(150), R.mipmap.btn_jump, R.mipmap.blue_round_btn, R.mipmap.red_round_btn);
-        jumpButton.setOnClickRunnable(new Runnable() {
+        MovingButton LButton = new MovingButton(cx-UiBridge.x(320), cy,UiBridge.x(30),UiBridge.y(100) , R.mipmap.left_btn,false,5);
+        LButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
                 if(characterBackgrounds[characterSelect].flashDone()&&changeDone){
@@ -136,9 +135,9 @@ public class SecondScene extends GameScene {
             }
 
         });
-        gameWorld.add(SecondScene.Layer.ui.ordinal(), jumpButton);
-        Button SAButton = new Button(cx+UiBridge.x(250), cy+UiBridge.y(150), R.mipmap.btn_sa, R.mipmap.blue_round_btn, R.mipmap.red_round_btn);
-        SAButton.setOnClickRunnable(new Runnable() {
+        gameWorld.add(SecondScene.Layer.ui.ordinal(), LButton);
+        MovingButton RButton = new MovingButton(cx+UiBridge.x(320), cy,UiBridge.x(30),UiBridge.y(100) , R.mipmap.right_btn,true,5);
+        RButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
                 if(characterBackgrounds[characterSelect].flashDone()&&changeDone){
@@ -152,7 +151,7 @@ public class SecondScene extends GameScene {
                 }
             }
         });
-        gameWorld.add(SecondScene.Layer.ui.ordinal(), SAButton);
+        gameWorld.add(SecondScene.Layer.ui.ordinal(), RButton);
 
     }
     public static SecondScene get() {

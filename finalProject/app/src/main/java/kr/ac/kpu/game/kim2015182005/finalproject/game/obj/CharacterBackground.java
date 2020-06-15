@@ -55,15 +55,9 @@ public class CharacterBackground extends GameObject {
         SecondScene.get().getGameWorld().add(FirstScene.Layer.ui.ordinal(),profile);
         op=new AnimObject(UiBridge.metrics.center.x+UiBridge.x(10),UiBridge.metrics.center.y+UiBridge.y(10),UiBridge.x(172),UiBridge.y(183),op_IDS[n],4,op_count[n]);
         SecondScene.get().getGameWorld().add(FirstScene.Layer.ui.ordinal(),op);
-        name_bg=new TextObject(ch_name[n],UiBridge.metrics.center.x+UiBridge.metrics.size.x/20*7,UiBridge.metrics.size.y-UiBridge.metrics.size.y/5);
-        name_bg.setBold();
-        name_bg.setColor("#000000");
-        name_bg.setSize(105);
+        name_bg=new TextObject(ch_name[n],UiBridge.metrics.center.x+UiBridge.metrics.size.x/20*7,UiBridge.metrics.size.y-UiBridge.metrics.size.y/5,105,"#000000",true);
         SecondScene.get().getGameWorld().add(FirstScene.Layer.ui.ordinal(),name_bg);
-        name=new TextObject(ch_name[n],UiBridge.metrics.center.x+UiBridge.metrics.size.x/20*7,UiBridge.metrics.size.y-UiBridge.metrics.size.y/5);
-        name.setBold();
-        name.setColor("#FFFFFF");
-        name.setSize(100);
+        name=new TextObject(ch_name[n],UiBridge.metrics.center.x+UiBridge.metrics.size.x/20*7,UiBridge.metrics.size.y-UiBridge.metrics.size.y/5,100,"#FFFFFF",true);
         SecondScene.get().getGameWorld().add(FirstScene.Layer.ui.ordinal(),name);
     }
 

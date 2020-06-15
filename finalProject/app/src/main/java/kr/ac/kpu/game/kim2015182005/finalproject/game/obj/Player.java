@@ -172,9 +172,7 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
             }
         }
     }
-    public void jump(){
 
-    }
     @Override
     public boolean onTouchEvent(MotionEvent e) {
 //        if (e.getAction() != MotionEvent.ACTION_DOWN) {

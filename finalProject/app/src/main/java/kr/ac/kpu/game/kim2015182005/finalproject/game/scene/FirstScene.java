@@ -66,9 +66,8 @@ public class FirstScene extends GameScene {
         int y = UiBridge.metrics.center.y;
 //        y += UiBridge.y(100);
         y += UiBridge.y(100);
-        FlashTextObject fto = new FlashTextObject("Touch To Start", UiBridge.metrics.center.x,y);
-        fto.setBold();
-        gameWorld.add(Layer.bg.ordinal(), fto);
+        gameWorld.add(Layer.bg.ordinal(),new FlashTextObject("Touch To Start", UiBridge.metrics.center.x,y,80,"#000000",true,1));
+        gameWorld.add(Layer.bg.ordinal(),new FlashTextObject("Touch To Start", UiBridge.metrics.center.x,y,78,"#FFFFFF",true,1));
         TouchManager tm = new TouchManager(0, 0,UiBridge.metrics.size.x,UiBridge.metrics.size.y);
         tm.setOnClickRunnable(new Runnable() {
             @Override
@@ -76,7 +75,7 @@ public class FirstScene extends GameScene {
                 //mediaPlayer.release();
                 SecondScene scene = new SecondScene();
                 scene.push();
-                DialogScene scene1 = new DialogScene();
+                LoadingScene scene1 = new LoadingScene();
                 scene1.push();
 
             }
