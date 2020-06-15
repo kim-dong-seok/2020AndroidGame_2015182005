@@ -13,14 +13,20 @@ public class TouchManager extends GameObject implements Touchable {
     private Runnable onClickRunnable;
     private boolean runOnDown;
     private RectF rectf;
+    private boolean touchable=true;
     public TouchManager(float x, float y,float w,float h) {
 
         rectf=new RectF(x, y, w, h);
 
     }
 
+    public void setTouchable(boolean touchable) {
+        this.touchable = touchable;
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent e) {
+        if(touchable){
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if (rectf.contains((int)e.getX(), (int)e.getY())) {
@@ -46,6 +52,8 @@ public class TouchManager extends GameObject implements Touchable {
                     }
                 }
                 return true;
+            }
+            return false;
         }
         return false;
     }

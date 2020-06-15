@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 import kr.ac.kpu.game.kim2015182005.finalproject.R;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.iface.Recyclable;
@@ -106,6 +107,7 @@ public class GameWorld {
         if (capturingObject != null) {
             return capturingObject.onTouchEvent(event);
         }
+        ListIterator li=layers.listIterator(layers.size());
         for (ArrayList<GameObject> objects: layers) {
             for (GameObject o : objects) {
                 if (o instanceof Touchable) {

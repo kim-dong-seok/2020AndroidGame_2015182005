@@ -23,33 +23,28 @@ import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Ball;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.CharacterBackground;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.MovingButton;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Player;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.SelectWindow;
 
 public class SecondScene extends GameScene {
     private static final String TAG = SecondScene.class.getSimpleName();
 
     public enum Layer {
-        bg, enemy, player, ui, COUNT
+        bg, enemy, player, ui,ui2, COUNT
     }
 
-    private Ball ball;
-    private ScoreObject scoreObject;
     private GameTimer timer;
-    private Button startButton;
-    private SoundPool pool;
-    private int start_bgm;
     private MapBackground map;
     private CharacterBackground[] characterBackgrounds;
     private int[][] mapPos={{1640,1035},{1620,1300},{1310,1240},
             {930,1145},{850,980},{1050,700},
             {1310,710},{1435,830}};
-    private BitmapObject profile;
-    private AnimObject op;
     private int characterSelect=0;
     private boolean moveDone;
     private boolean changeDone;
     private BGBlack hint_bg1;
     private BGBlack hint_bg2;
     private TextObject hint_text;
+    private boolean selectWindow=false;
     @Override
     protected int getLayerCount() {
         return Layer.COUNT.ordinal();
@@ -106,14 +101,15 @@ public class SecondScene extends GameScene {
         int y = UiBridge.metrics.center.y;
 //        y += UiBridge.y(100);
         y += UiBridge.y(100);
-        TouchManager tm = new TouchManager(UiBridge.metrics.size.x/4, UiBridge.metrics.size.y/4,UiBridge.metrics.size.x/4*3,UiBridge.metrics.size.y/4*3);
+        final TouchManager tm = new TouchManager(UiBridge.metrics.size.x/4, UiBridge.metrics.size.y/4,UiBridge.metrics.size.x/4*3,UiBridge.metrics.size.y/4*3);
         tm.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-
-
-                DialogScene scene = new DialogScene();
-                scene.push();
+                if(!selectWindow) {
+                    selectWindow=true;
+                    tm.setTouchable(false);
+                    gameWorld.add(SecondScene.Layer.ui.ordinal(), new SelectWindow(UiBridge.metrics.center.x, UiBridge.metrics.center.y, "트레사의 이야기를 시작하시겠습니까?", "예", "아니요"));
+                }
             }
         });
         gameWorld.add(SecondScene.Layer.ui.ordinal(), tm);
@@ -123,6 +119,7 @@ public class SecondScene extends GameScene {
         LButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
+                if(!selectWindow) {
                 if(characterBackgrounds[characterSelect].flashDone()&&changeDone){
                     characterBackgrounds[characterSelect].flash();
                     characterSelect-=1;
@@ -132,6 +129,7 @@ public class SecondScene extends GameScene {
                     changeCB(characterSelect);
                     changeDone=false;
                 }
+                }
             }
 
         });
@@ -140,6 +138,7 @@ public class SecondScene extends GameScene {
         RButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
+                if(!selectWindow) {
                 if(characterBackgrounds[characterSelect].flashDone()&&changeDone){
                     characterBackgrounds[characterSelect].flash();
                     characterSelect+=1;
@@ -149,7 +148,7 @@ public class SecondScene extends GameScene {
                     changeCB(characterSelect);
                     changeDone=false;
                 }
-            }
+            }}
         });
         gameWorld.add(SecondScene.Layer.ui.ordinal(), RButton);
 
