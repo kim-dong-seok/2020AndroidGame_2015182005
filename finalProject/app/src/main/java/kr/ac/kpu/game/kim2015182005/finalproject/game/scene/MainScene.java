@@ -23,6 +23,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Enemy;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.MainCharacterInfo;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Platform;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Player;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.SelectButton;
 
 public class MainScene extends GameScene {
     private static final String TAG = MainScene.class.getSimpleName();
@@ -64,9 +65,10 @@ public class MainScene extends GameScene {
 
     private Player player;
     private GameTimer timer;
-    private Button jumpButton;
-    private Button sAttackButton;
-    private Button lAttackButton;
+    private SelectButton jumpButton;
+    private SelectButton SAButton;
+    private SelectButton LAButton;
+    private SelectButton ATBButton;
     @Override
     protected int getLayerCount() {
         return Layer.COUNT.ordinal();
@@ -124,7 +126,7 @@ public class MainScene extends GameScene {
         gameWorld.add(MainScene.Layer.ui.ordinal(), scoreObject);
 
 
-        Button jumpButton = new Button(cx-UiBridge.x(300), cy+UiBridge.y(150), R.mipmap.btn_jump, R.mipmap.blue_round_btn, R.mipmap.red_round_btn);
+        jumpButton = new SelectButton(UiBridge.x(60), UiBridge.metrics.size.y-UiBridge.y(60),UiBridge.x(100), UiBridge.y(100),150,"",10,R.mipmap.jump_btn60, R.mipmap.jump_btn100);
         jumpButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
@@ -132,7 +134,7 @@ public class MainScene extends GameScene {
             }
         });
         gameWorld.add(Layer.ui.ordinal(), jumpButton);
-        Button SAButton = new Button(cx+UiBridge.x(250), cy+UiBridge.y(150), R.mipmap.btn_sa, R.mipmap.blue_round_btn, R.mipmap.red_round_btn);
+        SAButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(50), UiBridge.metrics.size.y-UiBridge.y(50), UiBridge.x(110), UiBridge.y(110),150,"",10,R.mipmap.spear_btn60, R.mipmap.spear_btn100);
         SAButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
@@ -140,7 +142,7 @@ public class MainScene extends GameScene {
             }
         });
         gameWorld.add(Layer.ui.ordinal(), SAButton);
-        Button LAButton = new Button(cx+UiBridge.x(300), cy+UiBridge.y(150), R.mipmap.btn_la, R.mipmap.blue_round_btn, R.mipmap.red_round_btn);
+        LAButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(50), UiBridge.metrics.size.y-UiBridge.y(150), UiBridge.x(90), UiBridge.y(90),150,"",10,R.mipmap.bow_btn60,R.mipmap.bow_btn100);
         LAButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
@@ -148,6 +150,14 @@ public class MainScene extends GameScene {
             }
         });
         gameWorld.add(Layer.ui.ordinal(), LAButton);
+        ATBButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(150), UiBridge.metrics.size.y-UiBridge.y(50), UiBridge.x(90), UiBridge.y(90),150,"",10,R.mipmap.atb_btn60,R.mipmap.atb_btn100);
+        ATBButton.setOnClickRunnable(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
+        gameWorld.add(Layer.ui.ordinal(), ATBButton);
 
         playerInfo = new MainCharacterInfo();
         gameWorld.add(Layer.ui.ordinal(), playerInfo);
