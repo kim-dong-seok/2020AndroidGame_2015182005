@@ -3,22 +3,18 @@ package kr.ac.kpu.game.kim2015182005.finalproject.game.obj;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 
-import kr.ac.kpu.game.kim2015182005.finalproject.R;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.FirstScene;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.SecondScene;
 
 import static android.graphics.Paint.Style.STROKE;
 
-public class BGBlack extends GameObject {
-    private static final String TAG = BGBlack.class.getSimpleName();
+public class BGRhombus extends GameObject {
+    private static final String TAG = BGRhombus.class.getSimpleName();
     private int l,t,r,b;
     private String color;
-    public  BGBlack(int l,int t,int r,int b,String color) {
+    public BGRhombus(int l, int t, int r, int b, String color) {
         paint=new Paint();
         this.l=l;
         this.t=t;
@@ -38,6 +34,16 @@ public class BGBlack extends GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawRect(l,t,r,b,paint);
+        int halfWidth=(r-l)/2;
+        int halfHight=(b-t)/2;
+        Path path = new Path();
+        path.moveTo(l+halfWidth, t); // Top
+        path.lineTo(l, t+halfHight); // Left
+        path.lineTo(l+halfWidth, b); // Bottom
+        path.lineTo(r , t+halfHight); // Right
+        path.moveTo(l+halfWidth, t); // Back to Top
+        path.close();
+
+        canvas.drawPath(path, paint);
     }
 }

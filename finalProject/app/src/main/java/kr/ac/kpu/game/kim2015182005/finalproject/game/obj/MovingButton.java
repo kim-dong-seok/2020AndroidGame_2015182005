@@ -22,7 +22,7 @@ public class MovingButton extends BitmapObject implements Touchable {
     private int distance;
     private int count;
     private int phase;
-
+    private boolean touchable=true;
     public MovingButton(float x, float y, int w,int h, int bgNormalResId,boolean right,int distance) {
         super(x, y, w, h, bgNormalResId);
         this.right=right;
@@ -38,7 +38,7 @@ public class MovingButton extends BitmapObject implements Touchable {
 
     @Override
     public void update() {
-        if(timer.done()){
+        if(timer.done()&&touchable){
         if(right){
             if(phase==0){
                 count+=1;
@@ -102,7 +102,9 @@ public class MovingButton extends BitmapObject implements Touchable {
 
     }
 
-
+    public void setTouchable(boolean touchable) {
+        this.touchable = touchable;
+    }
 
     @Override
     public void draw(Canvas canvas) {
@@ -120,6 +122,7 @@ public class MovingButton extends BitmapObject implements Touchable {
     }
     @Override
     public boolean onTouchEvent(MotionEvent e) {
+        if(touchable){
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if (this.btn.getBounds().contains((int)e.getX(), (int)e.getY())) {
@@ -146,6 +149,7 @@ public class MovingButton extends BitmapObject implements Touchable {
                 }
                 return true;
         }
+        return false;}
         return false;
     }
     public void setOnClickRunnable(Runnable runnable) {

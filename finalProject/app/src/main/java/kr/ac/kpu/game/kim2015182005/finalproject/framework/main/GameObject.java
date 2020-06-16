@@ -9,6 +9,8 @@ public class GameObject {
     protected float x, y;
     protected Paint paint;
     protected int alphaNum;
+    protected int maxAlpha;
+    protected int flashSpeed=3;
     protected boolean flashDone;
     protected boolean flashOn;
     protected boolean flash;
@@ -42,22 +44,30 @@ public class GameObject {
         GameWorld gw = GameScene.getTop().getGameWorld();
         gw.removeObject(this);
     }
+
+    public boolean isFlashOn() {
+        return flashOn;
+    }
+
     public boolean isFlashDone(){
         return flashDone;
     }
-    public void flash(){
+    public void flash(int maxAlpha){
         flash=true;
+        this.maxAlpha=maxAlpha;
     }
-
+    public void setFlashSpeed(int speed){
+        flashSpeed=speed;
+    }
     public void update() {
         if(flash){
             if(flashDone) {
                 flashDone = false;
             }else{
                 if(!flashOn) {
-                    alphaNum += 3;
-                    if (alphaNum >= 255) {
-                        alphaNum = 255;
+                    alphaNum += flashSpeed;
+                    if (alphaNum >= maxAlpha) {
+                        alphaNum = maxAlpha;
                         flashOn = true;
                         flashDone=true;
                         flash=false;
@@ -65,7 +75,7 @@ public class GameObject {
                     alpha(alphaNum);
                 }else{
                     alphaNum -= 3;
-                    if (alphaNum <= 0) {
+                    if (alphaNum <= flashSpeed) {
                         alphaNum = 0;
                         flashOn = false;
                         flashDone=true;
@@ -76,7 +86,6 @@ public class GameObject {
             }
         }
     }
-
     public void alpha(int x){
         paint.setAlpha(x);
     }

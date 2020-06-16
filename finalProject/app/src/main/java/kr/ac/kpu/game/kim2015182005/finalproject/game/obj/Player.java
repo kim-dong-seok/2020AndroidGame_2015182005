@@ -37,13 +37,15 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
     private int sAtk;
     private int lAtk;
     private float jumpY, originY, originX;
+    protected int totalHp=200;
+
 
     public Player(float x, float y) {
         super(x, y, UiBridge.x(60), UiBridge.y(102), R.mipmap.tressa_right_move, 6, 6);
         base = y;
         originX=x;
         fabNormal = fab;
-        hp=200;
+        hp=totalHp;
         sAtk=50;
         fabJump = new FrameAnimationBitmap(R.mipmap.tressa_right_jump, 9, 9);
         fabSA = new FrameAnimationBitmap(R.mipmap.tressa_right_short_attack, 1, 4);
@@ -52,6 +54,10 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
 
     public enum AnimState {
         normal, jump, djump, sattack, lattack
+    }
+
+    public int getTotalHp() {
+        return totalHp;
     }
 
     public void setAnimState(AnimState state) {

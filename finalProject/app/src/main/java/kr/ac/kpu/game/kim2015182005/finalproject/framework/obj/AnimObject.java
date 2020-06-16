@@ -41,8 +41,9 @@ public class AnimObject extends GameObject {
         this.height = height;
     }
 
-
-
+    public int getHp() {
+        return hp;
+    }
 
     @Override
     public float getRadius() {

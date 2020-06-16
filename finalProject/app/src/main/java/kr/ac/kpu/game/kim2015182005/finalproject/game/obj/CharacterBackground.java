@@ -70,10 +70,10 @@ public class CharacterBackground extends GameObject {
         return profile.isFlashDone();
     }
     public void flash(){
-        profile.flash();
-        op.flash();
-        name.flash();
-        name_bg.flash();
+        profile.flash(255);
+        op.flash(255);
+        name.flash(255);
+        name_bg.flash(255);
         storyBgMove();
 
     }

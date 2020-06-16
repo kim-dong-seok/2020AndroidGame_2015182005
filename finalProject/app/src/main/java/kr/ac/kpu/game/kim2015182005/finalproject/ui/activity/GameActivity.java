@@ -10,6 +10,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.R;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.view.GameView;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.FirstScene;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.MainScene;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -22,6 +23,6 @@ public class GameActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(new GameView(this));
 
-        new FirstScene().run();
+        new MainScene().run();
     }
 }

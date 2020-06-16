@@ -20,6 +20,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.game.map.TextMap;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Arrow;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.CityBackground;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Enemy;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.MainCharacterInfo;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Platform;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Player;
 
@@ -30,7 +31,7 @@ public class MainScene extends GameScene {
 
     private RectF rect = new RectF();
     private ScoreObject scoreObject;
-
+    private MainCharacterInfo playerInfo;
     public Platform getPlatformAt(float x, float y) {
         Platform platform = null;
         ArrayList<GameObject> objects = gameWorld.objectsAtLayer(Layer.platform.ordinal());
@@ -147,6 +148,13 @@ public class MainScene extends GameScene {
             }
         });
         gameWorld.add(Layer.ui.ordinal(), LAButton);
+
+        playerInfo = new MainCharacterInfo();
+        gameWorld.add(Layer.ui.ordinal(), playerInfo);
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public void addScore(int amount) {
