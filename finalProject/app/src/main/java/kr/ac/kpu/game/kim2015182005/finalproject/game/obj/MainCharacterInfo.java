@@ -102,7 +102,7 @@ public class MainCharacterInfo extends GameObject {
         }
         totalHp.setText("/"+(int)tphp);
         hp.setText((int)php+"");
-        Log.d(TAG,"asdasdsafgawqaw"+php/tphp);
+        //Log.d(TAG,"asdasdsafgawqaw"+php/tphp);
         hp_bar.setR(UiBridge.x(86)+(int)(UiBridge.x(130)*(php/tphp)));
     }
 

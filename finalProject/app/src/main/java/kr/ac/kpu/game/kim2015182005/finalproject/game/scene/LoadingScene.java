@@ -28,7 +28,7 @@ public class LoadingScene extends GameScene {
         bg, enemy, player, ui, COUNT
     }
     private int jumpCount=0;
-
+    private static LoadingScene instance;
 
     @Override
     protected int getLayerCount() {
@@ -38,6 +38,7 @@ public class LoadingScene extends GameScene {
     @Override
     public void enter() {
         super.enter();
+        instance=this;
         setTransparent(true);
         initObjects();
 
@@ -107,6 +108,6 @@ public class LoadingScene extends GameScene {
 
     }
     public static LoadingScene get(){
-        return (LoadingScene) GameScene.getTop();
+        return instance;
     }
 }

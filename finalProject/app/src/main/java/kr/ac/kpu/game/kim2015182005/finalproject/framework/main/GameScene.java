@@ -12,10 +12,35 @@ public abstract class GameScene {
     private static ArrayList<GameScene> sceneStack = new ArrayList<>();
 
     protected static GameScene topGameScene;
+
+    public static void drawScenes(Canvas canvas) {
+
+        int topIndex = sceneStack.size() - 1;
+
+       // Log.d(TAG,"topindex"+sceneStack.size());
+        if (topIndex < 0) {
+            return;
+        }
+        drawSceneAt(topIndex, canvas);
+       // getTop().draw(canvas);
+       // Log.d(TAG,"gettop"+getTop());
+    }
+
+    protected static void drawSceneAt(int stackIndex, Canvas canvas) {
+        GameScene scene = sceneStack.get(stackIndex);
+        if (scene.isTransparent() && stackIndex > 0) {
+
+            drawSceneAt(stackIndex - 1, canvas);
+        }
+       // Log.d(TAG,"tackIndex"+stackIndex);
+        scene.draw(canvas);
+       // Log.d(TAG,"tackIndex"+stackIndex);
+    }
+
     public GameWorld getGameWorld() {
         return gameWorld;
     }
-    public MediaPlayer  mediaPlayer;
+
     protected GameWorld gameWorld;
 
     public boolean isTransparent() {
@@ -47,6 +72,7 @@ public abstract class GameScene {
         }
         sceneStack.add(this);
         topGameScene = this;
+
         this.enter();
     }
     public void push() {

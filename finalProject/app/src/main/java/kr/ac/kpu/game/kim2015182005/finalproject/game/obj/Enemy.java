@@ -23,7 +23,7 @@ public class Enemy extends AnimObject implements Recyclable, BoxCollidable {
     private static final String TAG = CandyItem.class.getSimpleName();
     public static final int SCORE_MULTIPLIER = 10;
     private int atk=20;
-
+    private boolean colidable;
     public int getScore() {
         return score;
     }
@@ -56,6 +56,7 @@ public class Enemy extends AnimObject implements Recyclable, BoxCollidable {
             enemy = new Enemy(x, y, width, height);
             enemy.atk=20;
             enemy.hp=100;
+
         } else {
             enemy.x = x;
             enemy.y = y;
@@ -66,7 +67,16 @@ public class Enemy extends AnimObject implements Recyclable, BoxCollidable {
             enemy.fab = new FrameAnimationBitmap(R.mipmap.mikk_left_move, 6, 6);
         }
         enemy.score = SCORE_MULTIPLIER ;
+        enemy.colidable=true;
         return enemy;
+    }
+
+    public void setColidable(boolean colidable) {
+        this.colidable = colidable;
+    }
+
+    public boolean isColidable() {
+        return colidable;
     }
 
     @Override

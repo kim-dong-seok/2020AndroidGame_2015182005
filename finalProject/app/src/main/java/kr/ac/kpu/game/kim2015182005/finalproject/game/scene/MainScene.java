@@ -10,16 +10,11 @@ import kr.ac.kpu.game.kim2015182005.finalproject.R;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameScene;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameTimer;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameWorld;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ScoreObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.bg.ImageScrollBackground;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ui.Button;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.map.TextMap;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Arrow;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.CityBackground;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Enemy;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ATBgauge;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.MainCharacterInfo;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Platform;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Player;
@@ -33,6 +28,9 @@ public class MainScene extends GameScene {
     private RectF rect = new RectF();
     private ScoreObject scoreObject;
     private MainCharacterInfo playerInfo;
+    private ATBgauge atBgauge;
+    private boolean atbWindowOn;
+
     public Platform getPlatformAt(float x, float y) {
         Platform platform = null;
         ArrayList<GameObject> objects = gameWorld.objectsAtLayer(Layer.platform.ordinal());
@@ -69,6 +67,7 @@ public class MainScene extends GameScene {
     private SelectButton SAButton;
     private SelectButton LAButton;
     private SelectButton ATBButton;
+    private  static  MainScene instance;
     @Override
     protected int getLayerCount() {
         return Layer.COUNT.ordinal();
@@ -95,7 +94,9 @@ public class MainScene extends GameScene {
     @Override
     public void enter() {
         super.enter();
+        this.setTransparent(false);
 //        GyroSensor.get();
+        instance=this;
         initObjects();
         map = new TextMap("stage_01.txt", gameWorld);
     }
@@ -134,7 +135,7 @@ public class MainScene extends GameScene {
             }
         });
         gameWorld.add(Layer.ui.ordinal(), jumpButton);
-        SAButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(50), UiBridge.metrics.size.y-UiBridge.y(50), UiBridge.x(110), UiBridge.y(110),150,"",10,R.mipmap.spear_btn60, R.mipmap.spear_btn100);
+        SAButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(50), UiBridge.metrics.size.y-UiBridge.y(150), UiBridge.x(90), UiBridge.y(90),150,"",10,R.mipmap.spear_btn60, R.mipmap.spear_btn100);
         SAButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
@@ -142,7 +143,7 @@ public class MainScene extends GameScene {
             }
         });
         gameWorld.add(Layer.ui.ordinal(), SAButton);
-        LAButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(50), UiBridge.metrics.size.y-UiBridge.y(150), UiBridge.x(90), UiBridge.y(90),150,"",10,R.mipmap.bow_btn60,R.mipmap.bow_btn100);
+        LAButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(50), UiBridge.metrics.size.y-UiBridge.y(50), UiBridge.x(110), UiBridge.y(110),150,"",10,R.mipmap.bow_btn60,R.mipmap.bow_btn100);
         LAButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
@@ -154,14 +155,21 @@ public class MainScene extends GameScene {
         ATBButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-
+                ATBScene atbScene = new ATBScene();
+                atbScene.push();
             }
         });
         gameWorld.add(Layer.ui.ordinal(), ATBButton);
+        atBgauge = new ATBgauge(UiBridge.metrics.size.x-UiBridge.x(150), UiBridge.metrics.size.y-UiBridge.y(50), UiBridge.x(90));
+        gameWorld.add(Layer.ui.ordinal(), atBgauge);
 
         playerInfo = new MainCharacterInfo();
         gameWorld.add(Layer.ui.ordinal(), playerInfo);
+
+
     }
+
+
 
     public Player getPlayer() {
         return player;
@@ -172,6 +180,6 @@ public class MainScene extends GameScene {
     }
 
     public static MainScene get() {
-        return (MainScene) GameScene.getTop();
+        return instance;
     }
 }

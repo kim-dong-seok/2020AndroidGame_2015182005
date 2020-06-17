@@ -28,6 +28,7 @@ public class FirstScene extends GameScene {
     private Button startButton;
     private SoundPool pool;
     private int start_bgm;
+    private static FirstScene instance;
     @Override
     protected int getLayerCount() {
         return Layer.COUNT.ordinal();
@@ -46,6 +47,7 @@ public class FirstScene extends GameScene {
     @Override
     public void enter() {
         super.enter();
+        instance=this;
         initObjects();
     }
 

@@ -36,6 +36,8 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
     private int befState;
     private int sAtk;
     private int lAtk;
+    private int ATB;
+    private int totalATB;
     private float jumpY, originY, originX;
     protected int totalHp=200;
 
@@ -47,6 +49,8 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
         fabNormal = fab;
         hp=totalHp;
         sAtk=50;
+        totalATB=300;
+        ATB=0;
         fabJump = new FrameAnimationBitmap(R.mipmap.tressa_right_jump, 9, 9);
         fabSA = new FrameAnimationBitmap(R.mipmap.tressa_right_short_attack, 1, 4);
         fabLA = new FrameAnimationBitmap(R.mipmap.tressa_right_long_attack, 4, 7);
@@ -58,6 +62,18 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
 
     public int getTotalHp() {
         return totalHp;
+    }
+
+    public int getATB() {
+        return ATB;
+    }
+
+    public int getTotalATB() {
+        return totalATB;
+    }
+
+    public void setATB(int ATB) {
+        this.ATB = ATB;
     }
 
     public void setAnimState(AnimState state) {
@@ -169,12 +185,13 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
                     enemy.setHp(ehp);
                     enemy.setX(enemy.getX()+UiBridge.x(100));
                 }
-            }else if(CollisionHelper.collides(this, enemy)&&state!=2){
+            }else if(CollisionHelper.collides(this, enemy)&&state!=2&&enemy.isColidable()){
                 int eAtk=enemy.getAtk();
                 this.hp-=eAtk;
                 Log.d(TAG,"hp"+this.hp);
                 //Log.d(TAG,"hp"+this.hp);
-                enemy.remove();
+                enemy.setColidable(false);
+                ATB+=eAtk;
             }
         }
     }

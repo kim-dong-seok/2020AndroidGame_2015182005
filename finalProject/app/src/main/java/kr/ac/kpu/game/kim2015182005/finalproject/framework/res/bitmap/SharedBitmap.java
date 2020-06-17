@@ -66,7 +66,6 @@ public class SharedBitmap {
 
         return sb;
     }
-
     public static void unload(int resId) {
         map.remove(resId);
     }
