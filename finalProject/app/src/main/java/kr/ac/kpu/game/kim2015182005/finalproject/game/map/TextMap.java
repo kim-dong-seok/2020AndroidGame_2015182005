@@ -13,6 +13,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameTimer;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameWorld;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Boss;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.CandyItem;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Enemy;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Platform;
@@ -52,13 +53,9 @@ public class TextMap {
         }
 
         blockSize = UiBridge.metrics.size.y / rows;
-        createAtX = UiBridge.metrics.size.x + 1 * blockSize;
-        mapIndex = 0;
+        createAtX = UiBridge.metrics.size.x + 2 * blockSize;
 
-        currentX = 0;
-        while (currentX <= createAtX) {
-            createColumn();
-        }
+        reset();
     }
 
     private void createColumn() {
@@ -76,10 +73,6 @@ public class TextMap {
         MainScene.Layer layer = MainScene.Layer.item;
         GameObject obj = null;
         switch (ch) {
-            case '5':
-                layer = MainScene.Layer.enemy;
-                obj = Enemy.get(x, y, blockSize*2, blockSize*3);
-                break;
             case '1': case '2': case '3': case '4':
                 layer = MainScene.Layer.item;
                 obj = CandyItem.get(x, y, blockSize, blockSize, ch - '1');
@@ -91,6 +84,14 @@ public class TextMap {
             case 'x':
                 layer = MainScene.Layer.obstacle;
                 obj = new AnimObject(x + 3 * blockSize / 2, y + 3 * blockSize / 2, 3 * blockSize, 3 * blockSize, R.mipmap.fireball_128_24f, 2, 0);
+                break;
+            case '5':
+                layer = MainScene.Layer.enemy;
+                obj = Enemy.get(x, y-blockSize, blockSize*2, blockSize*3);
+                break;
+            case '6':
+                layer = MainScene.Layer.enemy;
+                obj = Boss.get(x, y-blockSize, blockSize*2, blockSize*3);
                 break;
         }
         if (obj != null) {
@@ -111,6 +112,14 @@ public class TextMap {
         timeElapsed += GameTimer.getTimeDiffSeconds();
         currentX += dx;
         if (currentX < createAtX) {
+            createColumn();
+        }
+    }
+    public void reset() {
+        mapIndex = 0;
+
+        currentX = 0;
+        while (currentX <= createAtX) {
             createColumn();
         }
     }

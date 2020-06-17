@@ -11,6 +11,8 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameScene;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameTimer;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ScoreObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.bg.ImageScrollBackground;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.map.TextMap;
@@ -94,7 +96,7 @@ public class MainScene extends GameScene {
     @Override
     public void enter() {
         super.enter();
-        this.setTransparent(false);
+
 //        GyroSensor.get();
         instance=this;
         initObjects();
@@ -166,6 +168,8 @@ public class MainScene extends GameScene {
         playerInfo = new MainCharacterInfo();
         gameWorld.add(Layer.ui.ordinal(), playerInfo);
 
+        AnimObject bit = new AnimObject(UiBridge.metrics.center.x,UiBridge.metrics.center.y,UiBridge.x(100),UiBridge.y(20),R.mipmap.spear_slash3,12,5);
+        gameWorld.add(Layer.ui.ordinal(),bit);
 
     }
 

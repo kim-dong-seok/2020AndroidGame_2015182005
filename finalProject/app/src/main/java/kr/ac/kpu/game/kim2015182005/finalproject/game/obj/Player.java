@@ -43,7 +43,7 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
 
 
     public Player(float x, float y) {
-        super(x, y, UiBridge.x(60), UiBridge.y(102), R.mipmap.tressa_right_move, 6, 6);
+        super(x, y, UiBridge.x(60), UiBridge.y(102), R.mipmap.tressa_right_run, 12, 6);
         base = y;
         originX=x;
         fabNormal = fab;
@@ -52,8 +52,8 @@ public class Player extends AnimObject implements Touchable, BoxCollidable {
         totalATB=300;
         ATB=0;
         fabJump = new FrameAnimationBitmap(R.mipmap.tressa_right_jump, 9, 9);
-        fabSA = new FrameAnimationBitmap(R.mipmap.tressa_right_short_attack, 1, 4);
-        fabLA = new FrameAnimationBitmap(R.mipmap.tressa_right_long_attack, 4, 7);
+        fabSA = new FrameAnimationBitmap(R.mipmap.tressa_right_short_attack2, 8, 5);
+        fabLA = new FrameAnimationBitmap(R.mipmap.tressa_right_long_attack, 12, 7);
     }
 
     public enum AnimState {

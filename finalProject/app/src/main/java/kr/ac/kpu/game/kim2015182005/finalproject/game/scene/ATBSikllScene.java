@@ -114,7 +114,7 @@ public class ATBSikllScene extends GameScene {
 
         });
         gameWorld.add(Layer.ui.ordinal(), atbSbutton3);
-        atbSbutton4 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(250),UiBridge.metrics.size.y-UiBridge.y(50,UiBridge.x(200), UiBridge.y(50),200,"취소",50,R.mipmap.atb_window,R.mipmap.atb_window);
+        atbSbutton4 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(250),UiBridge.metrics.size.y-UiBridge.y(50),UiBridge.x(200), UiBridge.y(50),200,"취소",50,R.mipmap.atb_window,R.mipmap.atb_window);
         atbSbutton4.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
