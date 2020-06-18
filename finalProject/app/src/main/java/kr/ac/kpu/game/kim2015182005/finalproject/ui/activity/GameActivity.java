@@ -11,6 +11,8 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.view.GameView;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.FirstScene;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.MainScene;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.MenuScene;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.SecondScene;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -24,7 +26,9 @@ public class GameActivity extends AppCompatActivity {
         setContentView(new GameView(this));
 
 
-        new FirstScene().run();
+        //new FirstScene().run();
         //new MainScene().run();
+        new MenuScene().run();
+        //new SecondScene().run();
     }
 }

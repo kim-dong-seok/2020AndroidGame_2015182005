@@ -62,6 +62,12 @@ public class SelectButton extends GameObject implements Touchable {
         btnText.alpha(alpha);
     }
 
+    @Override
+    public boolean isFlashOn() {
+        return btnText.isFlashOn();
+
+    }
+
     public void buttonFlash(int maxAlpha) {
         pressBit.flash(200);
         normalBit.flash(200);

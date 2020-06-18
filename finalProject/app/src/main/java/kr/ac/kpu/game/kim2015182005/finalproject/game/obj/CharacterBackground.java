@@ -48,9 +48,7 @@ public class CharacterBackground extends GameObject {
         story_bg=new StoryBackground(UiBridge.metrics.center.x/5*2-UiBridge.metrics.size.x/5*2,UiBridge.metrics.center.y-UiBridge.metrics.size.y/15,UiBridge.metrics.size.x/5*2,UiBridge.metrics.size.y-UiBridge.metrics.size.y/3,R.mipmap.story_bg, n);
         story_bg.alpha(150);
         SecondScene.get().getGameWorld().add(FirstScene.Layer.bg.ordinal(),story_bg);
-        SecondScene.get().getGameWorld().add(SecondScene.Layer.bg.ordinal(),new BitmapObject(UiBridge.metrics.center.x,UiBridge.metrics.center.y-UiBridge.metrics.size.y/20,UiBridge.metrics.size.x,UiBridge.metrics.size.y-UiBridge.metrics.size.y/10,R.mipmap.main_frame));
-
-
+        SecondScene.get().getGameWorld().add(SecondScene.Layer.bg.ordinal(),new BitmapObject(UiBridge.metrics.center.x,UiBridge.metrics.center.y-UiBridge.metrics.size.y/20,UiBridge.metrics.size.x,UiBridge.metrics.size.y-UiBridge.metrics.size.y/10,R.mipmap.map_frame));
         profile=new BitmapObject(UiBridge.metrics.size.x-UiBridge.x(150),UiBridge.metrics.center.y-UiBridge.metrics.size.y/20,UiBridge.metrics.size.x/2,UiBridge.metrics.size.y-UiBridge.metrics.size.y/10,profile_IDS[n]);
         SecondScene.get().getGameWorld().add(FirstScene.Layer.ui.ordinal(),profile);
         op=new AnimObject(UiBridge.metrics.center.x+UiBridge.x(10),UiBridge.metrics.center.y+UiBridge.y(10),UiBridge.x(172),UiBridge.y(183),op_IDS[n],4,op_count[n]);

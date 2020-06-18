@@ -13,6 +13,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.FlashTextObject;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.RotateBitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ScoreObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.TextObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.bg.MapBackground;
@@ -107,15 +108,31 @@ public class SecondScene extends GameScene {
         //mediaPlayer.start();
         int screenHight = UiBridge.metrics.size.y;
         int mdpi_100 = UiBridge.x(100);
-        map=new MapBackground(UiBridge.metrics.center.x,UiBridge.metrics.center.y,UiBridge.metrics.size.x,UiBridge.metrics.size.y, 1650,1050,R.mipmap.world_map);
+        map=new MapBackground(UiBridge.metrics.center.x,UiBridge.metrics.center.y,UiBridge.metrics.size.x,UiBridge.metrics.size.y, 1650,1050,R.mipmap.world_map,2);
         SecondScene.get().getGameWorld().add(SecondScene.Layer.bg.ordinal(),map);
 
+
+
+        RotateBitmapObject sun=new RotateBitmapObject(UiBridge.x(300), UiBridge.y(70),UiBridge.x(30),UiBridge.y(30),R.mipmap.sun,0,6,true);
+        gameWorld.add(SecondScene.Layer.ui.ordinal(),sun );
+        sun.setMax(45);
+        sun.setReite(true);
+        RotateBitmapObject moon=new RotateBitmapObject(UiBridge.x(380), UiBridge.y(72),UiBridge.x(31),UiBridge.y(31),R.mipmap.moon,0,6,false);
+        moon.setMax(45);
+        moon.setReite(true);
+        gameWorld.add(SecondScene.Layer.ui.ordinal(),moon );
+
+        gameWorld.add(SecondScene.Layer.ui.ordinal(), new RotateBitmapObject(UiBridge.x(343), UiBridge.y(22),UiBridge.x(117),UiBridge.y(117),R.mipmap.compass1,0,4,true));
+        gameWorld.add(SecondScene.Layer.ui.ordinal(), new RotateBitmapObject(UiBridge.x(343), UiBridge.y(22),UiBridge.x(113),UiBridge.y(113),R.mipmap.compass2,180,4,false));
+        gameWorld.add(SecondScene.Layer.ui.ordinal(),new BitmapObject(UiBridge.x(339), UiBridge.y(32),UiBridge.x(240),UiBridge.y(60),R.mipmap.ribbon));
+
+
         hint_bg1=new BGBlack(0,UiBridge.metrics.size.y-screenHight/10,UiBridge.metrics.size.x,UiBridge.metrics.size.y,"#9a958a");
-        SecondScene.get().getGameWorld().add(FirstScene.Layer.bg.ordinal(),hint_bg1);
+        SecondScene.get().getGameWorld().add(SecondScene.Layer.bg.ordinal(),hint_bg1);
         hint_bg2=new BGBlack(0,UiBridge.metrics.size.y-screenHight/10+UiBridge.y(2),UiBridge.metrics.size.x,UiBridge.metrics.size.y,"#000000");
-        SecondScene.get().getGameWorld().add(FirstScene.Layer.bg.ordinal(),hint_bg2);
-        hint_text=new TextObject("이야기를 시작할 주인공을 선택해주세요.",UiBridge.metrics.center.x-UiBridge.x(150),UiBridge.metrics.size.y-UiBridge.y(5),50,"#9a958a",true);
-        SecondScene.get().getGameWorld().add(FirstScene.Layer.bg.ordinal(),hint_text);
+        SecondScene.get().getGameWorld().add(SecondScene.Layer.bg.ordinal(),hint_bg2);
+        hint_text=new TextObject("이야기를 시작할 주인공을 선택해주세요.",UiBridge.metrics.center.x-UiBridge.x(150),UiBridge.metrics.size.y-UiBridge.y(15),50,"#9a958a",true);
+        SecondScene.get().getGameWorld().add(SecondScene.Layer.bg.ordinal(),hint_text);
 
         int screenWidth = UiBridge.metrics.size.x;
         RectF rbox = new RectF(UiBridge.x(-52), UiBridge.y(20), UiBridge.x(-20), UiBridge.y(62));

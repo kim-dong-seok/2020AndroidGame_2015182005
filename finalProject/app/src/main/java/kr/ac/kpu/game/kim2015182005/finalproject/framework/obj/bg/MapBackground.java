@@ -20,10 +20,11 @@ public class MapBackground extends GameObject {
     private int ox;
     private int ny;
     private int nx;
+    private int range;
     protected int width;
     protected int height;
 
-    public MapBackground(float x, float y, int width, int height,int nx,int ny, int resId) {
+    public MapBackground(float x, float y, int width, int height,int nx,int ny, int resId,int range) {
         sbmp = SharedBitmap.load(resId);
         this.x = x;
         this.y = y;
@@ -33,6 +34,7 @@ public class MapBackground extends GameObject {
         this.oy=ny;
         this.dstRect = new RectF();
         this.srcRect=new Rect();
+        this.range=range;
         if (width == 0) {
             width = UiBridge.x(sbmp.getWidth());
         } else if (width < 0) {
@@ -81,10 +83,10 @@ public class MapBackground extends GameObject {
         dstRect.top = y - halfHeight;
         dstRect.right = x + halfWidth;
         dstRect.bottom = y + halfHeight;
-        srcRect.left = ox - 160;
-        srcRect.top = oy - 120;
-        srcRect.right = ox + 160;
-        srcRect.bottom = oy + 120;
+        srcRect.left = ox - 160*range;
+        srcRect.top = oy - 120*range;
+        srcRect.right = ox + 160*range;
+        srcRect.bottom = oy + 120*range;
         canvas.drawBitmap(sbmp.getBitmap(), srcRect, dstRect, null);
     }
     public boolean posCheck(){

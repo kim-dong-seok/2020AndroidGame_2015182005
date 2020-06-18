@@ -39,7 +39,7 @@ public class SelectWindow extends GameObject {
         YButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-                if(isSWFlashDone()&&SecondScene.get().getCharacterSelect()==0) {
+                if(isSWFlashDone()&&SecondScene.get().getCharacterSelect()==0&&YButton.isFlashOn()) {
                     Log.e(TAG,"saddddddddddassssssssssssssddddddddddddweweweqeasddddddddddddd");
                     FirstScene.get().getBgmPlayer().stopBGM();
                     MainScene scene = new MainScene();
@@ -55,7 +55,7 @@ public class SelectWindow extends GameObject {
         NButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-                if(isSWFlashDone()&&SecondScene.get().getCharacterSelect()==0) {
+                if(isSWFlashDone()&&SecondScene.get().getCharacterSelect()==0&&NButton.isFlashOn()) {
                 flashSW();
                 SecondScene.get().setTouchable(true);
                 FirstScene.get().getSoundEffects().play(R.raw.back_button,1.0f);

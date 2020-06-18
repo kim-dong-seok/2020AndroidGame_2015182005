@@ -24,7 +24,11 @@ public class RotateBitmapObject extends GameObject implements BoxCollidable {
     private int degree;
     private int count;
     private int speed;
-    public RotateBitmapObject(float x, float y, int width, int height, int resId,int fitst_dgree,int speed) {
+    private int max;
+    private int min;
+    private boolean clock;
+    private boolean reite,reite_flag;
+    public RotateBitmapObject(float x, float y, int width, int height, int resId,int fitst_dgree,int speed,boolean clock) {
         sbmp = SharedBitmap.load(resId);
         rotate=new Matrix();
         this.paint=new Paint();
@@ -38,7 +42,10 @@ public class RotateBitmapObject extends GameObject implements BoxCollidable {
         this.flashDone=true;
         this.flashOn=false;
         this.flash=false;
-
+        this.clock=clock;
+        this.max=360;
+        this.reite=false;
+        this.reite_flag=false;
         if (width == 0) {
             width = UiBridge.x(sbmp.getWidth());
         } else if (width < 0) {
@@ -53,6 +60,18 @@ public class RotateBitmapObject extends GameObject implements BoxCollidable {
         this.height = height;
     }
 
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public void setReite(boolean reite) {
+        this.reite = reite;
+    }
+
     @Override
     public void update() {
         super.update();
@@ -62,9 +81,50 @@ public class RotateBitmapObject extends GameObject implements BoxCollidable {
         if(count>=speed){
 
             count=0;
+            if (!reite) {
+
+
+            if(clock){
             degree+=1;
-            if(degree>=360) {
+            if(degree>=max) {
                 degree=0;
+            }}
+            else{
+                degree-=1;
+                if(degree<=-max){
+                    degree=0;
+                }
+            }
+            }else{
+                if(clock){
+                    if(!reite_flag){
+                    degree+=1;
+                    if(degree>=max) {
+                        degree=max;
+                        reite_flag=true;
+                    }
+                    }else{
+                        degree-=1;
+                        if(degree<=0) {
+                            degree=0;
+                            reite_flag=false;
+                        }
+                    }
+                }else{
+                    if(!reite_flag){
+                        degree-=1;
+                        if(degree<=-max) {
+                            degree=-max;
+                            reite_flag=true;
+                        }
+                    }else{
+                        degree+=1;
+                        if(degree>=0) {
+                            degree=0;
+                            reite_flag=false;
+                        }
+                    }
+                }
             }
         }
 

@@ -6,7 +6,7 @@
     <string name="profile_story_00">"상인               : 트레사"</string>
     <string name="profile_story_01">"고유 패시브  : 수금"</string>
     <string name="profile_story_02">"고유 액션      : 용병 부르기"</string>
-    <string name="profile_story_03">"---------------------------"</string>
+    <string name="profile_story_03">"------------------------------------"</string>
     <string name="profile_story_04">"18세, 여성."</string>
     <string name="profile_story_05">"그녀는 중앙해를 끼고 "</string>
     <string name="profile_story_06">"있는 코스트랜드 지방의 "</string>
@@ -17,7 +17,7 @@
     <string name="profile_story_10">"검사               : 울베릭"</string>
     <string name="profile_story_11">"고유 패시브  : 철벽"</string>
     <string name="profile_story_12">"고유 액션      : 시합"</string>
-    <string name="profile_story_13">"---------------------------"</string>
+    <string name="profile_story_13">"------------------------------------"</string>
     <string name="profile_story_14">"35세, 남성."</string>
     <string name="profile_story_15">"그는 산으로 둘러싸인 "</string>
     <string name="profile_story_16">"하이랜드 지방의 "</string>
@@ -28,7 +28,7 @@
     <string name="profile_story_20">"무희               : 프림로제"</string>
     <string name="profile_story_21">"고유 패시브  : 유혹"</string>
     <string name="profile_story_22">"고유 액션      : 가세"</string>
-    <string name="profile_story_23">"---------------------------"</string>
+    <string name="profile_story_23">"------------------------------------"</string>
     <string name="profile_story_24">"23세, 여성."</string>
     <string name="profile_story_25">"그녀는 드넓은 사막이 "</string>
     <string name="profile_story_26">"펼쳐진 선랜드 지방에 "</string>
@@ -41,7 +41,7 @@
     <string name="profile_story_30">"약사               : 알핀"</string>
     <string name="profile_story_31">"고유 패시브  : 예방주사"</string>
     <string name="profile_story_32">"고유 액션      : 응급처치"</string>
-    <string name="profile_story_33">"---------------------------"</string>
+    <string name="profile_story_33">"------------------------------------"</string>
     <string name="profile_story_34">"21세, 남성."</string>
     <string name="profile_story_35">"그는 시냇물 흐르는  "</string>
     <string name="profile_story_36">"리버랜드 지방에 있는 "</string>
@@ -52,7 +52,7 @@
     <string name="profile_story_40">"도둑               : 테리온"</string>
     <string name="profile_story_41">"고유 패시브  : 훔치기"</string>
     <string name="profile_story_42">"고유 액션      : 자물쇠 따기"</string>
-    <string name="profile_story_43">"---------------------------"</string>
+    <string name="profile_story_43">"------------------------------------"</string>
     <string name="profile_story_44">"22세, 남성."</string>
     <string name="profile_story_45">"그는 절벽이 이어지는"</string>
     <string name="profile_story_46">"클리프랜드 지방에 "</string>
@@ -63,7 +63,7 @@
     <string name="profile_story_50">"사냥꾼           : 하닛"</string>
     <string name="profile_story_51">"고유 패시브  : 덤벼들기"</string>
     <string name="profile_story_52">"고유 액션      : 포획"</string>
-    <string name="profile_story_53">"---------------------------"</string>
+    <string name="profile_story_53">"------------------------------------"</string>
     <string name="profile_story_54">"26세, 여성."</string>
     <string name="profile_story_55">"그녀는 깊은 숲이 "</string>
     <string name="profile_story_56">"이어지는 우드랜드 지방에"</string>
@@ -74,7 +74,7 @@
     <string name="profile_story_60">"신관               : 오필리아"</string>
     <string name="profile_story_61">"고유 패시브  : 인도"</string>
     <string name="profile_story_62">"고유 액션      : 가세"</string>
-    <string name="profile_story_63">"---------------------------"</string>
+    <string name="profile_story_63">"------------------------------------"</string>
     <string name="profile_story_64">"20세, 여성."</string>
     <string name="profile_story_65">"그녀는 눈덮인 "</string>
     <string name="profile_story_66">"프로스트랜드 지방에서 "</string>
@@ -85,7 +85,7 @@
     <string name="profile_story_70">"학자               : 사이러스"</string>
     <string name="profile_story_71">"고유 패시브  : 예습"</string>
     <string name="profile_story_72">"고유 액션      : 탐지"</string>
-    <string name="profile_story_73">"---------------------------"</string>
+    <string name="profile_story_73">"------------------------------------"</string>
     <string name="profile_story_74">"30세, 남성."</string>
     <string name="profile_story_75">"그는 풍요롭고 드넓음 "</string>
     <string name="profile_story_76">"평원의 플랫랜드 "</string>

@@ -79,8 +79,7 @@ public class DialogScene extends GameScene {
         gameWorld.add(Layer.bg.ordinal(), new BitmapObject(cx, y, screenWidth, screenHeight, R.mipmap.story_bg));
 //        y += UiBridge.y(100);
 
-        gameWorld.add(Layer.bg.ordinal(), new RotateBitmapObject(UiBridge.metrics.center.x, UiBridge.metrics.center.y,400,400,R.mipmap.compass1,0,10));
-        gameWorld.add(Layer.enemy.ordinal(), new RotateBitmapObject(UiBridge.metrics.center.x, UiBridge.metrics.center.y,400,400,R.mipmap.compass2,180,5));
+
 
     }
 }

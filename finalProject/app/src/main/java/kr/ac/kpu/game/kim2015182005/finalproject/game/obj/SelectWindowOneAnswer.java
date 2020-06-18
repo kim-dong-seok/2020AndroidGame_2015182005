@@ -34,7 +34,7 @@ public class SelectWindowOneAnswer extends GameObject {
         OAButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-                if(isSWFlashDoneA1()&&SecondScene.get().getCharacterSelect()!=0)
+                if(isSWFlashDoneA1()&&SecondScene.get().getCharacterSelect()!=0&&OAButton.isFlashOn())
                 flashSW1A();
                 SecondScene.get().setTouchable(true);
                 FirstScene.get().getSoundEffects().play(R.raw.back_button,1.0f);

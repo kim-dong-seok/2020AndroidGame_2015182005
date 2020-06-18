@@ -98,8 +98,8 @@ public class LoadingScene extends GameScene {
         gameWorld.add(Layer.bg.ordinal(), new BGBlack(0,0, UiBridge.metrics.size.x, UiBridge.metrics.size.y,"#000000"));
 //        y += UiBridge.y(100);
 
-        gameWorld.add(Layer.bg.ordinal(), new RotateBitmapObject(UiBridge.metrics.size.x/10*6, UiBridge.metrics.size.y/10*8+UiBridge.y(30),UiBridge.x(100),UiBridge.y(100),R.mipmap.compass1,0,3));
-        gameWorld.add(Layer.enemy.ordinal(), new RotateBitmapObject(UiBridge.metrics.size.x/10*6, UiBridge.metrics.size.y/10*8+UiBridge.y(30),UiBridge.x(100),UiBridge.y(100),R.mipmap.compass2,180,2));
+        gameWorld.add(Layer.bg.ordinal(), new RotateBitmapObject(UiBridge.metrics.size.x/10*6, UiBridge.metrics.size.y/10*8+UiBridge.y(30),UiBridge.x(100),UiBridge.y(100),R.mipmap.compass1,0,4,true));
+        gameWorld.add(Layer.enemy.ordinal(), new RotateBitmapObject(UiBridge.metrics.size.x/10*6, UiBridge.metrics.size.y/10*8+UiBridge.y(30),UiBridge.x(90),UiBridge.y(90),R.mipmap.compass2,180,4,false));
         jt=new JumpText[s.length];
         for(int i=0;i<s.length;++i){
             jt[i]=new JumpText(s[i],UiBridge.metrics.size.x/10*7+i*40, UiBridge.metrics.size.y/10*9,70,"#FFFFFF",true);
