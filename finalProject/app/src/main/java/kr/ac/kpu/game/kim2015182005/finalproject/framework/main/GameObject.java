@@ -11,9 +11,9 @@ public class GameObject {
     protected int alphaNum;
     protected int maxAlpha;
     protected int flashSpeed=3;
-    protected boolean flashDone;
+    protected boolean flashDone=true;
     protected boolean flashOn;
-    protected boolean flash;
+    protected boolean flash=false;
     public float getX() {
         return x;
     }
@@ -74,8 +74,8 @@ public class GameObject {
                     }
                     alpha(alphaNum);
                 }else{
-                    alphaNum -= 3;
-                    if (alphaNum <= flashSpeed) {
+                    alphaNum -= flashSpeed;
+                    if (alphaNum <= 0) {
                         alphaNum = 0;
                         flashOn = false;
                         flashDone=true;

@@ -45,7 +45,7 @@ public class SecondScene extends GameScene {
     private BGBlack hint_bg1;
     private BGBlack hint_bg2;
     private TextObject hint_text;
-    public boolean selectWindowOn;
+    public boolean selectWindowOn,selectWindowA1On;
     private SelectWindow SWindow;
     private SelectWindowOneAnswer SWindow1a;
     private TouchManager tm;
@@ -65,6 +65,7 @@ public class SecondScene extends GameScene {
 //            scoreObject.add(100);
 //            timer.reset();
 //        }
+
         if(map.posCheck()&&!changeDone) {
             moveDone=true;
             characterBackgrounds[characterSelect].flash();
@@ -88,11 +89,16 @@ public class SecondScene extends GameScene {
         return selectWindowOn;
     }
 
+    public int getCharacterSelect() {
+        return characterSelect;
+    }
+
     private void initObjects() {
         moveDone=true;
         changeDone=true;
         characterBackgrounds=new CharacterBackground[8];
         selectWindowOn=true;
+        selectWindowA1On=true;
         int sw = UiBridge.metrics.size.x;
         int sh = UiBridge.metrics.size.y;
         int cx = UiBridge.metrics.center.x;
@@ -133,6 +139,7 @@ public class SecondScene extends GameScene {
                 if(selectWindowOn) {
                 if(characterBackgrounds[characterSelect].flashDone()&&changeDone){
                     characterBackgrounds[characterSelect].flash();
+                    FirstScene.get().getSoundEffects().play(R.raw.menu_move,1.0f);
                     characterSelect-=1;
                     if(characterSelect<0) {
                         characterSelect=7;
@@ -153,6 +160,7 @@ public class SecondScene extends GameScene {
                 if(characterBackgrounds[characterSelect].flashDone()&&changeDone){
                     characterBackgrounds[characterSelect].flash();
                     characterSelect+=1;
+                    FirstScene.get().getSoundEffects().play(R.raw.menu_move,1.0f);
                     if(characterSelect>7) {
                         characterSelect=0;
                     }
@@ -166,17 +174,19 @@ public class SecondScene extends GameScene {
         tm.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-                if(selectWindowOn){
+
+                if(selectWindowOn&&SWindow.isSWFlashDone()&&SWindow1a.isSWFlashDoneA1()){
+
                 if(characterSelect==0) {
-
+                    FirstScene.get().getSoundEffects().play(R.raw.select_button,1.0f);
                     setTouchable(false);
-                    SWindow.flash();
-                }
-                else {
-
+                    SWindow.flashSW();
+                } else {
+                    FirstScene.get().getSoundEffects().play(R.raw.select_button,1.0f);
                     setTouchable(false);
-                    SWindow1a.flash();
-                }
+                    //Log.d(TAG,"characterSelect)"+characterSelect);
+                    SWindow1a.flashSW1A();
+                    }
                 }
 
             }
@@ -185,7 +195,6 @@ public class SecondScene extends GameScene {
 
     }
     public void setTouchable(boolean touchable){
-
         selectWindowOn=touchable;
         tm.setTouchable(touchable);
         RButton.setTouchable(touchable);

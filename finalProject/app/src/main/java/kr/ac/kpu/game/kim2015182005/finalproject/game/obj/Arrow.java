@@ -75,7 +75,7 @@ public class Arrow extends BitmapObject implements Recyclable, BoxCollidable {
                 continue;
             }
             Enemy enemy = (Enemy) obj;
-            if (CollisionHelper.collides(this, enemy)) {
+            if (CollisionHelper.collides(this, enemy)&&enemy.isColidable()) {
                 Log.d(TAG,"arrow collides");
                 int ehp=enemy.getHp();
                 ehp-=hp;

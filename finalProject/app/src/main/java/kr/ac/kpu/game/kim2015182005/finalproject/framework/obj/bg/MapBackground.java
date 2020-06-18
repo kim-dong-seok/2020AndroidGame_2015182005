@@ -50,25 +50,25 @@ public class MapBackground extends GameObject {
     }
     public void update(){
         if(ox>nx){
-            ox-=2;
+            ox-=3;
             if(ox<=nx){
                 ox=nx;
             }
         }
         if(ox<nx){
-            ox+=2;
+            ox+=3;
             if(ox>=nx){
                 ox=nx;
             }
         }
         if(oy>ny){
-            oy-=2;
+            oy-=3;
             if(oy<=ny){
                 oy=ny;
             }
         }
         if(oy<ny){
-            oy+=2;
+            oy+=3;
             if(oy>=ny){
                 oy=ny;
             }

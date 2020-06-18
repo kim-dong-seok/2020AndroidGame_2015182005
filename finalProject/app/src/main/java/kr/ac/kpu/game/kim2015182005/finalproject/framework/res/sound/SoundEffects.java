@@ -15,7 +15,10 @@ public class SoundEffects {
     private SoundPool soundPool;
     private HashMap<Integer, Integer> soundIdMap = new HashMap<>();
     private static final int[] SOUND_IDS = {
-//        R.raw.hadouken
+            R.raw.tressa_attack2,R.raw.tressa_attack1,R.raw.tressa_attack3,R.raw.tressa_attack4,R.raw.tressa_attack5,R.raw.tressa_attack6
+            ,R.raw.tressa_hit1,R.raw.tressa_hit2,R.raw.tressa_hit3,R.raw.bow_attack,R.raw.spear_attack
+            ,R.raw.tressa_select,R.raw.tressa_select2,R.raw.tressa_select3,R.raw.tressa_select4,R.raw.tressa_select5
+            ,R.raw.select_button,R.raw.back_button,R.raw.menu_move,R.raw.menu_window
     };
 
     public static SoundEffects get() {
@@ -46,9 +49,14 @@ public class SoundEffects {
         }
     }
 
-    public int play(int resId) {
+    public static int[] getSoundIds() {
+        return SOUND_IDS;
+    }
+
+    public int play(int resId,float volume) {
         int soundId = soundIdMap.get(resId);
-        int streamId = soundPool.play(soundId, 1f, 1f, 1, 0, 1f);
+        int streamId = soundPool.play(soundId, volume, volume, 1, 0, 1f);
         return streamId;
     }
+
 }

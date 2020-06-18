@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import java.util.Random;
+
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.iface.Touchable;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameTimer;
@@ -23,7 +25,7 @@ public class SelectButton extends GameObject implements Touchable {
     private float x,y;
     private BitmapObject pressBit,normalBit,drawBit;
     private Rect bound;
-
+    private Random rand = new Random();
     public SelectButton(float x, float y, int w, int h,int alpha,String text,int size, int bgNormalResId,int bgPressResId) {
         this.w=w;
         this.h=h;
@@ -37,7 +39,7 @@ public class SelectButton extends GameObject implements Touchable {
         int left = (int)this.x - this.w / 2, top = (int)this.y - this.h / 2;
         bound=new Rect( left, top, left + this.w, top + this.h);
         setAlpha(alpha);
-        Log.d(TAG,"asdasdasdasdsasdadas"+bound.left+","+bound.top+","+bound.right+","+bound.bottom);
+       // Log.d(TAG,"asdasdasdasdsasdadas"+bound.left+","+bound.top+","+bound.right+","+bound.bottom);
     }
 
     @Override
@@ -60,10 +62,23 @@ public class SelectButton extends GameObject implements Touchable {
         btnText.alpha(alpha);
     }
 
-    public void flash(int maxAlpha) {
+    public void buttonFlash(int maxAlpha) {
         pressBit.flash(200);
         normalBit.flash(200);
         btnText.flash(255);
+    }
+
+    @Override
+    public void setFlashSpeed(int speed) {
+        super.setFlashSpeed(speed);
+        pressBit.setFlashSpeed(speed);
+        normalBit.setFlashSpeed(speed);
+        btnText.setFlashSpeed(speed);
+    }
+
+    @Override
+    public boolean isFlashDone() {
+        return (pressBit.isFlashDone()&&normalBit.isFlashDone()&&btnText.isFlashDone());
     }
 
     @Override

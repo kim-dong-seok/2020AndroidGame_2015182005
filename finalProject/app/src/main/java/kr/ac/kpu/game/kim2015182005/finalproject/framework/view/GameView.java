@@ -1,6 +1,7 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.framework.view;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Canvas;
 import android.media.MediaPlayer;
 import android.util.AttributeSet;
@@ -22,6 +23,8 @@ public class GameView extends View {
     private static final int FPS_SECONDS = 10;
     private GameTimer timer;
     private int frameCount;
+
+
     public GameView(Context context) {
         super(context);
 

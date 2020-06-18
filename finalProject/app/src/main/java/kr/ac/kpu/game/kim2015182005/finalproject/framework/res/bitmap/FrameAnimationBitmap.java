@@ -17,7 +17,7 @@ public class FrameAnimationBitmap {
     private Rect srcRect = new Rect();
     private RectF dstRect = new RectF();
     private GameTimer timer;
-
+    private Paint paint;
 
     public FrameAnimationBitmap(int resId, int framesPerSecond, int frameCount) {
         this.sbmp = SharedBitmap.load(resId);
@@ -28,6 +28,7 @@ public class FrameAnimationBitmap {
         } else {
             this.frameWidth = sbmp.getWidth() / frameCount;
         }
+        paint=new Paint();
         this.frames = frameCount;
         this.timer = new GameTimer(frames, framesPerSecond);
         srcRect.top = 0;
@@ -41,7 +42,7 @@ public class FrameAnimationBitmap {
         dstRect.top = y - halfHeight;
         dstRect.right = x + halfWidth;
         dstRect.bottom = y + halfHeight;
-        draw(canvas, dstRect, null);
+        draw(canvas, dstRect, paint);
     }
     public void draw(Canvas canvas, RectF rect, Paint paint) {
         int index = timer.getIndex();
@@ -63,9 +64,11 @@ public class FrameAnimationBitmap {
     }
 
     public void draw(Canvas canvas, Matrix matrix) {
-        canvas.drawBitmap(sbmp.getBitmap(), matrix, null);
+        canvas.drawBitmap(sbmp.getBitmap(), matrix, paint);
     }
-
+    public void setAlpha(int alpha){
+        paint.setAlpha(alpha);
+    }
     public int getWidth() {
         return frameWidth;
     }
@@ -78,13 +81,13 @@ public class FrameAnimationBitmap {
         dstRect.top = y - radius;
         dstRect.right = x + radius;
         dstRect.bottom = y + radius;
-        draw(canvas, dstRect, null);
+        draw(canvas, dstRect, paint);
     }
     public void draw(Canvas canvas, float x, float y, int xRadius, int yRadius) {
         dstRect.left = x - xRadius;
         dstRect.top = y - yRadius;
         dstRect.right = x + xRadius;
         dstRect.bottom = y + yRadius;
-        draw(canvas, dstRect, null);
+        draw(canvas, dstRect, paint);
     }
 }

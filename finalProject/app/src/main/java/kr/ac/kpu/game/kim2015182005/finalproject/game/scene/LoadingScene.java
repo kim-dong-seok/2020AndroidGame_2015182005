@@ -75,6 +75,7 @@ public class LoadingScene extends GameScene {
         super.update();
         if(timer.done()){
             pop();
+            FirstScene.get().getBgmPlayer().startBGM();
         }
         if(jumpTimer.done()){
             jt[jumpCount].jump();

@@ -23,6 +23,8 @@ public class GameActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(new GameView(this));
 
-        new MainScene().run();
+
+        new FirstScene().run();
+        //new MainScene().run();
     }
 }

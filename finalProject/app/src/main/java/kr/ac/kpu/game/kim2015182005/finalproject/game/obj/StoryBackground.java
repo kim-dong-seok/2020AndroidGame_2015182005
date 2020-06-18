@@ -55,25 +55,25 @@ public class StoryBackground extends GameObject {
     }
     public void update(){
         if(x>nx){
-            x-=mx/85;
+            x-=mx/50;
             if(x<=nx){
                 x=nx;
             }
         }
         if(x<nx){
-            x+=-mx/85;
+            x+=-mx/50;
             if(x>=nx){
                 x=nx;
             }
         }
         if(y>ny){
-            y-=my/85;
+            y-=my/50;
             if(y<=ny){
                 y=ny;
             }
         }
         if(y<ny){
-            y+=-my/85;
+            y+=-my/50;
             if(y>=ny){
                 y=ny;
             }

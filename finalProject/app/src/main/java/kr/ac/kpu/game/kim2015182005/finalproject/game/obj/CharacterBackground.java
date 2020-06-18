@@ -59,6 +59,7 @@ public class CharacterBackground extends GameObject {
         SecondScene.get().getGameWorld().add(FirstScene.Layer.ui.ordinal(),name_bg);
         name=new TextObject(ch_name[n],UiBridge.metrics.center.x+UiBridge.metrics.size.x/20*7,UiBridge.metrics.size.y-UiBridge.metrics.size.y/5,100,"#FFFFFF",true);
         SecondScene.get().getGameWorld().add(FirstScene.Layer.ui.ordinal(),name);
+        setCBFlashSpeed(5);
     }
 
     @Override
@@ -82,6 +83,12 @@ public class CharacterBackground extends GameObject {
         op.alpha(x);
         name.alpha(x);
         name_bg.alpha(x);
+    }
+    public void setCBFlashSpeed(int x){
+        profile.setFlashSpeed(x);
+        op.setFlashSpeed(x);
+        name.setFlashSpeed(x);
+        name_bg.setFlashSpeed(x);
     }
     public void storyBgMove(){
         if(storyOn) {

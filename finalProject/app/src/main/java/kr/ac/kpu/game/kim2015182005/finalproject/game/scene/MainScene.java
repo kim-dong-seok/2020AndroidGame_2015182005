@@ -15,6 +15,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ScoreObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.bg.ImageScrollBackground;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.res.sound.SoundEffects;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.map.TextMap;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ATBgauge;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.MainCharacterInfo;
@@ -32,6 +33,10 @@ public class MainScene extends GameScene {
     private MainCharacterInfo playerInfo;
     private ATBgauge atBgauge;
     private boolean atbWindowOn;
+
+
+
+
 
     public Platform getPlatformAt(float x, float y) {
         Platform platform = null;
@@ -69,6 +74,7 @@ public class MainScene extends GameScene {
     private SelectButton SAButton;
     private SelectButton LAButton;
     private SelectButton ATBButton;
+
     private  static  MainScene instance;
     @Override
     protected int getLayerCount() {
@@ -96,7 +102,8 @@ public class MainScene extends GameScene {
     @Override
     public void enter() {
         super.enter();
-
+        FirstScene.get().getBgmPlayer().setBGM(R.raw.battle);
+        FirstScene.get().getBgmPlayer().startBGM();
 //        GyroSensor.get();
         instance=this;
         initObjects();
@@ -111,7 +118,9 @@ public class MainScene extends GameScene {
 
     private void initObjects() {
         timer = new GameTimer(60, 1);
-        Random rand = new Random();
+
+
+
         mdpi_100 = UiBridge.x(100);
         Log.d(TAG, "mdpi_100: " + mdpi_100);
         int sw = UiBridge.metrics.size.x;
@@ -133,7 +142,7 @@ public class MainScene extends GameScene {
         jumpButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-                player.touchEvent(1);
+                player.jump();
             }
         });
         gameWorld.add(Layer.ui.ordinal(), jumpButton);
@@ -141,7 +150,8 @@ public class MainScene extends GameScene {
         SAButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-                player.touchEvent(2);
+
+                player.shortAttack();
             }
         });
         gameWorld.add(Layer.ui.ordinal(), SAButton);
@@ -149,7 +159,7 @@ public class MainScene extends GameScene {
         LAButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-                player.touchEvent(3);
+                player.longAttack();
             }
         });
         gameWorld.add(Layer.ui.ordinal(), LAButton);
@@ -157,8 +167,11 @@ public class MainScene extends GameScene {
         ATBButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
+                if(player.getATB()>=100){
                 ATBScene atbScene = new ATBScene();
                 atbScene.push();
+                FirstScene.get().soundPlay(5,11,1.0f);
+                }
             }
         });
         gameWorld.add(Layer.ui.ordinal(), ATBButton);
