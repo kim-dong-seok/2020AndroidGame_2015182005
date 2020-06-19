@@ -78,7 +78,7 @@ public class TitleScene extends GameScene {
 
 
         int mdpi_100 = UiBridge.x(100);
-        gameWorld.add(Layer.bg.ordinal(),new BitmapObject(UiBridge.metrics.center.x,UiBridge.metrics.center.y,UiBridge.metrics.size.x,UiBridge.metrics.size.y,R.mipmap.main));
+        gameWorld.add(Layer.bg.ordinal(),new BitmapObject(UiBridge.metrics.center.x,UiBridge.metrics.center.y,UiBridge.metrics.size.x,UiBridge.metrics.size.y,R.mipmap.main3));
         int screenWidth = UiBridge.metrics.size.x;
         RectF rbox = new RectF(UiBridge.x(-52), UiBridge.y(20), UiBridge.x(-20), UiBridge.y(62));
         timer = new GameTimer(2, 1);
@@ -88,7 +88,7 @@ public class TitleScene extends GameScene {
 //        y += UiBridge.y(100);
         y += UiBridge.y(100);
         gameWorld.add(Layer.bg.ordinal(),new FlashTextObject("Touch To Start", UiBridge.metrics.center.x,y,85,"#FFFFFF",true,2));
-        gameWorld.add(Layer.bg.ordinal(),new FlashTextObject("Touch To Start", UiBridge.metrics.center.x,y,83,"#000000",true,2));
+        gameWorld.add(Layer.bg.ordinal(),new FlashTextObject("Touch To Start", UiBridge.metrics.center.x,y,84,"#000000",true,2));
         TouchManager tm = new TouchManager(0, 0,UiBridge.metrics.size.x,UiBridge.metrics.size.y);
         tm.setOnClickRunnable(new Runnable() {
             @Override

@@ -142,7 +142,7 @@ public class MenuScene extends GameScene {
         selectButton1.setOnClickRunnable(new Runnable() {
                                                 @Override
                                                 public void run() {
-
+                                                    TitleScene.get().getSoundEffects().play(R.raw.select_button,1.0f);
                                                 }
                                             }
         );
@@ -153,7 +153,7 @@ public class MenuScene extends GameScene {
         selectButton2.setOnClickRunnable(new Runnable() {
                                              @Override
                                              public void run() {
-
+                                                 TitleScene.get().getSoundEffects().play(R.raw.select_button,1.0f);
                                              }
                                          }
         );
@@ -163,7 +163,7 @@ public class MenuScene extends GameScene {
         selectButton3.setOnClickRunnable(new Runnable() {
                                              @Override
                                              public void run() {
-
+                                                 TitleScene.get().getSoundEffects().play(R.raw.select_button,1.0f);
                                              }
                                          }
         );
@@ -173,7 +173,7 @@ public class MenuScene extends GameScene {
         selectButton4.setOnClickRunnable(new Runnable() {
                                              @Override
                                              public void run() {
-
+                                                 TitleScene.get().getSoundEffects().play(R.raw.select_button,1.0f);
                                              }
                                          }
         );
@@ -183,7 +183,13 @@ public class MenuScene extends GameScene {
         selectButton5.setOnClickRunnable(new Runnable() {
                                              @Override
                                              public void run() {
-
+                                                 TitleScene.get().getSoundEffects().play(R.raw.select_button,1.0f);
+                                                 TitleScene.get().getBgmPlayer().stopBGM();
+                                                 TitleScene.get().getBgmPlayer().setBGM(R.raw.main);
+                                                 TitleScene.get().getBgmPlayer().startBGM();
+                                                 pop();
+                                                 pop();
+                                                 pop();
                                              }
                                          }
         );
@@ -193,7 +199,9 @@ public class MenuScene extends GameScene {
         selectButton6.setOnClickRunnable(new Runnable() {
                                              @Override
                                              public void run() {
-
+                                                 TitleScene.get().getSoundEffects().play(R.raw.select_button,1.0f);
+                                                 TitleScene.get().getBgmPlayer().stopBGM();
+                                                 UiBridge.getActivity().finish();
                                              }
                                          }
         );

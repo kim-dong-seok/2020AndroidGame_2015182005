@@ -107,6 +107,11 @@ public class LoadingScene extends GameScene {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+    }
+
     public static LoadingScene get(){
         return instance;
     }

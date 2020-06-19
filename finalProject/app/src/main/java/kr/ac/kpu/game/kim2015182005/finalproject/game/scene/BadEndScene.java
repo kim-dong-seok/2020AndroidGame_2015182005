@@ -68,6 +68,10 @@ public class BadEndScene extends GameScene {
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
 
     public static BadEndScene get() {return instance; }
 
