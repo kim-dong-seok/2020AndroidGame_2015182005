@@ -25,7 +25,7 @@ public class MenuScene extends GameScene {
         bg, enemy, player, ui,ui2, COUNT
     }
     private static final String[] ch_button = {
-            "여행기록","아이템","어빌리티",
+            "여행기록","스테이터스","아이템",
             "옵션","타이틀로","게임 종료"
     };
     private GameTimer timer;
@@ -127,10 +127,19 @@ public class MenuScene extends GameScene {
         int y = UiBridge.metrics.center.y;
 //        y += UiBridge.y(100);
         y += UiBridge.y(100);
+        BGBlack menu_bg1=new BGBlack(0,0,UiBridge.metrics.size.x/4,UiBridge.y(50),"#9a958a");
+        menu_bg1.alpha(150);
+        gameWorld.add(MenuScene.Layer.bg.ordinal(),menu_bg1);
+        BGBlack menu_bg2=new BGBlack(0,0,UiBridge.metrics.size.x/4,UiBridge.y(49),"#000000");
+        menu_bg2.alpha(150);
+        gameWorld.add(MenuScene.Layer.bg.ordinal(),menu_bg2);
+        TextObject menu_text=new TextObject("메뉴",UiBridge.x(60),UiBridge.y(27),60,"#FFFFFF",true);
+        gameWorld.add(MenuScene.Layer.bg.ordinal(),menu_text);
 
 
 
-        selectButton1=new SelectButton(UiBridge.y(100),UiBridge.y(100),UiBridge.x(200),UiBridge.y(40),200,ch_button[0],40,R.mipmap.menu_button_idle,R.mipmap.menu_button);
+        selectButton1=new SelectButton(UiBridge.x(50),UiBridge.y(90),UiBridge.x(300),UiBridge.y(40),200,ch_button[0],45,R.mipmap.menu_button_idle,R.mipmap.menu_button);
+        selectButton1.setTx(UiBridge.x(70));
         selectButton1.setOnClickRunnable(new Runnable() {
                                                 @Override
                                                 public void run() {
@@ -140,7 +149,8 @@ public class MenuScene extends GameScene {
         );
         gameWorld.add(MenuScene.Layer.ui.ordinal(),selectButton1);
 
-        selectButton2=new SelectButton(UiBridge.y(100),UiBridge.y(150),UiBridge.x(200),UiBridge.y(40),200,ch_button[1],40,R.mipmap.menu_button_idle,R.mipmap.menu_button);
+        selectButton2=new SelectButton(UiBridge.x(50),UiBridge.y(140),UiBridge.x(300),UiBridge.y(40),200,ch_button[1],45,R.mipmap.menu_button_idle,R.mipmap.menu_button);
+        selectButton2.setTx(UiBridge.x(77));
         selectButton2.setOnClickRunnable(new Runnable() {
                                              @Override
                                              public void run() {
@@ -149,7 +159,8 @@ public class MenuScene extends GameScene {
                                          }
         );
         gameWorld.add(MenuScene.Layer.ui.ordinal(),selectButton2);
-        selectButton3=new SelectButton(UiBridge.y(100),UiBridge.y(200),UiBridge.x(200),UiBridge.y(40),200,ch_button[2],40,R.mipmap.menu_button_idle,R.mipmap.menu_button);
+        selectButton3=new SelectButton(UiBridge.x(50),UiBridge.y(190),UiBridge.x(300),UiBridge.y(40),200,ch_button[2],45,R.mipmap.menu_button_idle,R.mipmap.menu_button);
+        selectButton3.setTx(UiBridge.x(61));
         selectButton3.setOnClickRunnable(new Runnable() {
                                              @Override
                                              public void run() {
@@ -158,7 +169,8 @@ public class MenuScene extends GameScene {
                                          }
         );
         gameWorld.add(MenuScene.Layer.ui.ordinal(),selectButton3);
-        selectButton4=new SelectButton(UiBridge.y(100),UiBridge.y(250),UiBridge.x(200),UiBridge.y(40),200,ch_button[3],40,R.mipmap.menu_button_idle,R.mipmap.menu_button);
+        selectButton4=new SelectButton(UiBridge.x(50),UiBridge.y(240),UiBridge.x(300),UiBridge.y(40),200,ch_button[3],45,R.mipmap.menu_button_idle,R.mipmap.menu_button);
+        selectButton4.setTx(UiBridge.x(55));
         selectButton4.setOnClickRunnable(new Runnable() {
                                              @Override
                                              public void run() {
@@ -167,7 +179,8 @@ public class MenuScene extends GameScene {
                                          }
         );
         gameWorld.add(MenuScene.Layer.ui.ordinal(),selectButton4);
-        selectButton5=new SelectButton(UiBridge.y(100),UiBridge.y(300),UiBridge.x(200),UiBridge.y(40),200,ch_button[4],40,R.mipmap.menu_button_idle,R.mipmap.menu_button);
+        selectButton5=new SelectButton(UiBridge.x(50),UiBridge.y(290),UiBridge.x(300),UiBridge.y(40),200,ch_button[4],45,R.mipmap.menu_button_idle,R.mipmap.menu_button);
+        selectButton5.setTx(UiBridge.x(70));
         selectButton5.setOnClickRunnable(new Runnable() {
                                              @Override
                                              public void run() {
@@ -176,7 +189,8 @@ public class MenuScene extends GameScene {
                                          }
         );
         gameWorld.add(MenuScene.Layer.ui.ordinal(),selectButton5);
-        selectButton6=new SelectButton(UiBridge.y(100),UiBridge.y(350),UiBridge.x(200),UiBridge.y(40),200,ch_button[5],40,R.mipmap.menu_button_idle,R.mipmap.menu_button);
+        selectButton6=new SelectButton(UiBridge.x(50),UiBridge.y(340),UiBridge.x(300),UiBridge.y(40),200,ch_button[5],45,R.mipmap.menu_button_idle,R.mipmap.menu_button);
+        selectButton6.setTx(UiBridge.x(71));
         selectButton6.setOnClickRunnable(new Runnable() {
                                              @Override
                                              public void run() {
@@ -187,6 +201,10 @@ public class MenuScene extends GameScene {
         gameWorld.add(MenuScene.Layer.ui.ordinal(),selectButton6);
 
     }
+
+
+
+
 
 
     public static MenuScene get() {

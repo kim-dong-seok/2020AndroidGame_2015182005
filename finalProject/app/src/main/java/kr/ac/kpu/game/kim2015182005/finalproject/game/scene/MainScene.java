@@ -129,9 +129,9 @@ public class MainScene extends GameScene {
         int cy = UiBridge.metrics.center.y;
         player = new Player(mdpi_100, mdpi_100);
         gameWorld.add(Layer.player.ordinal(),player);
-        gameWorld.add(Layer.bg.ordinal(), new ImageScrollBackground(R.mipmap.cave_bg2, ImageScrollBackground.Orientation.horizontal, -100));
-        gameWorld.add(Layer.bg.ordinal(), new ImageScrollBackground(R.mipmap.cave_bg12, ImageScrollBackground.Orientation.horizontal, -200));
-        gameWorld.add(Layer.bg.ordinal(), new ImageScrollBackground(R.mipmap.cave_bg13, ImageScrollBackground.Orientation.horizontal, -300));
+        gameWorld.add(Layer.bg.ordinal(), new ImageScrollBackground(R.mipmap.town_bg, ImageScrollBackground.Orientation.horizontal, -100));
+        gameWorld.add(Layer.bg.ordinal(), new ImageScrollBackground(R.mipmap.town_bg_2, ImageScrollBackground.Orientation.horizontal, -200));
+        gameWorld.add(Layer.bg.ordinal(), new ImageScrollBackground(R.mipmap.town_bg_3, ImageScrollBackground.Orientation.horizontal, -300));
 
         RectF rbox = new RectF(UiBridge.x(-52), UiBridge.y(20), UiBridge.x(-20), UiBridge.y(62));
         scoreObject = new ScoreObject(R.mipmap.number_64x84, rbox);

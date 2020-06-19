@@ -32,6 +32,10 @@ public class TextObject extends GameObject {
        // scoreAnimator.setDuration(SCORE_INCREASE_DURATION);
     }
 
+    public void setX(float x) {
+        this.x = x;
+    }
+
     public void setText(String text) {
         this.text = text;
     }

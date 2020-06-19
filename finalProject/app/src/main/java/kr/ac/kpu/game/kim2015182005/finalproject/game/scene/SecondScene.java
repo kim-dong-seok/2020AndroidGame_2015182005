@@ -78,6 +78,8 @@ public class SecondScene extends GameScene {
     @Override
     public void enter() {
         super.enter();
+        LoadingScene scene1 = new LoadingScene();
+        scene1.push();
         instance=this;
         initObjects();
     }

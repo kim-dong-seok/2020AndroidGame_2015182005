@@ -99,8 +99,7 @@ public class FirstScene extends GameScene {
                 //mediaPlayer.release();
                 SecondScene scene = new SecondScene();
                 scene.push();
-                LoadingScene scene1 = new LoadingScene();
-                scene1.push();
+
                 soundEffects.play(R.raw.select_button,1.0f);
                 bgmPlayer.pauseBGM();
 

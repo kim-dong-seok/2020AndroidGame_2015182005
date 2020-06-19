@@ -26,11 +26,13 @@ public class SelectButton extends GameObject implements Touchable {
     private BitmapObject pressBit,normalBit,drawBit;
     private Rect bound;
     private Random rand = new Random();
+    private float tx;
     public SelectButton(float x, float y, int w, int h,int alpha,String text,int size, int bgNormalResId,int bgPressResId) {
         this.w=w;
         this.h=h;
         this.x=x;
         this.y=y;
+        this.tx=x;
         this.size=size;
         this.alpha=alpha;
         this.btnText=new TextObject(text,x,y,size,"#FFFFFF",true);
@@ -40,6 +42,10 @@ public class SelectButton extends GameObject implements Touchable {
         bound=new Rect( left, top, left + this.w, top + this.h);
         setAlpha(alpha);
        // Log.d(TAG,"asdasdasdasdsasdadas"+bound.left+","+bound.top+","+bound.right+","+bound.bottom);
+    }
+
+    public void setTx(float tx) {
+        this.btnText.setX(tx);
     }
 
     @Override

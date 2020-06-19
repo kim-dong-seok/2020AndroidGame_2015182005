@@ -30,7 +30,7 @@ public class MainCharacterInfo extends GameObject {
         php=MainScene.get().getPlayer().getHp();
         preHp=php;
         bg=new BGBlack(0,0,UiBridge.metrics.size.x/3,UiBridge.y(100),"#000000");
-        bg.alpha(50);
+        bg.alpha(150);
         MainScene.get().getGameWorld().add( MainScene.Layer.bg.ordinal(),bg);
 
         bar=new BitmapObject(UiBridge.x(145),UiBridge.y(15),UiBridge.x(155),UiBridge.y(10),R.mipmap.info_bar);
