@@ -29,8 +29,10 @@ public class TextMap {
     ArrayList<String> lines;
     private double timeElapsed;
 
+
     public TextMap(String assetFilename, GameWorld gameWorld) {
         this.gameWorld = gameWorld;
+
         AssetManager assets = UiBridge.getActivity().getAssets();
         try {
             InputStream is = assets.open(assetFilename);
@@ -108,12 +110,15 @@ public class TextMap {
         }
     }
 
+
     public void update(float dx) {
+
         timeElapsed += GameTimer.getTimeDiffSeconds();
         currentX += dx;
         if (currentX < createAtX) {
             createColumn();
         }
+
     }
     public void reset() {
         mapIndex = 0;

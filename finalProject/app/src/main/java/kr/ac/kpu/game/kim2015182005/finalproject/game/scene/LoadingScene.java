@@ -10,7 +10,6 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameScene;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameTimer;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.RotateBitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ui.Button;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.BGBlack;
@@ -75,7 +74,7 @@ public class LoadingScene extends GameScene {
         super.update();
         if(timer.done()){
             pop();
-            FirstScene.get().getBgmPlayer().startBGM();
+            TitleScene.get().getBgmPlayer().startBGM();
         }
         if(jumpTimer.done()){
             jt[jumpCount].jump();

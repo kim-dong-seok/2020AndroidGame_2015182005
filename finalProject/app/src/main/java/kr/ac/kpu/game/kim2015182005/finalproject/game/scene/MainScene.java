@@ -4,7 +4,6 @@ import android.graphics.RectF;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import kr.ac.kpu.game.kim2015182005.finalproject.R;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
@@ -12,12 +11,11 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameScene;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameTimer;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ScoreObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.bg.ImageScrollBackground;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.res.sound.SoundEffects;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.map.TextMap;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ATBgauge;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.BGBlack;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.MainCharacterInfo;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Platform;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Player;
@@ -27,15 +25,13 @@ public class MainScene extends GameScene {
     private static final String TAG = MainScene.class.getSimpleName();
     private TextMap map;
     private int mdpi_100;
-
+    private int story=0;
     private RectF rect = new RectF();
     private ScoreObject scoreObject;
     private MainCharacterInfo playerInfo;
     private ATBgauge atBgauge;
     private boolean atbWindowOn;
-
-
-
+    private BGBlack end_bg;
 
 
     public Platform getPlatformAt(float x, float y) {
@@ -74,7 +70,7 @@ public class MainScene extends GameScene {
     private SelectButton SAButton;
     private SelectButton LAButton;
     private SelectButton ATBButton;
-
+    private boolean game_puase,bad_end;
     private  static  MainScene instance;
     @Override
     protected int getLayerCount() {
@@ -84,11 +80,15 @@ public class MainScene extends GameScene {
 
     @Override
     public void update() {
+
         super.update();
+        if(!bad_end){
+        if(!game_puase){
 //        Log.d(TAG, "Score: " + timer.getRawIndex());
 //        if (timer.done()) {
 //            pop();
 //        }
+
         float dx = -2 * mdpi_100 * GameTimer.getTimeDiffSeconds();
         map.update(dx);
         for (int layer = Layer.platform.ordinal(); layer <= Layer.obstacle.ordinal(); layer++) {
@@ -97,13 +97,30 @@ public class MainScene extends GameScene {
                 obj.move(dx, 0);
             }
         }
+        }
+        if(player.getHp()<=0){
+            bad_end=true;
+        }
+        }else{
+            if(end_bg.getAlpha()==0) {
+                end_bg.setFlashSpeed(1);
+                end_bg.flash(255);
+            }
+            if(end_bg.getAlpha()==255){
+                TitleScene.get().getBgmPlayer().stopBGM();
+                BadEndScene scene = new  BadEndScene();
+                scene.push();
+            }
+        }
     }
 
     @Override
     public void enter() {
         super.enter();
-        FirstScene.get().getBgmPlayer().setBGM(R.raw.battle);
-        FirstScene.get().getBgmPlayer().startBGM();
+        LoadingScene lscene = new LoadingScene();
+        lscene.push();
+        TitleScene.get().getBgmPlayer().setBGM(R.raw.coast_lands);
+        TitleScene.get().getBgmPlayer().startBGM();
 //        GyroSensor.get();
         instance=this;
         initObjects();
@@ -118,8 +135,8 @@ public class MainScene extends GameScene {
 
     private void initObjects() {
         timer = new GameTimer(60, 1);
-
-
+        bad_end=false;
+        game_puase=false;
 
         mdpi_100 = UiBridge.x(100);
         Log.d(TAG, "mdpi_100: " + mdpi_100);
@@ -129,6 +146,11 @@ public class MainScene extends GameScene {
         int cy = UiBridge.metrics.center.y;
         player = new Player(mdpi_100, mdpi_100);
         gameWorld.add(Layer.player.ordinal(),player);
+        end_bg=new BGBlack(0,0, UiBridge.metrics.size.x, UiBridge.metrics.size.y,"#000000");
+        end_bg.alpha(0);
+        gameWorld.add(Layer.ui.ordinal(), end_bg);
+
+
         gameWorld.add(Layer.bg.ordinal(), new ImageScrollBackground(R.mipmap.town_bg, ImageScrollBackground.Orientation.horizontal, -100));
         gameWorld.add(Layer.bg.ordinal(), new ImageScrollBackground(R.mipmap.town_bg_2, ImageScrollBackground.Orientation.horizontal, -200));
         gameWorld.add(Layer.bg.ordinal(), new ImageScrollBackground(R.mipmap.town_bg_3, ImageScrollBackground.Orientation.horizontal, -300));
@@ -142,6 +164,7 @@ public class MainScene extends GameScene {
         jumpButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
+                game_puase=false;
                 player.jump();
             }
         });
@@ -150,7 +173,7 @@ public class MainScene extends GameScene {
         SAButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-
+                game_puase=true;
                 player.shortAttack();
             }
         });
@@ -170,7 +193,7 @@ public class MainScene extends GameScene {
                 if(player.getATB()>=100){
                 ATBScene atbScene = new ATBScene();
                 atbScene.push();
-                FirstScene.get().soundPlay(5,11,1.0f);
+                TitleScene.get().soundPlay(5,11,1.0f);
                 }
             }
         });
@@ -186,7 +209,11 @@ public class MainScene extends GameScene {
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        MenuScene scene = new MenuScene();
+        scene.push();
+    }
 
     public Player getPlayer() {
         return player;

@@ -7,7 +7,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.BGBlack;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.SelectButton;
 
 public class ATBItemScene extends GameScene {
-        private static final String TAG = DialogScene.class.getSimpleName();
+        private static final String TAG = ATBItemScene.class.getSimpleName();
         private BGBlack atbBG;
         private static ATBItemScene instance;
         private boolean clickOn;

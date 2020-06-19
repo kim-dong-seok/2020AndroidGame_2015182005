@@ -5,9 +5,8 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.TextObject;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.FirstScene;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.MainScene;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.SecondScene;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.TitleScene;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.CharacterSelectScene;
 
 public class SelectWindowOneAnswer extends GameObject {
     private static final String TAG = SelectWindowOneAnswer.class.getSimpleName();
@@ -24,24 +23,24 @@ public class SelectWindowOneAnswer extends GameObject {
         this.answer1=answer1;
         OAbg=new BGBlack(0,0, UiBridge.metrics.size.x, UiBridge.metrics.size.y,"#000000");
         OAbg.alpha(80);
-        SecondScene.get().getGameWorld().add(SecondScene.Layer.ui2.ordinal(),OAbg);
+        CharacterSelectScene.get().getGameWorld().add(CharacterSelectScene.Layer.ui2.ordinal(),OAbg);
         OAaw=new BitmapObject(UiBridge.metrics.center.x,UiBridge.metrics.center.y, UiBridge.metrics.center.x+UiBridge.x(60), UiBridge.metrics.center.y,R.mipmap.select_window);
         OAaw.alpha(230);
-        SecondScene.get().getGameWorld().add(SecondScene.Layer.ui2.ordinal(),OAaw);
+        CharacterSelectScene.get().getGameWorld().add(CharacterSelectScene.Layer.ui2.ordinal(),OAaw);
         OAto=new TextObject(text,UiBridge.metrics.center.x,UiBridge.metrics.center.y-UiBridge.y(40),50,"#FFFFFF",true);
-        SecondScene.get().getGameWorld().add(SecondScene.Layer.ui2.ordinal(),OAto);
+        CharacterSelectScene.get().getGameWorld().add(CharacterSelectScene.Layer.ui2.ordinal(),OAto);
         OAButton = new SelectButton(x,y+UiBridge.y(30),UiBridge.x(120), UiBridge.y(40),100,answer1,50,R.mipmap.btn_idle,R.mipmap.btn_select);
         OAButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-                if(isSWFlashDoneA1()&&SecondScene.get().getCharacterSelect()!=0&&OAButton.isFlashOn())
+                if(isSWFlashDoneA1()&& CharacterSelectScene.get().getCharacterSelect()!=0&&OAButton.isFlashOn())
                 flashSW1A();
-                SecondScene.get().setTouchable(true);
-                FirstScene.get().getSoundEffects().play(R.raw.back_button,1.0f);
+                CharacterSelectScene.get().setTouchable(true);
+                TitleScene.get().getSoundEffects().play(R.raw.back_button,1.0f);
             }
 
         });
-        SecondScene.get().getGameWorld().add(SecondScene.Layer.ui2.ordinal(), OAButton);
+        CharacterSelectScene.get().getGameWorld().add(CharacterSelectScene.Layer.ui2.ordinal(), OAButton);
         setSW1AFlashSpeed();
     }
 

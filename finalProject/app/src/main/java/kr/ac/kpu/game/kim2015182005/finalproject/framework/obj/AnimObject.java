@@ -41,6 +41,20 @@ public class AnimObject extends GameObject {
         this.height = height;
     }
 
+    @Override
+    public void update() {
+        super.update();
+        this.fab.update();
+    }
+
+    public FrameAnimationBitmap getFab() {
+        return fab;
+    }
+
+    public void setFab(FrameAnimationBitmap fab) {
+        this.fab = fab;
+    }
+
     public int getHp() {
         return hp;
     }

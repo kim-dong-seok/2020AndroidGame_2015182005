@@ -4,13 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import kr.ac.kpu.game.kim2015182005.finalproject.R;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.FirstScene;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.SecondScene;
 
 import static android.graphics.Paint.Style.STROKE;
 

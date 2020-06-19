@@ -12,7 +12,6 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.TextObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.bg.MapBackground;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ui.TouchManager;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.BGBlack;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.CharacterBackground;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.MovingButton;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.SelectButton;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.SelectWindow;
@@ -99,7 +98,7 @@ public class MenuScene extends GameScene {
         int mdpi_100 = UiBridge.x(100);
         map=new MapBackground(UiBridge.metrics.center.x,UiBridge.metrics.center.y,UiBridge.metrics.size.x,UiBridge.metrics.size.y, 760,400,R.mipmap.world_map2,2);
         gameWorld.add(MenuScene.Layer.bg.ordinal(),map);
-        gameWorld.add(SecondScene.Layer.bg.ordinal(),new BitmapObject(UiBridge.metrics.center.x,UiBridge.metrics.center.y-UiBridge.metrics.size.y/20,UiBridge.metrics.size.x,UiBridge.metrics.size.y-UiBridge.metrics.size.y/10,R.mipmap.map_frame));
+        gameWorld.add(CharacterSelectScene.Layer.bg.ordinal(),new BitmapObject(UiBridge.metrics.center.x,UiBridge.metrics.center.y-UiBridge.metrics.size.y/20,UiBridge.metrics.size.x,UiBridge.metrics.size.y-UiBridge.metrics.size.y/10,R.mipmap.map_frame));
         RotateBitmapObject sun=new RotateBitmapObject(UiBridge.x(300), UiBridge.y(70),UiBridge.x(30),UiBridge.y(30),R.mipmap.sun,0,6,true);
         gameWorld.add(LoadingScene.Layer.bg.ordinal(),sun );
         sun.setMax(45);

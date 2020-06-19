@@ -13,8 +13,8 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.res.bitmap.SharedBitm
 public class Platform extends BitmapObject implements Recyclable {
     private static final int[] RES_IDS = {
             R.mipmap.town_load1,
-            R.mipmap.cave_load3_270_50,
-            R.mipmap.cave_load4_300_60,
+            R.mipmap.town_load1,
+            R.mipmap.town_load1,
     };
     private static final Point[] SIZES = {
             new Point(10, 2),

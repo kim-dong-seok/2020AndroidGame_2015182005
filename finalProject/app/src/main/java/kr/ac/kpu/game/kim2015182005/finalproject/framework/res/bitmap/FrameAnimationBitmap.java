@@ -18,7 +18,7 @@ public class FrameAnimationBitmap {
     private RectF dstRect = new RectF();
     private GameTimer timer;
     private Paint paint;
-
+    private int index;
     public FrameAnimationBitmap(int resId, int framesPerSecond, int frameCount) {
         this.sbmp = SharedBitmap.load(resId);
         this.fps = framesPerSecond;
@@ -44,8 +44,11 @@ public class FrameAnimationBitmap {
         dstRect.bottom = y + halfHeight;
         draw(canvas, dstRect, paint);
     }
+    public void update(){
+         index= timer.getIndex();
+    }
     public void draw(Canvas canvas, RectF rect, Paint paint) {
-        int index = timer.getIndex();
+
         srcRect.left = frameWidth * index;
         srcRect.right = srcRect.left + frameWidth;
 

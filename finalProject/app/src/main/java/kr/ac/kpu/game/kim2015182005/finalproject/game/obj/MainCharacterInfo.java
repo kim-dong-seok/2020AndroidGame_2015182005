@@ -1,19 +1,11 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.game.obj;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.util.Log;
-
 import kr.ac.kpu.game.kim2015182005.finalproject.R;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.TextObject;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.FirstScene;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.MainScene;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.SecondScene;
-
 
 
 public class MainCharacterInfo extends GameObject {

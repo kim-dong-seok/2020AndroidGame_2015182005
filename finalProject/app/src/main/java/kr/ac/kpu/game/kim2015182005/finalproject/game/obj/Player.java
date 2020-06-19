@@ -1,27 +1,19 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.game.obj;
 
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.util.FloatProperty;
-import android.util.Log;
-import android.util.LogPrinter;
-import android.view.MotionEvent;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import kr.ac.kpu.game.kim2015182005.finalproject.R;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.iface.BoxCollidable;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.iface.Touchable;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameTimer;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.res.bitmap.FrameAnimationBitmap;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.res.sound.SoundEffects;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.util.CollisionHelper;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.FirstScene;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.TitleScene;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.MainScene;
 
 public class Player extends AnimObject implements BoxCollidable {
@@ -37,6 +29,7 @@ public class Player extends AnimObject implements BoxCollidable {
     private final FrameAnimationBitmap fabSA;
     private final FrameAnimationBitmap fabHit;
     private final FrameAnimationBitmap fabDJump;
+    private final FrameAnimationBitmap fabDie;
     private final FrameAnimationBitmap hitEffect;
     private final FrameAnimationBitmap shortAttackEffect;
 
@@ -52,7 +45,7 @@ public class Player extends AnimObject implements BoxCollidable {
     private int ATB;
     private int totalATB;
     private float jumpY, originY, originX;
-    protected int totalHp=200;
+    protected int totalHp=20;
 
     float hitTime;
     private AnimState state;
@@ -72,13 +65,14 @@ public class Player extends AnimObject implements BoxCollidable {
         fabLA = new FrameAnimationBitmap(R.mipmap.tressa_right_long_attack, 14, 7);
         fabHit = new FrameAnimationBitmap(R.mipmap.tressa_hit, 1, 1);
         shortAttackEffect=new FrameAnimationBitmap(R.mipmap.spear_slash3, 20, 5);
+        fabDie=new FrameAnimationBitmap(R.mipmap.tressa_die, 1, 1);
         hitEffect.setAlpha(200);
         shortAttackEffect.setAlpha(200);
         setAnimState(AnimState.normal);
     }
 
     public enum AnimState {
-        normal, jump, djump, sattack, lattack,hit
+        normal, jump, djump, sattack, lattack,hit,die
     }
 
     public int getTotalHp() {
@@ -107,6 +101,7 @@ public class Player extends AnimObject implements BoxCollidable {
             case sattack:  fab = fabSA;  break;
             case lattack:  fab = fabLA;  break;
             case hit:    fab = fabHit;    break;
+            case die:    fab = fabDie;    break;
         }
     }
 
@@ -116,6 +111,8 @@ public class Player extends AnimObject implements BoxCollidable {
 
     @Override
     public void update() {
+        super.update();
+        if(state != AnimState.die){
         if (fab.done() && (state == AnimState.sattack || state == AnimState.lattack)) {
             width=UiBridge.x(60);
             x=originX;
@@ -179,6 +176,7 @@ public class Player extends AnimObject implements BoxCollidable {
         checkItemCollision();
         checkEnemyCollision();
     }
+    }
 
     @Override
     public void draw(Canvas canvas) {
@@ -231,14 +229,18 @@ public class Player extends AnimObject implements BoxCollidable {
             }else if(CollisionHelper.collides(this, enemy)&&state!=AnimState.sattack){
                 int eAtk=enemy.getAtk();
                 this.hp-=eAtk;
-
                 //Log.d(TAG,"hp"+this.hp);
                 enemy.setColidable(false);
+                TitleScene.get().soundPlay(3,6,1.0f);
+                if(this.hp>0){
                 ATB+=eAtk;
                 setAnimState(AnimState.hit);
                 hitTime=HIT_TIME;
                 hitEffect.reset();
-                FirstScene.get().soundPlay(3,6,1.0f);
+                }else{
+                    setAnimState(AnimState.die);
+                    TitleScene.get().soundPlay(R.raw.tressa_die,1.0f);
+                }
             }
             }
         }
@@ -255,32 +257,32 @@ public class Player extends AnimObject implements BoxCollidable {
             if (speed > JUMP_POWER) {
                 speed = JUMP_POWER;
             }
-            FirstScene.get().soundPlay(R.raw.tressa_attack2,1.0f);
+            TitleScene.get().soundPlay(R.raw.tressa_attack2,1.0f);
             setAnimState(jumpCount == 1 ? AnimState.jump : AnimState.djump);
         }}
     }
     public void shortAttack() {
         if (state != AnimState.lattack&&state != AnimState.sattack){
         if(saReload<=0){
-            FirstScene.get().soundPlay(6,1,1.0f);
+            TitleScene.get().soundPlay(6,1,1.0f);
             setAnimState(AnimState.sattack);
             x+=UiBridge.x(30);
             width=UiBridge.x(160);
             saReload=60;
             fab.reset();
-            FirstScene.get().soundPlay(R.raw.spear_attack,0.5f);
+            TitleScene.get().soundPlay(R.raw.spear_attack,0.5f);
         }}
     }
     public void longAttack() {
         if (state != AnimState.lattack&&state != AnimState.sattack){
         if(laReload<=0){
-            FirstScene.get().soundPlay(6,0,1.0f);
+            TitleScene.get().soundPlay(6,0,1.0f);
             setAnimState(AnimState.lattack);
             laReload=100;
             fab.reset();
             MainScene scene = MainScene.get();
             scene.getGameWorld().add(MainScene.Layer.arrow.ordinal(), new Arrow(x,y));
-            FirstScene.get().soundPlay(R.raw.bow_attack,0.5f);
+            TitleScene.get().soundPlay(R.raw.bow_attack,0.5f);
         }}
     }
 
