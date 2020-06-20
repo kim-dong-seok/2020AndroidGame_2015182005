@@ -34,6 +34,7 @@ public class TitleScene extends GameScene {
     private SoundEffects soundEffects;
     private int[] PLAYER_SOUND_IDS;
     private Random random;
+    private boolean start;
     @Override
     protected int getLayerCount() {
         return Layer.COUNT.ordinal();
@@ -67,7 +68,7 @@ public class TitleScene extends GameScene {
         random=new Random();
         bgmPlayer=new BGMPlayer();
         bgmPlayer.setBGM(R.raw.main);
-
+        start=false;
         bgmPlayer.setloop(true);
         bgmPlayer.startBGM();
 

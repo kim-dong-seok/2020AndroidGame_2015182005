@@ -11,28 +11,36 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameScene;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameTimer;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ScoreObject;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.TextObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.bg.ImageScrollBackground;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ui.TouchManager;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.map.TextMap;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ATBgauge;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ui.ATBgauge;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.BGBlack;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.MainCharacterInfo;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ui.MainCharacterInfo;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Platform;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Player;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.SelectButton;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ui.SelectButton;
 
 public class MainScene extends GameScene {
     private static final String TAG = MainScene.class.getSimpleName();
     private TextMap map;
     private int mdpi_100;
-    private int story=0;
     private RectF rect = new RectF();
     private ScoreObject scoreObject;
     private MainCharacterInfo playerInfo;
     private ATBgauge atBgauge;
     private boolean atbWindowOn;
     private BGBlack end_bg;
-
+    private String[] player_story ={
+            "이런 상상이나 하고 있을 때가 아니야","우리 가게는 조그마하고...","내가 더 열심히 해야지!"
+            ,"심부름 받은 포도주를 받으러 가자"
+    };
+    private String[] story_name={
+            "트레사"
+    };
 
     public Platform getPlatformAt(float x, float y) {
         Platform platform = null;
@@ -61,7 +69,7 @@ public class MainScene extends GameScene {
 
 
     public enum Layer {
-        bg, platform, item, obstacle,arrow,enemy, player, ui, COUNT
+        bg, platform, item,box,environemental,npc, obstacle,enemy,checkPoint, arrow,player, ui,story, COUNT
     }
 
     private Player player;
@@ -72,6 +80,11 @@ public class MainScene extends GameScene {
     private SelectButton ATBButton;
     private boolean game_puase,bad_end;
     private  static  MainScene instance;
+    private boolean storyOn=true;
+    private int story=0;
+    private BitmapObject speech;
+    private TextObject speech_text;
+    private TextObject speech_name;
     @Override
     protected int getLayerCount() {
         return Layer.COUNT.ordinal();
@@ -80,14 +93,43 @@ public class MainScene extends GameScene {
 
     @Override
     public void update() {
+        //Log.d(TAG,"map.getRows()"+map.getRows()+",      map.getRows()"+map.getColumns());
 
-        Log.d(TAG,"bad_end=="+bad_end+",game_puase=="+game_puase);
+        if(storyOn){
+            for (GameObject o :getGameWorld().objectsAtLayer(Layer.story.ordinal())) {
+                o.update();
+            }
+            switch (story){
+                case 0:
+                    game_puase=true;
+                    break;
+                case 1:
+                    speech_text.setText(player_story[1]);
+                    speech_text.setCut(6,1);
+                    break;
+                case 2:
+                    speech_text.setText(player_story[2]);
+                    speech_text.setCut(8,1);
+                    break;
+                case 3:
+                    speech_text.setText(player_story[3]);
+                    speech_text.setCut(11,1);
+                    break;
+                case 4:
+                    speech_text.alpha(0);
+                    speech.alpha(0);
+                    speech_name.alpha(0);
+                    storyOn=false;
+                    game_puase=false;
+                    break;
+            }
+        }else{
         if(!bad_end){
         if(!game_puase){
             super.update();
         float dx = -2 * mdpi_100 * GameTimer.getTimeDiffSeconds();
         map.update(dx);
-        for (int layer = Layer.platform.ordinal(); layer <= Layer.enemy.ordinal(); layer++) {
+        for (int layer = Layer.platform.ordinal(); layer <= Layer.checkPoint.ordinal(); layer++) {
             ArrayList<GameObject> objects = gameWorld.objectsAtLayer(layer);
             for (GameObject obj : objects) {
                 obj.move(dx, 0);
@@ -108,16 +150,20 @@ public class MainScene extends GameScene {
                 BadEndScene scene = new  BadEndScene();
                 scene.push();
             }
-        }
+        }}
+    }
+
+    public void setStory(int story) {
+        this.story = story;
+    }
+
+    public int getStory() {
+        return story;
     }
 
     @Override
     public void enter() {
         super.enter();
-        LoadingScene lscene = new LoadingScene();
-        lscene.push();
-        TitleScene.get().getBgmPlayer().setBGM(R.raw.coast_lands);
-        TitleScene.get().getBgmPlayer().startBGM();
 //        GyroSensor.get();
         instance=this;
         initObjects();
@@ -128,6 +174,10 @@ public class MainScene extends GameScene {
 //        GyroSensor.get().destroy();
         super.exit();
 
+    }
+
+    public void setStoryOn(boolean storyOn) {
+        this.storyOn = storyOn;
     }
 
     private void initObjects() {
@@ -141,11 +191,20 @@ public class MainScene extends GameScene {
         int sh = UiBridge.metrics.size.y;
         int cx = UiBridge.metrics.center.x;
         int cy = UiBridge.metrics.center.y;
-        player = new Player(mdpi_100, mdpi_100);
+        player = new Player(UiBridge.x(100), UiBridge.y(320));
         gameWorld.add(Layer.player.ordinal(),player);
         end_bg=new BGBlack(0,0, UiBridge.metrics.size.x, UiBridge.metrics.size.y,"#000000");
         end_bg.alpha(0);
         gameWorld.add(Layer.ui.ordinal(), end_bg);
+
+        speech=new BitmapObject(UiBridge.x(110), UiBridge.y(200),UiBridge.y(250),UiBridge.y(130),R.mipmap.speech);
+        gameWorld.add(Layer.story.ordinal(), speech);
+
+        speech_name=new TextObject(story_name[0],UiBridge.x(32), UiBridge.y(145),40,"#3d331d",true);
+        gameWorld.add(Layer.story.ordinal(), speech_name);
+        speech_text=new TextObject(player_story[0],UiBridge.x(180), UiBridge.y(170),50,"#3d331d",true);
+        speech_text.setCut(10,1);
+        gameWorld.add(Layer.story.ordinal(), speech_text);
 
 
         gameWorld.add(Layer.bg.ordinal(), new ImageScrollBackground(R.mipmap.town_bg, ImageScrollBackground.Orientation.horizontal, -100));
@@ -161,8 +220,7 @@ public class MainScene extends GameScene {
         jumpButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-                if(!bad_end){
-                game_puase=false;
+                if(!bad_end&&!storyOn){
                 player.jump();}
             }
         });
@@ -171,8 +229,7 @@ public class MainScene extends GameScene {
         SAButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-                if(!bad_end){
-                game_puase=true;
+                if(!bad_end&&!storyOn){
                 player.shortAttack();}
             }
         });
@@ -185,19 +242,19 @@ public class MainScene extends GameScene {
             }
         });
         gameWorld.add(Layer.ui.ordinal(), LAButton);
-        ATBButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(150), UiBridge.metrics.size.y-UiBridge.y(50), UiBridge.x(90), UiBridge.y(90),150,"",10,R.mipmap.atb_btn60,R.mipmap.atb_btn100);
+        ATBButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(155), UiBridge.metrics.size.y-UiBridge.y(50), UiBridge.x(90), UiBridge.y(90),150,"",10,R.mipmap.atb_btn60,R.mipmap.atb_btn100);
         ATBButton.setOnClickRunnable(new Runnable() {
             @Override
-            public void run() {if(!bad_end){
+            public void run() {if(!bad_end&&!storyOn&&!player.isCheck()){
                 if(player.getATB()>=100){
                 ATBScene atbScene = new ATBScene();
                 atbScene.push();
-                TitleScene.get().soundPlay(5,11,1.0f);
+               // TitleScene.get().soundPlay(5,11,1.0f);
                 }}
             }
         });
         gameWorld.add(Layer.ui.ordinal(), ATBButton);
-        atBgauge = new ATBgauge(UiBridge.metrics.size.x-UiBridge.x(150), UiBridge.metrics.size.y-UiBridge.y(50), UiBridge.x(90));
+        atBgauge = new ATBgauge(UiBridge.metrics.size.x-UiBridge.x(155), UiBridge.metrics.size.y-UiBridge.y(50), UiBridge.x(90));
         gameWorld.add(Layer.ui.ordinal(), atBgauge);
 
         playerInfo = new MainCharacterInfo();
@@ -206,10 +263,10 @@ public class MainScene extends GameScene {
         AnimObject bit = new AnimObject(UiBridge.metrics.center.x,UiBridge.metrics.center.y,UiBridge.x(100),UiBridge.y(20),R.mipmap.spear_slash3,12,5);
         gameWorld.add(Layer.ui.ordinal(),bit);
 
-        SelectButton menuButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(40), UiBridge.y(50), UiBridge.x(90), UiBridge.y(90),150,"",10,R.mipmap.menu_icon2,R.mipmap.menu_icon2);
+        SelectButton menuButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(50), UiBridge.y(35), UiBridge.x(90), UiBridge.y(60),250,"",10,R.mipmap.menu_icon3,R.mipmap.menu_icon3);
         menuButton.setOnClickRunnable(new Runnable() {
             @Override
-            public void run() {if(!bad_end){
+            public void run() {if(!bad_end&&!storyOn&&!player.isCheck()){
                MenuScene scene=new MenuScene();
                scene.push();
 
@@ -218,12 +275,24 @@ public class MainScene extends GameScene {
         });
         gameWorld.add(Layer.ui.ordinal(),menuButton);
 
+        TouchManager tm = new TouchManager(UiBridge.metrics.size.x/4, UiBridge.metrics.size.y/4,UiBridge.metrics.size.x/4*3,UiBridge.metrics.size.y/4*3);
+        tm.setOnClickRunnable(new Runnable() {
+            @Override
+            public void run() {
+                if(storyOn) {
+                    story+=1;
+                }
+            }
+        });
+        gameWorld.add(Layer.story.ordinal(),tm);
+
 
     }
 
     @Override
     public void onBackPressed() {
         if(!bad_end&&!game_puase){
+            TitleScene.get().getSoundEffects().play(R.raw.menu_window,1.0f);
         MenuScene scene = new MenuScene();
         scene.push();
         }

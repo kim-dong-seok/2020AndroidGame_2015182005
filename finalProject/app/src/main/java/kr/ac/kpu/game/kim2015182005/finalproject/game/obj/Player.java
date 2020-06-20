@@ -2,6 +2,7 @@ package kr.ac.kpu.game.kim2015182005.finalproject.game.obj;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameTimer;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.res.bitmap.FrameAnimationBitmap;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.res.bitmap.SharedBitmap;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.util.CollisionHelper;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.TitleScene;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.MainScene;
@@ -46,6 +48,7 @@ public class Player extends AnimObject implements BoxCollidable {
     private int totalATB;
     private float jumpY, originY, originX;
     protected int totalHp=20;
+    private boolean check=false;
 
     float hitTime;
     private AnimState state;
@@ -109,6 +112,10 @@ public class Player extends AnimObject implements BoxCollidable {
         return state;
     }
 
+    public boolean isCheck() {
+        return check;
+    }
+
     @Override
     public void update() {
         super.update();
@@ -118,7 +125,7 @@ public class Player extends AnimObject implements BoxCollidable {
             x=originX;
             setAnimState(AnimState.normal);
         }
-        //Log.d(TAG,"state"+state);
+        Log.d(TAG,"check,check,check"+check);
 
 
         if (jumpCount > 0) {
@@ -140,7 +147,7 @@ public class Player extends AnimObject implements BoxCollidable {
 
             RectF rect = new RectF();
             platform.getBox(rect);
-//            Log.d(TAG, "Platform box = " + rect);
+//
             float ptop = platform.getTop();
             if (jumpCount > 0) {
 //                Log.d(TAG, "Platform box = " + rect + " footY = " + footY + " ptop=" + ptop);
@@ -173,8 +180,9 @@ public class Player extends AnimObject implements BoxCollidable {
         saReload-=1;
         laReload-=1;
 
-        checkItemCollision();
+        checkBoxCollision();
         checkEnemyCollision();
+        checkPointCollision();
     }
     }
 
@@ -190,21 +198,45 @@ public class Player extends AnimObject implements BoxCollidable {
         }
     }
 
-    private void checkItemCollision() {
+    private void checkBoxCollision() {
 
-        ArrayList<GameObject> items = MainScene.get().getGameWorld().objectsAtLayer(MainScene.Layer.item.ordinal());
-        for (GameObject obj : items) {
-            if (!(obj instanceof CandyItem)) {
+        ArrayList<GameObject> Box = MainScene.get().getGameWorld().objectsAtLayer(MainScene.Layer.box.ordinal());
+        for (GameObject obj : Box) {
+            if (!(obj instanceof BoxObject)) {
                 continue;
             }
-            CandyItem candy = (CandyItem) obj;
-            if (CollisionHelper.collides(this, candy)) {
-                candy.remove();
-                MainScene.get().addScore(candy.getScore());
+            BoxObject box = (BoxObject) obj;
+            if(box.isColidable()){
+                if (CollisionHelper.collides(this, box)&&state==AnimState.sattack) {
+                    // TitleScene.get().soundPlay(R.raw.tressa_die,1.0f);
+                    box.setColidable(false);
+                    box.setSbmp(SharedBitmap.load(R.mipmap.box_open));
+                }
+        }
+    }
+    }
+    private void checkPointCollision() {
+
+        ArrayList<GameObject> checkPointObject = MainScene.get().getGameWorld().objectsAtLayer(MainScene.Layer.checkPoint.ordinal());
+        for (GameObject obj :checkPointObject) {
+            if (!(obj instanceof CheckPointObject)) {
+                continue;
+            }
+            CheckPointObject checkPoint = (CheckPointObject) obj;
+            if( checkPoint.isColidable()){
+                if (CollisionHelper.collides(this,  checkPoint)) {
+                    // TitleScene.get().soundPlay(R.raw.tressa_die,1.0f);
+                    checkPoint.setColidable(false);
+                    if(!check) {
+                        this.check = true;
+                    }else{
+                        MainScene.get().setStoryOn(true);
+                        MainScene.get().setStory( MainScene.get().getStory()+1);
+                    }
+                }
             }
         }
     }
-
     private void checkEnemyCollision() {
 
         ArrayList<GameObject> enemys = MainScene.get().getGameWorld().objectsAtLayer(MainScene.Layer.enemy.ordinal());
@@ -231,7 +263,7 @@ public class Player extends AnimObject implements BoxCollidable {
                 this.hp-=eAtk;
                 //Log.d(TAG,"hp"+this.hp);
                 enemy.setColidable(false);
-                TitleScene.get().soundPlay(3,6,1.0f);
+                //TitleScene.get().soundPlay(3,6,1.0f);
                 if(this.hp>0){
                 ATB+=eAtk;
                 setAnimState(AnimState.hit);
@@ -239,7 +271,7 @@ public class Player extends AnimObject implements BoxCollidable {
                 hitEffect.reset();
                 }else{
                     setAnimState(AnimState.die);
-                    TitleScene.get().soundPlay(R.raw.tressa_die,1.0f);
+                   // TitleScene.get().soundPlay(R.raw.tressa_die,1.0f);
                 }
             }
             }
@@ -249,7 +281,7 @@ public class Player extends AnimObject implements BoxCollidable {
 
 
     public void jump() {
-        if (state != AnimState.lattack&&state != AnimState.sattack){
+        if (state != AnimState.lattack&&state != AnimState.sattack&&!check){
             if (jumpCount < 2) {
 //
             jumpCount++;
@@ -257,32 +289,32 @@ public class Player extends AnimObject implements BoxCollidable {
             if (speed > JUMP_POWER) {
                 speed = JUMP_POWER;
             }
-            TitleScene.get().soundPlay(R.raw.tressa_attack2,1.0f);
+            //TitleScene.get().soundPlay(R.raw.tressa_attack2,1.0f);
             setAnimState(jumpCount == 1 ? AnimState.jump : AnimState.djump);
         }}
     }
     public void shortAttack() {
-        if (state != AnimState.lattack&&state != AnimState.sattack){
+        if (state != AnimState.lattack&&state != AnimState.sattack&&!check){
         if(saReload<=0){
-            TitleScene.get().soundPlay(6,1,1.0f);
+            //TitleScene.get().soundPlay(6,1,1.0f);
             setAnimState(AnimState.sattack);
             x+=UiBridge.x(30);
             width=UiBridge.x(160);
             saReload=60;
             fab.reset();
-            TitleScene.get().soundPlay(R.raw.spear_attack,0.5f);
+            //TitleScene.get().soundPlay(R.raw.spear_attack,0.5f);
         }}
     }
     public void longAttack() {
-        if (state != AnimState.lattack&&state != AnimState.sattack){
+        if (state != AnimState.lattack&&state != AnimState.sattack&&!check){
         if(laReload<=0){
-            TitleScene.get().soundPlay(6,0,1.0f);
+            //TitleScene.get().soundPlay(6,0,1.0f);
             setAnimState(AnimState.lattack);
             laReload=100;
             fab.reset();
             MainScene scene = MainScene.get();
             scene.getGameWorld().add(MainScene.Layer.arrow.ordinal(), new Arrow(x,y));
-            TitleScene.get().soundPlay(R.raw.bow_attack,0.5f);
+            //TitleScene.get().soundPlay(R.raw.bow_attack,0.5f);
         }}
     }
 

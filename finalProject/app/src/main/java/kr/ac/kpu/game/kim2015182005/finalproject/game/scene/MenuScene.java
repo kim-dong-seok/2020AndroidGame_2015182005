@@ -12,10 +12,10 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.TextObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.bg.MapBackground;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ui.TouchManager;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.BGBlack;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.MovingButton;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.SelectButton;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.SelectWindow;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.SelectWindowOneAnswer;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ui.MovingButton;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ui.SelectButton;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ui.SelectWindow;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ui.SelectWindowOneAnswer;
 
 public class MenuScene extends GameScene {
     private static final String TAG = MenuScene.class.getSimpleName();
@@ -210,9 +210,12 @@ public class MenuScene extends GameScene {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        TitleScene.get().getSoundEffects().play(R.raw.menu_window,1.0f);
+        super.onBackPressed();
 
-
-
+    }
 
     public static MenuScene get() {
         return instance;

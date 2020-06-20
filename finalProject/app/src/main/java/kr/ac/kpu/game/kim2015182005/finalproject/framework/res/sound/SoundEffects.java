@@ -18,7 +18,7 @@ public class SoundEffects {
             R.raw.tressa_attack2,R.raw.tressa_attack1,R.raw.tressa_attack3,R.raw.tressa_attack4,R.raw.tressa_attack5,R.raw.tressa_attack6
             ,R.raw.tressa_hit1,R.raw.tressa_hit2,R.raw.tressa_hit3,R.raw.bow_attack,R.raw.spear_attack
             ,R.raw.tressa_select,R.raw.tressa_select2,R.raw.tressa_select3,R.raw.tressa_select4,R.raw.tressa_select5
-            ,R.raw.select_button,R.raw.back_button,R.raw.menu_move,R.raw.menu_window
+            ,R.raw.select_button,R.raw.back_button,R.raw.menu_move,R.raw.menu_window,R.raw.ch_select_effect
             , R.raw.character_select_tressa,R.raw.tressa_die
     };
 

@@ -6,7 +6,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.TextObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.BGBlack;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.SelectButton;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ui.SelectButton;
 
 public class CharacterSelectBackPressScene extends GameScene {
         private static final String TAG = CharacterSelectBackPressScene.class.getSimpleName();
@@ -62,7 +62,7 @@ public class CharacterSelectBackPressScene extends GameScene {
         tbNButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
-                TitleScene.get().getSoundEffects().play(R.raw.select_button,1.0f);
+                TitleScene.get().getSoundEffects().play(R.raw.back_button,1.0f);
                 pop();
             }
 

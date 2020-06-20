@@ -40,6 +40,10 @@ public class BitmapObject extends GameObject implements BoxCollidable {
         this.height = height;
     }
 
+    public void setSbmp(SharedBitmap sbmp) {
+        this.sbmp = sbmp;
+    }
+
     @Override
     public float getRadius() {
         return this.width / 2;

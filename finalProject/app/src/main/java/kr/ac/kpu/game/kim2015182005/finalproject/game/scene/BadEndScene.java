@@ -6,8 +6,6 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.TextObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ui.TouchManager;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.BGBlack;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.SelectButton;
 
 public class BadEndScene extends GameScene {
         private static final String TAG = BadEndScene.class.getSimpleName();
@@ -63,7 +61,7 @@ public class BadEndScene extends GameScene {
                 pop();
             }
         });
-        gameWorld.add(CharacterSelectScene.Layer.ui.ordinal(), tm);
+        gameWorld.add(Layer.ui.ordinal(), tm);
 
 
     }

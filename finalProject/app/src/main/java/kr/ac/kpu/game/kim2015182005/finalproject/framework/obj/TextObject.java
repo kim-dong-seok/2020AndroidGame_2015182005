@@ -18,6 +18,8 @@ public class TextObject extends GameObject {
     private String text;
     protected float x,y,w,h;
     private Rect rect;
+    private int row;
+    private int col;
     public TextObject(String text, float x,float y,int size,String color,boolean bold) {
         this.text=text;
         this.x=x;
@@ -29,7 +31,14 @@ public class TextObject extends GameObject {
         setSize(size);
         setColor(color);
         setHW();
+        row=0;
+        col=0;
        // scoreAnimator.setDuration(SCORE_INCREASE_DURATION);
+    }
+
+    public void setCut(int row,int col) {
+        this.row = row;
+        this.col=col;
     }
 
     public void setX(float x) {
@@ -51,8 +60,13 @@ public class TextObject extends GameObject {
 
     @Override
     public void draw(Canvas canvas) {
+        if(col==1) {
+            canvas.drawText(text.substring(0,row), x - w / 2, y + h / 2, paint);
+            canvas.drawText(text.substring(row+1), x - w / 2, y + h / 2+h/10*12, paint);
+        }else{
+            canvas.drawText(text, x - w / 2, y + h / 2, paint);
+        }
 
-        canvas.drawText(text,x-w/2,y+h/2,paint);
     }
     public void setSize(int size) {
         paint.setTextSize(size);

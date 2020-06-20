@@ -2,10 +2,12 @@ package kr.ac.kpu.game.kim2015182005.finalproject.framework.main;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.iface.Touchable;
 
 public class GameObject {
+    private static final String TAG = GameObject.class.getSimpleName();
     protected float x, y;
     protected Paint paint;
     protected int alphaNum;
@@ -56,6 +58,11 @@ public class GameObject {
         flash=true;
         this.maxAlpha=maxAlpha;
     }
+
+    public void setFlashOn(boolean flashOn) {
+        this.flashOn = flashOn;
+    }
+
     public void setFlashSpeed(int speed){
         flashSpeed=speed;
     }
@@ -74,6 +81,7 @@ public class GameObject {
                     }
                     alpha(alphaNum);
                 }else{
+                    //Log.d(TAG,"")
                     alphaNum -= flashSpeed;
                     if (alphaNum <= 0) {
                         alphaNum = 0;
@@ -88,6 +96,7 @@ public class GameObject {
     }
     public void alpha(int x){
         paint.setAlpha(x);
+        alphaNum=x;
     }
     public int getAlpha(){
         return paint.getAlpha();

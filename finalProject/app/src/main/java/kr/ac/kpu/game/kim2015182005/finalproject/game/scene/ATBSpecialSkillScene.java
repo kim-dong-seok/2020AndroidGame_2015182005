@@ -4,7 +4,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.R;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameScene;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.BGBlack;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.SelectButton;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ui.SelectButton;
 
 public class ATBSpecialSkillScene extends GameScene {
         private static final String TAG = ATBSpecialSkillScene.class.getSimpleName();

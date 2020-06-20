@@ -14,8 +14,12 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameWorld;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Boss;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.BoxObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.CandyItem;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.CheckPointObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Enemy;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Environemental;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Npc;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Platform;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.MainScene;
 
@@ -60,6 +64,8 @@ public class TextMap {
         reset();
     }
 
+
+
     private void createColumn() {
         float y = blockSize / 2;
         for (int row = 0; row < rows; row++) {
@@ -89,11 +95,27 @@ public class TextMap {
                 break;
             case '5':
                 layer = MainScene.Layer.enemy;
-                obj = Enemy.get(x, y-blockSize, blockSize*2, blockSize*3);
+                obj = Enemy.get(x, y, blockSize, blockSize*2);
                 break;
             case '6':
                 layer = MainScene.Layer.enemy;
-                obj = Boss.get(x, y-blockSize, blockSize*2, blockSize*3);
+                obj = Boss.get(x, y, blockSize, blockSize*2);
+                break;
+            case '7':
+                layer = MainScene.Layer.box;
+                obj = BoxObject.get(x, y, blockSize*2, blockSize*2);
+                break;
+            case 'z':
+                layer = MainScene.Layer.checkPoint;
+                obj = CheckPointObject.get(x, y-blockSize*3, blockSize, blockSize*8);
+                break;
+            case 'A': case 'B': case 'C': case 'D':
+                layer = MainScene.Layer.npc;
+                obj = Npc.get(x, y,blockSize, blockSize*2, ch - 'A');
+                break;
+            case 'H': case 'I': case 'J': case 'K':
+                layer = MainScene.Layer.environemental;
+                obj = Environemental.get(x, y,blockSize*4, blockSize*3, ch - 'H');
                 break;
         }
         if (obj != null) {

@@ -1,7 +1,6 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.game.scene;
 
 import android.graphics.RectF;
-import android.util.Log;
 
 import kr.ac.kpu.game.kim2015182005.finalproject.R;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameScene;
@@ -14,10 +13,10 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.TextObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.bg.MapBackground;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.ui.TouchManager;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.BGBlack;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.CharacterBackground;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.MovingButton;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.SelectWindow;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.SelectWindowOneAnswer;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.bg.CharacterBackground;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ui.MovingButton;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ui.SelectWindow;
+import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.ui.SelectWindowOneAnswer;
 
 public class CharacterSelectScene extends GameScene {
     private static final String TAG = CharacterSelectScene.class.getSimpleName();
@@ -78,7 +77,7 @@ public class CharacterSelectScene extends GameScene {
             }else{
                 if(select_op.getFab().done()){
                 TitleScene.get().getBgmPlayer().stopBGM();
-                MainScene scene = new MainScene();
+                StoryScene scene=new StoryScene();
                 scene.push();
                 }
             }

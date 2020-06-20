@@ -59,6 +59,7 @@ public class Arrow extends BitmapObject implements Recyclable, BoxCollidable {
         float seconds = GameTimer.getTimeDiffSeconds();
         x += dx * seconds;
 
+        Log.d(TAG,"GameTimer.getTimeDiffSeconds()"+GameTimer.getTimeDiffSeconds());
         super.update();
         //
         if (x > UiBridge.metrics.size.x) {
