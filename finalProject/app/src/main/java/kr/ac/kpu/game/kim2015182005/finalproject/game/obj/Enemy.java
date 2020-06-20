@@ -17,7 +17,9 @@ import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.MainScene;
 
 public class Enemy extends AnimObject implements Recyclable, BoxCollidable {
     private static final int[] RES_IDS = {
-            R.mipmap.mikk_left_move,
+            R.mipmap.prt1,R.mipmap.prt2,R.mipmap.prt3,R.mipmap.prt4,
+            R.mipmap.prt5,R.mipmap.prt6,R.mipmap.prt7
+
     };
     public static final int ITEM_TYPE_COUNT = RES_IDS.length;
     private static final String TAG = CandyItem.class.getSimpleName();
@@ -45,15 +47,15 @@ public class Enemy extends AnimObject implements Recyclable, BoxCollidable {
     protected int score;
 
 
-    protected Enemy(float x, float y, int width, int height) {
-        super(x, y,width, height, R.mipmap.mikk_left_move, 6, 6);
+    protected Enemy(float x, float y, int width, int height,int typeIndex) {
+        super(x, y,width, height, RES_IDS[typeIndex], 4, 4);
         Log.d(TAG, "Creating CandyItem instance");
     }
-    public static Enemy get(float x, float y, int width, int height) {
+    public static Enemy get(float x, float y, int width, int height,int typeIndex) {
         RecyclePool rpool = GameScene.getTop().getGameWorld().getRecyclePool();
         Enemy enemy = (Enemy) rpool.get(Enemy.class);
         if (enemy == null) {
-            enemy = new Enemy(x, y, width, height);
+            enemy = new Enemy(x, y, width, height, typeIndex);
             enemy.atk=20;
             enemy.hp=100;
 
@@ -64,7 +66,7 @@ public class Enemy extends AnimObject implements Recyclable, BoxCollidable {
             enemy.hp=100;
             enemy.width = width;
             enemy.height = height;
-            enemy.fab = new FrameAnimationBitmap(R.mipmap.mikk_left_move, 6, 6);
+            enemy.fab = new FrameAnimationBitmap(RES_IDS[typeIndex], 4, 4);
         }
         enemy.score = SCORE_MULTIPLIER ;
         enemy.colidable=true;
@@ -95,11 +97,11 @@ public class Enemy extends AnimObject implements Recyclable, BoxCollidable {
     }
     @Override
     public void getBox(RectF rect) {
-        int hw = width / 2;
-        int hh = height / 2;
-        rect.left = x - hw;
-        rect.top = y - hh;
-        rect.right = x + hw;
-        rect.bottom = y + hh;
+        int hw = width / 20;
+        int hh = height / 20;
+        rect.left = x - hw*5;
+        rect.top = y ;
+        rect.right = x + hw*6;
+        rect.bottom = y + hh*10;
     }
 }

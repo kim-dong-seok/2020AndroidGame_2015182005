@@ -23,6 +23,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(new GameView(this));
         //new TitleScene().run();
         new MainScene().run();
+        //new InGameStoryScene().run();
         //new MenuScene().run();
         //new SecondScene().run();
     }

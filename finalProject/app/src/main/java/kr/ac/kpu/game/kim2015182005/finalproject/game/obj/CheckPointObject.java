@@ -70,13 +70,13 @@ public class CheckPointObject extends GameObject implements Recyclable, BoxColli
         }
     }
 
-    @Override
-    public void draw(Canvas canvas) {
-        int hw = width / 2;
-        int hh = height / 2;
-        paint.setColor(Color.RED);
-        canvas.drawRect(x - hw,y - hh,x + hw, y + hh,paint);
-    }
+//    @Override
+//    public void draw(Canvas canvas) {
+//        int hw = width / 2;
+//        int hh = height / 2;
+//        paint.setColor(Color.RED);
+//        canvas.drawRect(x - hw,y - hh,x + hw, y + hh,paint);
+//    }
 
     @Override
     public void recycle() {

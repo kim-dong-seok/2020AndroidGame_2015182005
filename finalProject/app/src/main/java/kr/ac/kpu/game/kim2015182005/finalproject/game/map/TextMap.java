@@ -93,9 +93,9 @@ public class TextMap {
                 layer = MainScene.Layer.obstacle;
                 obj = new AnimObject(x + 3 * blockSize / 2, y + 3 * blockSize / 2, 3 * blockSize, 3 * blockSize, R.mipmap.fireball_128_24f, 2, 0);
                 break;
-            case '5':
+            case 'a':case 'b':case 'c':case 'd':case 'e':case 'f':case 'g':
                 layer = MainScene.Layer.enemy;
-                obj = Enemy.get(x, y, blockSize, blockSize*2);
+                obj = Enemy.get(x, y-blockSize*2, blockSize*5, blockSize*5,ch - 'a');
                 break;
             case '6':
                 layer = MainScene.Layer.enemy;

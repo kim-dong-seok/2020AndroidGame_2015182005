@@ -237,6 +237,11 @@ public class Player extends AnimObject implements BoxCollidable {
             }
         }
     }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
     private void checkEnemyCollision() {
 
         ArrayList<GameObject> enemys = MainScene.get().getGameWorld().objectsAtLayer(MainScene.Layer.enemy.ordinal());
@@ -271,6 +276,10 @@ public class Player extends AnimObject implements BoxCollidable {
                 hitEffect.reset();
                 }else{
                     setAnimState(AnimState.die);
+                    y+=UiBridge.y(30);
+                    width=UiBridge.x(94);
+                    height=UiBridge.x(51);
+
                    // TitleScene.get().soundPlay(R.raw.tressa_die,1.0f);
                 }
             }

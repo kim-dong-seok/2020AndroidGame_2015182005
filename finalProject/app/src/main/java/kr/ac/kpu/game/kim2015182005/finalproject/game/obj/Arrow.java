@@ -27,7 +27,7 @@ public class Arrow extends BitmapObject implements Recyclable, BoxCollidable {
     private float dx;
     private int hp=40;
     public Arrow(float x, float y) {
-        super(x, y, 50, 50, R.mipmap.arrow);
+        super(x, y, 100, 20, R.mipmap.arrow);
         this.dx =500;
 
         Log.d(TAG,"new"+this);

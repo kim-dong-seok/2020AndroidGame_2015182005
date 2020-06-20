@@ -36,10 +36,15 @@ public class MainScene extends GameScene {
     private BGBlack end_bg;
     private String[] player_story ={
             "이런 상상이나 하고 있을 때가 아니야","우리 가게는 조그마하고...","내가 더 열심히 해야지!"
-            ,"심부름 받은 포도주를 받으러 가자"
+            ,"심부름 받은 포도주를 받으러 가자","무슨 일 있나요?","본거지가 마을 외곽 마미야 동굴이였던가요"
+            ,"소중한 상품을 빼앗다니 용서 할 수 없어요","저에게도 상인으로서의 고집이 있어요!"
+    };
+    private String[] npc_story ={
+            "~~웅성~~ ~~웅성~~ ~~시끌~~ ~~시끌~~","오! 트레사구나..","실은 해적에게 장사할 물건을 빼았겨 버렸단다"
+            ,"너무 위험하단다. 물건은 다음주를 기약 하자구나"
     };
     private String[] story_name={
-            "트레사"
+            "트레사","마을상인"
     };
 
     public Platform getPlatformAt(float x, float y) {
@@ -82,9 +87,10 @@ public class MainScene extends GameScene {
     private  static  MainScene instance;
     private boolean storyOn=true;
     private int story=0;
-    private BitmapObject speech;
-    private TextObject speech_text;
-    private TextObject speech_name;
+    private BitmapObject speech,npc_speech;
+    private TextObject speech_text,npc_speech_text;
+    private TextObject speech_name,npc_speech_name;
+    private ImageScrollBackground bg1,bg2,bg3;
     @Override
     protected int getLayerCount() {
         return Layer.COUNT.ordinal();
@@ -116,17 +122,72 @@ public class MainScene extends GameScene {
                     speech_text.setCut(11,1);
                     break;
                 case 4:
-                    speech_text.alpha(0);
-                    speech.alpha(0);
-                    speech_name.alpha(0);
+                    player_speechOn(false);
                     storyOn=false;
                     game_puase=false;
+                    player.setCheck(false);
+                    break;
+                case 5:
+                    npc_speechOn(true);
+                    break;
+                case 6:
+                    npc_speechOn(false);
+                    player_speechOn(true);
+                    speech_text.setText(player_story[4]);
+                    speech_text.setCut(0,0);
+                    break;
+                case 7:
+                    npc_speechOn(true);
+                    player_speechOn(false);
+                    npc_speech_text.setText(npc_story[1]);
+                    npc_speech_text.setCut(0,0);
+                    break;
+                case 8:
+                    npc_speech_text.setText(npc_story[2]);
+                    npc_speech_text.setCut(11,1);
+                    break;
+                case 9:
+                    npc_speechOn(false);
+                    player_speechOn(true);
+                    speech_text.setText(player_story[5]);
+                    speech_text.setCut(10,1);
+                    break;
+                case 10:
+                    npc_speechOn(true);
+                    player_speechOn(false);
+                    npc_speech_text.setText(npc_story[3]);
+                    npc_speech_text.setCut(13,1);
+                    break;
+                case 11:
+                    npc_speechOn(false);
+                    player_speechOn(true);
+                    speech_text.setText(player_story[6]);
+                    speech_text.setCut(12,1);
+                    break;
+                case 12:
+                    speech_text.setText(player_story[7]);
+                    speech_text.setCut(11,1);
+                    break;
+                case 13:
+                    player_speechOn(false);
+                    storyOn=false;
+                    game_puase=false;
+                    player.setCheck(false);
+                    end_bg.setFlashSpeed(1);
+                    end_bg.flash(255);
                     break;
             }
         }else{
         if(!bad_end){
         if(!game_puase){
             super.update();
+            if(end_bg.getAlpha()==255){
+                map = new TextMap("stage_02.txt", gameWorld);
+                bg1.setImage(R.mipmap.cave_bg2);
+                bg2.setImage(R.mipmap.cave_bg12);
+                bg3.setImage(R.mipmap.cave_bg13);
+                end_bg.flash(255);
+            }
         float dx = -2 * mdpi_100 * GameTimer.getTimeDiffSeconds();
         map.update(dx);
         for (int layer = Layer.platform.ordinal(); layer <= Layer.checkPoint.ordinal(); layer++) {
@@ -139,7 +200,8 @@ public class MainScene extends GameScene {
         if(player.getHp()<=0){
             bad_end=true;
         }
-        }else{
+        }
+        else{
             super.update();
             if(end_bg.getAlpha()==0) {
                 end_bg.setFlashSpeed(1);
@@ -152,7 +214,28 @@ public class MainScene extends GameScene {
             }
         }}
     }
-
+    public void npc_speechOn(boolean on){
+           if(on){
+               npc_speech_text.alpha(255);
+               npc_speech.alpha(255);
+               npc_speech_name.alpha(255);
+           }else{
+               npc_speech_text.alpha(0);
+               npc_speech.alpha(0);
+               npc_speech_name.alpha(0);
+           }
+    }
+    public void player_speechOn(boolean on){
+        if(on){
+            speech_text.alpha(255);
+            speech.alpha(255);
+            speech_name.alpha(255);
+        }else{
+            speech_text.alpha(0);
+            speech.alpha(0);
+            speech_name.alpha(0);
+        }
+    }
     public void setStory(int story) {
         this.story = story;
     }
@@ -202,20 +285,30 @@ public class MainScene extends GameScene {
 
         speech_name=new TextObject(story_name[0],UiBridge.x(32), UiBridge.y(145),40,"#3d331d",true);
         gameWorld.add(Layer.story.ordinal(), speech_name);
-        speech_text=new TextObject(player_story[0],UiBridge.x(180), UiBridge.y(170),50,"#3d331d",true);
+        speech_text=new TextObject(player_story[0],UiBridge.x(155), UiBridge.y(170),45,"#3d331d",true);
         speech_text.setCut(10,1);
         gameWorld.add(Layer.story.ordinal(), speech_text);
 
-
-        gameWorld.add(Layer.bg.ordinal(), new ImageScrollBackground(R.mipmap.town_bg, ImageScrollBackground.Orientation.horizontal, -100));
-        gameWorld.add(Layer.bg.ordinal(), new ImageScrollBackground(R.mipmap.town_bg_2, ImageScrollBackground.Orientation.horizontal, -200));
-        gameWorld.add(Layer.bg.ordinal(), new ImageScrollBackground(R.mipmap.town_bg_3, ImageScrollBackground.Orientation.horizontal, -300));
+        npc_speech=new BitmapObject(UiBridge.x(550), UiBridge.y(200),UiBridge.y(250),UiBridge.y(130),R.mipmap.speech);
+        gameWorld.add(Layer.story.ordinal(), npc_speech);
+        npc_speech_name=new TextObject(story_name[1],UiBridge.x(472), UiBridge.y(145),40,"#3d331d",true);
+        gameWorld.add(Layer.story.ordinal(), npc_speech_name);
+        npc_speech_text=new TextObject(npc_story[0],UiBridge.x(630), UiBridge.y(170),45,"#3d331d",true);
+        npc_speech_text.setCut(13,1);
+        gameWorld.add(Layer.story.ordinal(), npc_speech_text);
+        npc_speechOn(false);
+        bg1=new ImageScrollBackground(R.mipmap.town_bg, ImageScrollBackground.Orientation.horizontal, -100);
+        gameWorld.add(Layer.bg.ordinal(), bg1);
+        bg2=new ImageScrollBackground(R.mipmap.town_bg_2, ImageScrollBackground.Orientation.horizontal, -200);
+        gameWorld.add(Layer.bg.ordinal(), bg2);
+        bg3=new ImageScrollBackground(R.mipmap.town_bg_3, ImageScrollBackground.Orientation.horizontal, -300);
+        gameWorld.add(Layer.bg.ordinal(), bg3);
 
         RectF rbox = new RectF(UiBridge.x(-52), UiBridge.y(20), UiBridge.x(-20), UiBridge.y(62));
         scoreObject = new ScoreObject(R.mipmap.number_64x84, rbox);
         gameWorld.add(MainScene.Layer.ui.ordinal(), scoreObject);
 
-
+        end_bg.alpha(255);
         jumpButton = new SelectButton(UiBridge.x(60), UiBridge.metrics.size.y-UiBridge.y(60),UiBridge.x(100), UiBridge.y(100),150,"",10,R.mipmap.jump_btn60, R.mipmap.jump_btn100);
         jumpButton.setOnClickRunnable(new Runnable() {
             @Override

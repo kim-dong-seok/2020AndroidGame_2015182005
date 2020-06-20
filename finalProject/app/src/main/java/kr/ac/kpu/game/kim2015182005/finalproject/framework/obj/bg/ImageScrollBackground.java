@@ -10,7 +10,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.res.bitmap.SharedBitmap;
 
 public class ImageScrollBackground extends GameObject {
-    private final SharedBitmap sbmp;
+    private SharedBitmap sbmp;
     //    private final int pageSize;
     private int speed;
     private float scrollX;
@@ -26,7 +26,9 @@ public class ImageScrollBackground extends GameObject {
         this.speed = speed;
         srcRect.set(0, 0, sbmp.getWidth(), sbmp.getHeight());
     }
-
+    public void setImage(int resId){
+        this.sbmp=SharedBitmap.load(resId);
+    }
     @Override
     public void update() {
         if (speed == 0) return;
