@@ -28,6 +28,7 @@ public class LoadingScene extends GameScene {
     }
     private int jumpCount=0;
     private static LoadingScene instance;
+    private boolean finish=true;
 
     @Override
     protected int getLayerCount() {
@@ -69,10 +70,14 @@ public class LoadingScene extends GameScene {
         }
     }
 
+    public void setFinish(boolean finish) {
+        this.finish = finish;
+    }
+
     @Override
     public void update() {
         super.update();
-        if(timer.done()){
+        if(timer.done()&&finish){
             pop();
             TitleScene.get().getBgmPlayer().startBGM();
         }

@@ -86,12 +86,16 @@ public class WinScene extends GameScene {
             public void run() {
                 TitleScene.get().getBgmPlayer().stopBGM();
                 TitleScene.get().getSoundEffects().play(R.raw.select_button,1.0f);
-                TitleScene.get().getBgmPlayer().setBGM(R.raw.main);
-                TitleScene.get().getBgmPlayer().setloop(true);
-                TitleScene.get().getBgmPlayer().startBGM();
+//                TitleScene.get().getBgmPlayer().setBGM(R.raw.main);
+//                TitleScene.get().getBgmPlayer().setloop(true);
+//                TitleScene.get().getBgmPlayer().startBGM();
                 pop();
                 pop();
                 pop();
+                LoadingScene scene1 = new LoadingScene();
+                scene1.push();
+                LoadingScene.get().setFinish(false);
+
             }
         });
         gameWorld.add(Layer.ui.ordinal(), tm);

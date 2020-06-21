@@ -45,10 +45,10 @@ public class Player extends AnimObject implements BoxCollidable {
     private int ATB;
     private int totalATB;
     private float jumpY, originY, originX;
-    protected int totalHp=200;
+    protected int totalHp=100;
     private boolean check=false;
     private boolean player_cheat=false;
-    private int hp_portion=5;
+    private int hp_portion=3;
     float hitTime;
     private AnimState state;
     public Player(float x, float y) {
@@ -59,7 +59,7 @@ public class Player extends AnimObject implements BoxCollidable {
         hp=totalHp;
         sAtk=50;
         totalATB=300;
-        ATB=100;
+        ATB=0;
         fabJump = new FrameAnimationBitmap(R.mipmap.tressa_right_jump4, 1, 1);
         fabDJump = new FrameAnimationBitmap(R.mipmap.tressa_right_djump, 1, 1);
         fabSA = new FrameAnimationBitmap(R.mipmap.tressa_right_short_attack2, 10, 5);
@@ -286,7 +286,7 @@ public class Player extends AnimObject implements BoxCollidable {
                 ehp-=sAtk;
                 TitleScene.get().soundPlay(R.raw.spear_hit,0.5f);
                 if(ehp<=0){
-                    ATB+=30;
+                    ATB+=50;
                     enemy.remove();
                     enemy.setHit(true);
                     MainScene.get().addKillcount();
@@ -294,7 +294,7 @@ public class Player extends AnimObject implements BoxCollidable {
                     enemy.setHp(ehp);
                     enemy.setHit(true);
                     enemy.setX(enemy.getX()+UiBridge.x(200));
-                    ATB+=15;
+                    ATB+=25;
                 }
             }else if(CollisionHelper.collides(this, enemy)&&state!=AnimState.sattack){
                 //Log.d(TAG,"player 하단"+(this.y+height/2)+"적 상단"+enemy.ColiH());

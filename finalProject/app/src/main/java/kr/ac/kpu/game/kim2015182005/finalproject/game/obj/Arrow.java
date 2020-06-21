@@ -83,11 +83,11 @@ public class Arrow extends BitmapObject implements Recyclable, BoxCollidable {
                 int ehp=enemy.getHp();
                 ehp-=hp;
                 if(ehp<=0){
-                    MainScene.get().getPlayer().setATB(MainScene.get().getPlayer().getATB()+20);
+                    MainScene.get().getPlayer().setATB(MainScene.get().getPlayer().getATB()+40);
                     enemy.remove();
                     MainScene.get().addKillcount();
                 }else{
-                    MainScene.get().getPlayer().setATB(MainScene.get().getPlayer().getATB()+10);
+                    MainScene.get().getPlayer().setATB(MainScene.get().getPlayer().getATB()+20);
                     enemy.setHp(ehp);
                     enemy.setX(enemy.getX()+UiBridge.x(100));
                 }

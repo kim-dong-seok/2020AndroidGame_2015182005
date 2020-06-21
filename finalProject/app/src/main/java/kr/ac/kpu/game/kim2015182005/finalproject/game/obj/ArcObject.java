@@ -29,6 +29,7 @@ public class ArcObject extends GameObject {
     public ArcObject(int x, int y, int r,int w,float start,float end, String color,int stroke) {
         paint=new Paint();
         bit = Bitmap.createBitmap(r*2, r*2, Bitmap.Config.ARGB_8888);
+        bit.eraseColor(Color.TRANSPARENT);
         arc=new Canvas(bit);
         arcPaint=new Paint();
         oval= new RectF();
@@ -58,14 +59,19 @@ public class ArcObject extends GameObject {
         paint.setStrokeWidth(UiBridge.x(1));
     }
 
+    @Override
+    public void update() {
+        super.update();
+
+    }
+
     public void setColor(String color) {
         arcPaint.setColor(Color.parseColor(color));
     }
-
     @Override
     public void draw(Canvas canvas) {
-
-
+        bit.eraseColor(Color.TRANSPARENT);
+        super.draw(canvas);
         if(stroke>0){
             //바깥 테두리
             oval.set(r-r, r-r, r+r, r+r);

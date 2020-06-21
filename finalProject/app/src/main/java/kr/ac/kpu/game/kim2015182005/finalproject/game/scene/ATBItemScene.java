@@ -84,6 +84,7 @@ public class ATBItemScene extends GameScene {
                 if(! ATBItemScene.get().isClickOn()){
                     ATBItemScene.get().setClickOn(true);
                     MainScene.get().getPlayer().useHpPortion();
+                    MainScene.get().getPlayer().setATB(MainScene.get().getPlayer().getATB()-100);
                     TitleScene.get().soundPlay(R.raw.select_button,1.0f);
                     TitleScene.get().soundPlay(R.raw.tressa_portion,1.0f);
                     pop();

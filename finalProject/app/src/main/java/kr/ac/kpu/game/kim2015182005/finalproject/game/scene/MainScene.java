@@ -112,7 +112,10 @@ public class MainScene extends GameScene {
     @Override
     public void update() {
         //Log.d(TAG,"map.getRows()"+map.getMapIndex());
+
         player_pos.setX(UiBridge.x(300)+((float)UiBridge.x(240)/stage_range*(map.getMapIndex()-19)));
+
+
         if(!game_win){
             if(player_pos.getX()>=boss_pos.getX()-UiBridge.x(15)){
                 end_bg.flash(255);
@@ -346,7 +349,7 @@ public class MainScene extends GameScene {
 
 
 
-        //end_bg.alpha(255);
+        end_bg.alpha(255);
         SelectButton jumpButton = new SelectButton(UiBridge.x(60), UiBridge.metrics.size.y - UiBridge.y(60), UiBridge.x(100), UiBridge.y(100), 150, "", 10, R.mipmap.jump_btn60, R.mipmap.jump_btn100);
         jumpButton.setOnClickRunnable(new Runnable() {
             @Override

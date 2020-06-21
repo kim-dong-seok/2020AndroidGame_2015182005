@@ -51,12 +51,17 @@ public class ATBgauge extends GameObject {
                 }
             }else{
                 gauge2.setEndAngle((int)115*((atb-100)/100));
+                gauge3.setEndAngle((int)0);
             }
 
         }else{
             //Log.d(TAG,"ATB"+atb/100);
+
             gauge1.setEndAngle((int)115*(atb/100));
             gauge1.setColor("#be310f");
+
+            gauge2.setEndAngle((int)0);
+            gauge3.setEndAngle((int)0);
         }
 
     }
