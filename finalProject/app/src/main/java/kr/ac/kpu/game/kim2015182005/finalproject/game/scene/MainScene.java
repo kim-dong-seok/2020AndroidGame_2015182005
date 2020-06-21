@@ -85,7 +85,7 @@ public class MainScene extends GameScene {
     private TextObject speech_text,npc_speech_text;
     private TextObject speech_name,npc_speech_name;
     private ImageScrollBackground bg1,bg2,bg3;
-    private int stage_range=200;
+    private int stage_range=150;
     private boolean cheat=false;
 
     @Override
@@ -117,7 +117,7 @@ public class MainScene extends GameScene {
 
 
         if(!game_win){
-            if(player_pos.getX()>=boss_pos.getX()-UiBridge.x(15)){
+            if(player_pos.getX()>=boss_pos.getX()-UiBridge.x(10)){
                 end_bg.flash(255);
                 game_win=true;
             }
@@ -349,7 +349,7 @@ public class MainScene extends GameScene {
 
 
 
-        end_bg.alpha(255);
+        //end_bg.alpha(255);
         SelectButton jumpButton = new SelectButton(UiBridge.x(60), UiBridge.metrics.size.y - UiBridge.y(60), UiBridge.x(100), UiBridge.y(100), 150, "", 10, R.mipmap.jump_btn60, R.mipmap.jump_btn100);
         jumpButton.setOnClickRunnable(new Runnable() {
             @Override
@@ -396,7 +396,7 @@ public class MainScene extends GameScene {
         gameWorld.add(Layer.ui.ordinal(), playerInfo);
 
 
-        SelectButton menuButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(50), UiBridge.y(35), UiBridge.x(90), UiBridge.y(60),250,"",10,R.mipmap.menu_icon3,R.mipmap.menu_icon3);
+        SelectButton menuButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(50), UiBridge.y(35), UiBridge.x(90), UiBridge.y(60),250,"",10,R.mipmap.menu_icon2,R.mipmap.menu_icon2);
         menuButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {if(!bad_end&&!storyOn&&!player.isCheck()){

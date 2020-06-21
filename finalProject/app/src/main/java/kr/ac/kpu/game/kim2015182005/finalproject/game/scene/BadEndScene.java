@@ -53,19 +53,21 @@ public class BadEndScene extends GameScene {
             public void run() {
                 TitleScene.get().getBgmPlayer().stopBGM();
                 TitleScene.get().getSoundEffects().play(R.raw.select_button,1.0f);
-//                TitleScene.get().getBgmPlayer().setBGM(R.raw.main);
-//                TitleScene.get().getBgmPlayer().setloop(true);
-//                TitleScene.get().getBgmPlayer().startBGM();
-                TitleScene.get().getBgmPlayer().setBGM(R.raw.battle);
+                TitleScene.get().getBgmPlayer().setBGM(R.raw.main);
                 TitleScene.get().getBgmPlayer().setloop(true);
                 TitleScene.get().getBgmPlayer().startBGM();
-                MainScene.get().setBad_end(false);
-                MainScene.get().setCheat(true);
-                MainScene.get().getEnd_bg().alpha(0);
+//                TitleScene.get().getBgmPlayer().setBGM(R.raw.battle);
+//                TitleScene.get().getBgmPlayer().setloop(true);
+//                TitleScene.get().getBgmPlayer().startBGM();
+//                MainScene.get().setBad_end(false);
+//                MainScene.get().setCheat(true);
+//                MainScene.get().getEnd_bg().setFlashOn(false);
+//                MainScene.get().getEnd_bg().alpha(0);
 
                 pop();
-//                pop();
-//                pop();
+                pop();
+                pop();
+                pop();
             }
         });
         gameWorld.add(Layer.ui.ordinal(), tm);
