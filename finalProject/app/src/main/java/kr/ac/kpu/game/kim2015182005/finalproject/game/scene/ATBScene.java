@@ -77,45 +77,47 @@ public class ATBScene extends GameScene {
             atbBG.alpha(100);
             gameWorld.add(Layer.ui.ordinal(),atbBG );
 
-        atbWbutton1 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(250),UiBridge.metrics.size.y-UiBridge.y(200),UiBridge.x(200), UiBridge.y(50),200,"상인의 기술",50,R.mipmap.atb_window,R.mipmap.atb_window);
+        atbWbutton1 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(230),UiBridge.metrics.size.y-UiBridge.y(200),UiBridge.x(200), UiBridge.y(50),200,"상인의 기술",50,R.mipmap.atb_window,R.mipmap.atb_window);
         atbWbutton1.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
                     ATBSikllScene atbScene = new ATBSikllScene();
                     atbScene.push();
+                TitleScene.get().soundPlay(R.raw.select_button,1.0f);
 
             }
 
         });
         ATBScene.get().getGameWorld().add(ATBScene.Layer.ui.ordinal(), atbWbutton1);
 
-        atbWbutton2 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(250),UiBridge.metrics.size.y-UiBridge.y(150),UiBridge.x(200), UiBridge.y(50),200,"용병 부르기",50,R.mipmap.atb_window,R.mipmap.atb_window);
+        atbWbutton2 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(230),UiBridge.metrics.size.y-UiBridge.y(150),UiBridge.x(200), UiBridge.y(50),200,"용병 부르기",50,R.mipmap.atb_window,R.mipmap.atb_window);
         atbWbutton2.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
                     ATBSpecialSkillScene atbScene = new ATBSpecialSkillScene();
                     atbScene.push();
-
+                TitleScene.get().soundPlay(R.raw.select_button,1.0f);
             }
 
         });
         gameWorld.add(ATBScene.Layer.ui.ordinal(), atbWbutton2);
-        atbWbutton3 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(250),UiBridge.metrics.size.y-UiBridge.y(100),UiBridge.x(200), UiBridge.y(50),200,"아이템",50,R.mipmap.atb_window,R.mipmap.atb_window);
+        atbWbutton3 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(230),UiBridge.metrics.size.y-UiBridge.y(100),UiBridge.x(200), UiBridge.y(50),200,"아이템",50,R.mipmap.atb_window,R.mipmap.atb_window);
         atbWbutton3.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
                     ATBItemScene atbScene = new ATBItemScene();
                     atbScene.push();
-
+                TitleScene.get().soundPlay(R.raw.select_button,1.0f);
             }
 
         });
         gameWorld.add(ATBScene.Layer.ui.ordinal(), atbWbutton3);
-        atbWbutton4 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(250),UiBridge.metrics.size.y-UiBridge.y(50),UiBridge.x(200), UiBridge.y(50),200,"취소",50,R.mipmap.atb_window,R.mipmap.atb_window);
+        atbWbutton4 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(230),UiBridge.metrics.size.y-UiBridge.y(50),UiBridge.x(200), UiBridge.y(50),200,"취소",50,R.mipmap.atb_window,R.mipmap.atb_window);
         atbWbutton4.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
                     ATBScene.pop();
+                TitleScene.get().soundPlay(R.raw.back_button,1.0f);
 
             }
 

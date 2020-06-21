@@ -18,8 +18,11 @@ public class SoundEffects {
             R.raw.tressa_attack2,R.raw.tressa_attack1,R.raw.tressa_attack3,R.raw.tressa_attack4,R.raw.tressa_attack5,R.raw.tressa_attack6
             ,R.raw.tressa_hit1,R.raw.tressa_hit2,R.raw.tressa_hit3,R.raw.bow_attack,R.raw.spear_attack
             ,R.raw.tressa_select,R.raw.tressa_select2,R.raw.tressa_select3,R.raw.tressa_select4,R.raw.tressa_select5
+            ,R.raw.tressa_win3
             ,R.raw.select_button,R.raw.back_button,R.raw.menu_move,R.raw.menu_window,R.raw.ch_select_effect
-            , R.raw.character_select_tressa,R.raw.tressa_die
+            , R.raw.character_select_tressa,R.raw.tressa_die,R.raw.box_open,R.raw.click,R.raw.spear_hit,R.raw.close_window
+            ,R.raw.spear_air_attack,R.raw.bow_hit,R.raw.tressa_battle_start
+            ,R.raw.tressa_portion,R.raw.portion
     };
 
     public static SoundEffects get() {

@@ -47,6 +47,10 @@ public class AnimObject extends GameObject {
         this.fab.update();
     }
 
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
     public FrameAnimationBitmap getFab() {
         return fab;
     }
@@ -63,7 +67,9 @@ public class AnimObject extends GameObject {
     public float getRadius() {
         return this.width / 2;
     }
-
+    public void setColor(String color){
+        this.paint.setColor(Color.parseColor(color));
+    }
     public void draw(Canvas canvas) {
         float halfWidth = width / 2;
         float halfHeight = height / 2;

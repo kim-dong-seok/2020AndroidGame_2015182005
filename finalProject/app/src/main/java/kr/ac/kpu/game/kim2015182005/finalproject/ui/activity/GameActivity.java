@@ -21,8 +21,8 @@ public class GameActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(new GameView(this));
-        //new TitleScene().run();
-        new MainScene().run();
+        new TitleScene().run();
+        //new MainScene().run();
         //new InGameStoryScene().run();
         //new MenuScene().run();
         //new SecondScene().run();

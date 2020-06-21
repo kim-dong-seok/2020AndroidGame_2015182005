@@ -28,11 +28,10 @@ public class MainScene extends GameScene {
     private static final String TAG = MainScene.class.getSimpleName();
     private TextMap map;
     private int mdpi_100;
+    private int kill_count;
     private RectF rect = new RectF();
     private ScoreObject scoreObject;
-    private MainCharacterInfo playerInfo;
-    private ATBgauge atBgauge;
-    private boolean atbWindowOn;
+    //private boolean atbWindowOn;
     private BGBlack end_bg;
     private String[] player_story ={
             "이런 상상이나 하고 있을 때가 아니야","우리 가게는 조그마하고...","내가 더 열심히 해야지!"
@@ -78,29 +77,47 @@ public class MainScene extends GameScene {
     }
 
     private Player player;
-    private GameTimer timer;
-    private SelectButton jumpButton;
-    private SelectButton SAButton;
-    private SelectButton LAButton;
-    private SelectButton ATBButton;
-    private boolean game_puase,bad_end;
+    private boolean game_puase,bad_end,game_win;
     private  static  MainScene instance;
     private boolean storyOn=true;
     private int story=0;
-    private BitmapObject speech,npc_speech;
+    private BitmapObject speech,npc_speech,pos_bar,player_pos,boss_pos;
     private TextObject speech_text,npc_speech_text;
     private TextObject speech_name,npc_speech_name;
     private ImageScrollBackground bg1,bg2,bg3;
+    private int stage_range=200;
+    private boolean cheat=false;
+
     @Override
     protected int getLayerCount() {
         return Layer.COUNT.ordinal();
     }
 
+    public boolean isCheat() {
+        return cheat;
+    }
+
+    public void setCheat(boolean cheat) {
+        this.cheat = cheat;
+    }
+
+    public void setBad_end(boolean bad_end) {
+        this.bad_end = bad_end;
+    }
+
+    public BGBlack getEnd_bg() {
+        return end_bg;
+    }
 
     @Override
     public void update() {
-        //Log.d(TAG,"map.getRows()"+map.getRows()+",      map.getRows()"+map.getColumns());
-
+        //Log.d(TAG,"map.getRows()"+map.getMapIndex());
+        player_pos.setX(UiBridge.x(300)+((float)UiBridge.x(240)/stage_range*(map.getMapIndex()-19)));
+        if(!game_win){
+            if(player_pos.getX()>=boss_pos.getX()-UiBridge.x(15)){
+                end_bg.flash(255);
+                game_win=true;
+            }
         if(storyOn){
             for (GameObject o :getGameWorld().objectsAtLayer(Layer.story.ordinal())) {
                 o.update();
@@ -181,12 +198,20 @@ public class MainScene extends GameScene {
         if(!bad_end){
         if(!game_puase){
             super.update();
-            if(end_bg.getAlpha()==255){
+            if(end_bg.getAlpha()==255&&!cheat){
                 map = new TextMap("stage_02.txt", gameWorld);
+                map.reset();
                 bg1.setImage(R.mipmap.cave_bg2);
                 bg2.setImage(R.mipmap.cave_bg12);
                 bg3.setImage(R.mipmap.cave_bg13);
+                TitleScene.get().getBgmPlayer().stopBGM();
+                TitleScene.get().getBgmPlayer().setBGM(R.raw.battle);
+                TitleScene.get().getBgmPlayer().startBGM();
+                pos_bar.alpha(150);
+                player_pos.alpha(255);
+                boss_pos.alpha(255);
                 end_bg.flash(255);
+                TitleScene.get().soundPlay(R.raw.tressa_battle_start,1.0f);
             }
         float dx = -2 * mdpi_100 * GameTimer.getTimeDiffSeconds();
         map.update(dx);
@@ -213,6 +238,13 @@ public class MainScene extends GameScene {
                 scene.push();
             }
         }}
+    }else{super.update();
+            if(end_bg.getAlpha()==255){
+            TitleScene.get().getBgmPlayer().stopBGM();
+            WinScene scene = new  WinScene();
+            scene.push();
+    }
+        }
     }
     public void npc_speechOn(boolean on){
            if(on){
@@ -247,14 +279,12 @@ public class MainScene extends GameScene {
     @Override
     public void enter() {
         super.enter();
-//        GyroSensor.get();
         instance=this;
         initObjects();
         map = new TextMap("stage_01.txt", gameWorld);
     }
     @Override
     public void exit() {
-//        GyroSensor.get().destroy();
         super.exit();
 
     }
@@ -264,16 +294,13 @@ public class MainScene extends GameScene {
     }
 
     private void initObjects() {
-        timer = new GameTimer(60, 1);
+        GameTimer timer = new GameTimer(60, 1);
         bad_end=false;
         game_puase=false;
+        game_win=false;
 
         mdpi_100 = UiBridge.x(100);
         Log.d(TAG, "mdpi_100: " + mdpi_100);
-        int sw = UiBridge.metrics.size.x;
-        int sh = UiBridge.metrics.size.y;
-        int cx = UiBridge.metrics.center.x;
-        int cy = UiBridge.metrics.center.y;
         player = new Player(UiBridge.x(100), UiBridge.y(320));
         gameWorld.add(Layer.player.ordinal(),player);
         end_bg=new BGBlack(0,0, UiBridge.metrics.size.x, UiBridge.metrics.size.y,"#000000");
@@ -304,12 +331,23 @@ public class MainScene extends GameScene {
         bg3=new ImageScrollBackground(R.mipmap.town_bg_3, ImageScrollBackground.Orientation.horizontal, -300);
         gameWorld.add(Layer.bg.ordinal(), bg3);
 
-        RectF rbox = new RectF(UiBridge.x(-52), UiBridge.y(20), UiBridge.x(-20), UiBridge.y(62));
-        scoreObject = new ScoreObject(R.mipmap.number_64x84, rbox);
-        gameWorld.add(MainScene.Layer.ui.ordinal(), scoreObject);
 
-        end_bg.alpha(255);
-        jumpButton = new SelectButton(UiBridge.x(60), UiBridge.metrics.size.y-UiBridge.y(60),UiBridge.x(100), UiBridge.y(100),150,"",10,R.mipmap.jump_btn60, R.mipmap.jump_btn100);
+        pos_bar=new BitmapObject(UiBridge.x(420),UiBridge.y(30),UiBridge.x(300),UiBridge.y(15),R.mipmap.pos_bar);
+        pos_bar.alpha(0);
+        gameWorld.add( MainScene.Layer.ui.ordinal(),pos_bar);
+        player_pos=new BitmapObject(UiBridge.x(300),UiBridge.y(30),UiBridge.x(40),UiBridge.y(40),R.mipmap.tressa_pos);
+        player_pos.alpha(0);
+        gameWorld.add( MainScene.Layer.ui.ordinal(),player_pos);
+
+        boss_pos=new BitmapObject(UiBridge.x(540),UiBridge.y(30),UiBridge.x(40),UiBridge.y(40),R.mipmap.boss_pos);
+        boss_pos.alpha(0);
+        gameWorld.add( MainScene.Layer.ui.ordinal(),boss_pos);
+
+
+
+
+        //end_bg.alpha(255);
+        SelectButton jumpButton = new SelectButton(UiBridge.x(60), UiBridge.metrics.size.y - UiBridge.y(60), UiBridge.x(100), UiBridge.y(100), 150, "", 10, R.mipmap.jump_btn60, R.mipmap.jump_btn100);
         jumpButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
@@ -318,7 +356,7 @@ public class MainScene extends GameScene {
             }
         });
         gameWorld.add(Layer.ui.ordinal(), jumpButton);
-        SAButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(50), UiBridge.metrics.size.y-UiBridge.y(150), UiBridge.x(90), UiBridge.y(90),150,"",10,R.mipmap.spear_btn60, R.mipmap.spear_btn100);
+        SelectButton SAButton = new SelectButton(UiBridge.metrics.size.x - UiBridge.x(50), UiBridge.metrics.size.y - UiBridge.y(150), UiBridge.x(90), UiBridge.y(90), 150, "", 10, R.mipmap.spear_btn60, R.mipmap.spear_btn100);
         SAButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
@@ -327,7 +365,7 @@ public class MainScene extends GameScene {
             }
         });
         gameWorld.add(Layer.ui.ordinal(), SAButton);
-        LAButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(50), UiBridge.metrics.size.y-UiBridge.y(50), UiBridge.x(110), UiBridge.y(110),150,"",10,R.mipmap.bow_btn60,R.mipmap.bow_btn100);
+        SelectButton LAButton = new SelectButton(UiBridge.metrics.size.x - UiBridge.x(50), UiBridge.metrics.size.y - UiBridge.y(50), UiBridge.x(110), UiBridge.y(110), 150, "", 10, R.mipmap.bow_btn60, R.mipmap.bow_btn100);
         LAButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {if(!bad_end){
@@ -335,31 +373,31 @@ public class MainScene extends GameScene {
             }
         });
         gameWorld.add(Layer.ui.ordinal(), LAButton);
-        ATBButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(155), UiBridge.metrics.size.y-UiBridge.y(50), UiBridge.x(90), UiBridge.y(90),150,"",10,R.mipmap.atb_btn60,R.mipmap.atb_btn100);
+        SelectButton ATBButton = new SelectButton(UiBridge.metrics.size.x - UiBridge.x(155), UiBridge.metrics.size.y - UiBridge.y(50), UiBridge.x(90), UiBridge.y(90), 150, "", 10, R.mipmap.atb_btn60, R.mipmap.atb_btn100);
         ATBButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {if(!bad_end&&!storyOn&&!player.isCheck()){
                 if(player.getATB()>=100){
                 ATBScene atbScene = new ATBScene();
                 atbScene.push();
-               // TitleScene.get().soundPlay(5,11,1.0f);
+                TitleScene.get().soundPlay(5,11,1.0f);
+                    TitleScene.get().soundPlay(R.raw.select_button,1.0f);
                 }}
             }
         });
         gameWorld.add(Layer.ui.ordinal(), ATBButton);
-        atBgauge = new ATBgauge(UiBridge.metrics.size.x-UiBridge.x(155), UiBridge.metrics.size.y-UiBridge.y(50), UiBridge.x(90));
+        ATBgauge atBgauge = new ATBgauge(UiBridge.metrics.size.x - UiBridge.x(155), UiBridge.metrics.size.y - UiBridge.y(50), UiBridge.x(90));
         gameWorld.add(Layer.ui.ordinal(), atBgauge);
 
-        playerInfo = new MainCharacterInfo();
+        MainCharacterInfo playerInfo = new MainCharacterInfo();
         gameWorld.add(Layer.ui.ordinal(), playerInfo);
 
-        AnimObject bit = new AnimObject(UiBridge.metrics.center.x,UiBridge.metrics.center.y,UiBridge.x(100),UiBridge.y(20),R.mipmap.spear_slash3,12,5);
-        gameWorld.add(Layer.ui.ordinal(),bit);
 
         SelectButton menuButton = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(50), UiBridge.y(35), UiBridge.x(90), UiBridge.y(60),250,"",10,R.mipmap.menu_icon3,R.mipmap.menu_icon3);
         menuButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {if(!bad_end&&!storyOn&&!player.isCheck()){
+                TitleScene.get().soundPlay(R.raw.menu_window,1.0f);
                MenuScene scene=new MenuScene();
                scene.push();
 
@@ -374,6 +412,7 @@ public class MainScene extends GameScene {
             public void run() {
                 if(storyOn) {
                     story+=1;
+                    TitleScene.get().soundPlay(R.raw.click,1.0f);
                 }
             }
         });
@@ -381,7 +420,9 @@ public class MainScene extends GameScene {
 
 
     }
-
+    public void addKillcount(){
+        kill_count+=1;
+    }
     @Override
     public void onBackPressed() {
         if(!bad_end&&!game_puase){
@@ -395,8 +436,8 @@ public class MainScene extends GameScene {
         return player;
     }
 
-    public void addScore(int amount) {
-        scoreObject.add(amount);
+    public int getKill_count() {
+        return kill_count;
     }
 
     public static MainScene get() {

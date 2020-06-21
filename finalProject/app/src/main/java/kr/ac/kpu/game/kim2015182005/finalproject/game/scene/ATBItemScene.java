@@ -77,49 +77,55 @@ public class ATBItemScene extends GameScene {
             atbBG.alpha(100);
             gameWorld.add(Layer.ui.ordinal(),atbBG );
 
-        atbWbutton1 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(250),UiBridge.metrics.size.y-UiBridge.y(200),UiBridge.x(200), UiBridge.y(50),200,"",50,R.mipmap.atb_window,R.mipmap.atb_window);
+        atbWbutton1 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(150),UiBridge.metrics.size.y-UiBridge.y(200),UiBridge.x(200), UiBridge.y(50),200,"HP 회복 포도  x"+MainScene.get().getPlayer().getHp_portion(),50,R.mipmap.atb_window,R.mipmap.atb_window);
         atbWbutton1.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
                 if(! ATBItemScene.get().isClickOn()){
                     ATBItemScene.get().setClickOn(true);
-
+                    MainScene.get().getPlayer().useHpPortion();
+                    TitleScene.get().soundPlay(R.raw.select_button,1.0f);
+                    TitleScene.get().soundPlay(R.raw.tressa_portion,1.0f);
+                    pop();
+                    pop();
+                    TitleScene.get().soundPlay(R.raw.portion,1.0f);
                 }
             }
 
         });
         ATBItemScene.get().getGameWorld().add(ATBItemScene.Layer.ui.ordinal(), atbWbutton1);
 
-        atbWbutton2 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(250),UiBridge.metrics.size.y-UiBridge.y(150),UiBridge.x(200), UiBridge.y(50),200,"",50,R.mipmap.atb_window,R.mipmap.atb_window);
+        atbWbutton2 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(150),UiBridge.metrics.size.y-UiBridge.y(150),UiBridge.x(200), UiBridge.y(50),200,"",50,R.mipmap.atb_window,R.mipmap.atb_window);
         atbWbutton2.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
                 if(! ATBItemScene.get().isClickOn()){
                     ATBItemScene.get().setClickOn(true);
-
+                    TitleScene.get().soundPlay(R.raw.select_button,1.0f);
                 }
             }
 
         });
         gameWorld.add(ATBItemScene.Layer.ui.ordinal(), atbWbutton2);
-        atbWbutton3 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(250),UiBridge.metrics.size.y-UiBridge.y(100),UiBridge.x(200), UiBridge.y(50),200,"",50,R.mipmap.atb_window,R.mipmap.atb_window);
+        atbWbutton3 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(150),UiBridge.metrics.size.y-UiBridge.y(100),UiBridge.x(200), UiBridge.y(50),200,"",50,R.mipmap.atb_window,R.mipmap.atb_window);
         atbWbutton3.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
                 if(! ATBItemScene.get().isClickOn()){
                     ATBItemScene.get().setClickOn(true);
-
+                    TitleScene.get().soundPlay(R.raw.select_button,1.0f);
                 }
             }
 
         });
         gameWorld.add(ATBItemScene.Layer.ui.ordinal(), atbWbutton3);
-        atbWbutton4 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(250),UiBridge.metrics.size.y-UiBridge.y(50),UiBridge.x(200), UiBridge.y(50),200,"취소",50,R.mipmap.atb_window,R.mipmap.atb_window);
+        atbWbutton4 = new SelectButton(UiBridge.metrics.size.x-UiBridge.x(150),UiBridge.metrics.size.y-UiBridge.y(50),UiBridge.x(200), UiBridge.y(50),200,"취소",50,R.mipmap.atb_window,R.mipmap.atb_window);
         atbWbutton4.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
                 if(! ATBItemScene.get().isClickOn()){
                     ATBItemScene.pop();
+                    TitleScene.get().soundPlay(R.raw.back_button,1.0f);
                 }
             }
 

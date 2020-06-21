@@ -32,8 +32,6 @@ public class Player extends AnimObject implements BoxCollidable {
     private final FrameAnimationBitmap fabHit;
     private final FrameAnimationBitmap fabDJump;
     private final FrameAnimationBitmap fabDie;
-    private final FrameAnimationBitmap hitEffect;
-    private final FrameAnimationBitmap shortAttackEffect;
 
     private int jumpCount = 10;
     private int saReload = 5;
@@ -47,9 +45,10 @@ public class Player extends AnimObject implements BoxCollidable {
     private int ATB;
     private int totalATB;
     private float jumpY, originY, originX;
-    protected int totalHp=20;
+    protected int totalHp=200;
     private boolean check=false;
-
+    private boolean player_cheat=false;
+    private int hp_portion=5;
     float hitTime;
     private AnimState state;
     public Player(float x, float y) {
@@ -61,17 +60,30 @@ public class Player extends AnimObject implements BoxCollidable {
         sAtk=50;
         totalATB=300;
         ATB=100;
-        hitEffect= new FrameAnimationBitmap(R.mipmap.hit_sprite, 16, 8);
         fabJump = new FrameAnimationBitmap(R.mipmap.tressa_right_jump4, 1, 1);
         fabDJump = new FrameAnimationBitmap(R.mipmap.tressa_right_djump, 1, 1);
         fabSA = new FrameAnimationBitmap(R.mipmap.tressa_right_short_attack2, 10, 5);
         fabLA = new FrameAnimationBitmap(R.mipmap.tressa_right_long_attack, 14, 7);
         fabHit = new FrameAnimationBitmap(R.mipmap.tressa_hit, 1, 1);
-        shortAttackEffect=new FrameAnimationBitmap(R.mipmap.spear_slash3, 20, 5);
         fabDie=new FrameAnimationBitmap(R.mipmap.tressa_die, 1, 1);
-        hitEffect.setAlpha(200);
-        shortAttackEffect.setAlpha(200);
+
         setAnimState(AnimState.normal);
+    }
+
+    public int getHp_portion() {
+        return hp_portion;
+    }
+
+
+    public void useHpPortion() {
+        if(hp_portion>0) {
+            this.hp_portion -= 1;
+            if(getHp()+50>totalHp){
+                setHp(totalHp);
+            }else{
+                setHp(getHp()+50);
+            }
+        }
     }
 
     public enum AnimState {
@@ -116,16 +128,32 @@ public class Player extends AnimObject implements BoxCollidable {
         return check;
     }
 
+    public void setTotalHp(int totalHp) {
+        this.totalHp = totalHp;
+    }
+
     @Override
     public void update() {
         super.update();
+        if(MainScene.get().isCheat()&&!player_cheat){
+
+            y-=UiBridge.y(30);
+            width=UiBridge.x(60);
+            height=UiBridge.x(102);
+            setAnimState(AnimState.normal);
+            setTotalHp(500);
+            setHp(500);
+            player_cheat=true;
+        }
+        if (state != AnimState.hit){alpha(255);}
         if(state != AnimState.die){
         if (fab.done() && (state == AnimState.sattack || state == AnimState.lattack)) {
             width=UiBridge.x(60);
             x=originX;
             setAnimState(AnimState.normal);
+
         }
-        Log.d(TAG,"check,check,check"+check);
+        //Log.d(TAG,"check,check,check"+check);
 
 
         if (jumpCount > 0) {
@@ -173,6 +201,7 @@ public class Player extends AnimObject implements BoxCollidable {
             hitTime-= GameTimer.getTimeDiffSeconds();
             if (hitTime < 0) {
                 hitTime = 0;
+
                 setAnimState(AnimState.normal);
             }
         }
@@ -189,13 +218,12 @@ public class Player extends AnimObject implements BoxCollidable {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if(hitTime>0&&!hitEffect.done()) {
-            hitEffect.draw(canvas, x, y);
-        }
-        if(!shortAttackEffect.done()) {
-            RectF rect=new RectF(x+UiBridge.x(50),y-UiBridge.y(20),x+UiBridge.x(150),y+UiBridge.y(20));
-            shortAttackEffect.draw(canvas,rect,null);
-        }
+//        RectF rect1 = new RectF();
+//        getBox(rect1);
+//        int hw = width / 2;
+//        int hh = height / 2;
+//        canvas.drawRect(rect1.left, rect1.top ,rect1.right,rect1.bottom,paint);
+
     }
 
     private void checkBoxCollision() {
@@ -208,9 +236,10 @@ public class Player extends AnimObject implements BoxCollidable {
             BoxObject box = (BoxObject) obj;
             if(box.isColidable()){
                 if (CollisionHelper.collides(this, box)&&state==AnimState.sattack) {
-                    // TitleScene.get().soundPlay(R.raw.tressa_die,1.0f);
+                     TitleScene.get().soundPlay(R.raw.box_open,1.0f);
                     box.setColidable(false);
                     box.setSbmp(SharedBitmap.load(R.mipmap.box_open));
+                    hp_portion+=1;
                 }
         }
     }
@@ -225,7 +254,6 @@ public class Player extends AnimObject implements BoxCollidable {
             CheckPointObject checkPoint = (CheckPointObject) obj;
             if( checkPoint.isColidable()){
                 if (CollisionHelper.collides(this,  checkPoint)) {
-                    // TitleScene.get().soundPlay(R.raw.tressa_die,1.0f);
                     checkPoint.setColidable(false);
                     if(!check) {
                         this.check = true;
@@ -247,40 +275,45 @@ public class Player extends AnimObject implements BoxCollidable {
         ArrayList<GameObject> enemys = MainScene.get().getGameWorld().objectsAtLayer(MainScene.Layer.enemy.ordinal());
         for (GameObject obj : enemys) {
             if (!(obj instanceof Enemy)) {
+
                 continue;
             }
             Enemy enemy = (Enemy) obj;
+
             if(enemy.isColidable()){
             if (CollisionHelper.collides(this, enemy)&&state==AnimState.sattack) {
                 int ehp=enemy.getHp();
                 ehp-=sAtk;
-                shortAttackEffect.reset();
+                TitleScene.get().soundPlay(R.raw.spear_hit,0.5f);
                 if(ehp<=0){
+                    ATB+=30;
                     enemy.remove();
-                    MainScene.get().addScore(enemy.getScore());
+                    enemy.setHit(true);
+                    MainScene.get().addKillcount();
                 }else{
-
                     enemy.setHp(ehp);
-                    enemy.setX(enemy.getX()+UiBridge.x(100));
+                    enemy.setHit(true);
+                    enemy.setX(enemy.getX()+UiBridge.x(200));
+                    ATB+=15;
                 }
             }else if(CollisionHelper.collides(this, enemy)&&state!=AnimState.sattack){
+                //Log.d(TAG,"player 하단"+(this.y+height/2)+"적 상단"+enemy.ColiH());
                 int eAtk=enemy.getAtk();
                 this.hp-=eAtk;
-                //Log.d(TAG,"hp"+this.hp);
+
                 enemy.setColidable(false);
-                //TitleScene.get().soundPlay(3,6,1.0f);
+                TitleScene.get().soundPlay(3,6,1.0f);
                 if(this.hp>0){
-                ATB+=eAtk;
+                ATB+=((float)eAtk/totalHp)*100;
                 setAnimState(AnimState.hit);
+                alpha(150);
                 hitTime=HIT_TIME;
-                hitEffect.reset();
                 }else{
                     setAnimState(AnimState.die);
                     y+=UiBridge.y(30);
                     width=UiBridge.x(94);
                     height=UiBridge.x(51);
-
-                   // TitleScene.get().soundPlay(R.raw.tressa_die,1.0f);
+                    TitleScene.get().soundPlay(R.raw.tressa_die,1.0f);
                 }
             }
             }
@@ -298,32 +331,32 @@ public class Player extends AnimObject implements BoxCollidable {
             if (speed > JUMP_POWER) {
                 speed = JUMP_POWER;
             }
-            //TitleScene.get().soundPlay(R.raw.tressa_attack2,1.0f);
+            TitleScene.get().soundPlay(R.raw.tressa_attack2,1.0f);
             setAnimState(jumpCount == 1 ? AnimState.jump : AnimState.djump);
         }}
     }
     public void shortAttack() {
         if (state != AnimState.lattack&&state != AnimState.sattack&&!check){
         if(saReload<=0){
-            //TitleScene.get().soundPlay(6,1,1.0f);
+            TitleScene.get().soundPlay(6,1,1.0f);
             setAnimState(AnimState.sattack);
             x+=UiBridge.x(30);
             width=UiBridge.x(160);
-            saReload=60;
+            saReload=30;
             fab.reset();
-            //TitleScene.get().soundPlay(R.raw.spear_attack,0.5f);
+            TitleScene.get().soundPlay(R.raw.spear_air_attack,1.0f);
         }}
     }
     public void longAttack() {
         if (state != AnimState.lattack&&state != AnimState.sattack&&!check){
         if(laReload<=0){
-            //TitleScene.get().soundPlay(6,0,1.0f);
+            TitleScene.get().soundPlay(6,0,1.0f);
             setAnimState(AnimState.lattack);
-            laReload=100;
+            laReload=60;
             fab.reset();
             MainScene scene = MainScene.get();
             scene.getGameWorld().add(MainScene.Layer.arrow.ordinal(), new Arrow(x,y));
-            //TitleScene.get().soundPlay(R.raw.bow_attack,0.5f);
+            TitleScene.get().soundPlay(R.raw.bow_attack,0.6f);
         }}
     }
 
@@ -331,11 +364,11 @@ public class Player extends AnimObject implements BoxCollidable {
 
     @Override
     public void getBox(RectF rect) {
-        int hw = width / 2;
-        int hh = height / 2;
-        rect.left = x - hw;
-        rect.top = y - hh;
-        rect.right = x + hw;
-        rect.bottom = y + hh;
+        int hw = width / 10;
+        int hh = height / 10;
+        rect.left = x - hw*4;
+        rect.top = y - hh*4;
+        rect.right = x + hw*4;
+        rect.bottom = y + hh*4;
     }
 }

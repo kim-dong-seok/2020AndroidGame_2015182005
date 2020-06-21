@@ -212,7 +212,7 @@ public class MenuScene extends GameScene {
 
     @Override
     public void onBackPressed() {
-        TitleScene.get().getSoundEffects().play(R.raw.menu_window,1.0f);
+        TitleScene.get().getSoundEffects().play(R.raw.close_window,1.0f);
         super.onBackPressed();
 
     }

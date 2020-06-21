@@ -25,7 +25,6 @@ public class ATBgauge extends GameObject {
         MainScene.get().getGameWorld().add( MainScene.Layer.ui.ordinal(),gauge2);
         gauge3 = new ArcObject(this.x, this.y, UiBridge.x(48),UiBridge.y(8),335,0,"#06454F",0);
         MainScene.get().getGameWorld().add( MainScene.Layer.ui.ordinal(),gauge3);
-
     }
 
     @Override
@@ -36,21 +35,28 @@ public class ATBgauge extends GameObject {
         atb=MainScene.get().getPlayer().getATB();
         //Log.d(TAG,"ATB"+atb);
         if(0<=(atb-100)) {
-            gauge1.setEndAngle((int)110);
+            gauge1.setColor("#f3c968");
+            gauge2.setColor("#f3c968");
+            gauge1.setEndAngle((int)115);
             if(0<=(atb-200)){
-                gauge2.setEndAngle((int)110);
+                gauge1.setColor("#2b5bbf");
+                gauge2.setColor("#2b5bbf");
+                gauge3.setColor("#2b5bbf");
+                gauge2.setEndAngle((int)115);
                 if(totalAtb<=atb){
-                    gauge3.setEndAngle((int)110);
+
+                    gauge3.setEndAngle((int)115);
                 }else{
-                    gauge3.setEndAngle((int)110*((atb-200)/100));
+                    gauge3.setEndAngle((int)115*((atb-200)/100));
                 }
             }else{
-                gauge2.setEndAngle((int)110*((atb-100)/100));
+                gauge2.setEndAngle((int)115*((atb-100)/100));
             }
 
         }else{
             //Log.d(TAG,"ATB"+atb/100);
-            gauge1.setEndAngle((int)110*(atb/100));
+            gauge1.setEndAngle((int)115*(atb/100));
+            gauge1.setColor("#be310f");
         }
 
     }

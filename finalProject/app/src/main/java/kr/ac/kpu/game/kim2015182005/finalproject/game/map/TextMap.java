@@ -15,7 +15,6 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Boss;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.BoxObject;
-import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.CandyItem;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.CheckPointObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Enemy;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.obj.Environemental;
@@ -64,7 +63,9 @@ public class TextMap {
         reset();
     }
 
-
+    public int getMapIndex() {
+        return mapIndex;
+    }
 
     private void createColumn() {
         float y = blockSize / 2;
@@ -81,10 +82,6 @@ public class TextMap {
         MainScene.Layer layer = MainScene.Layer.item;
         GameObject obj = null;
         switch (ch) {
-            case '1': case '2': case '3': case '4':
-                layer = MainScene.Layer.item;
-                obj = CandyItem.get(x, y, blockSize, blockSize, ch - '1');
-                break;
             case 'O': case 'P': case 'Q':
                 layer = MainScene.Layer.platform;
                 obj = Platform.get(x, y, blockSize, ch - 'O');

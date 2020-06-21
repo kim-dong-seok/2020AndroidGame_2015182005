@@ -11,7 +11,7 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.res.bitmap.SharedBitm
 public class ScoreObject extends GameObject {
 
     private static final String TAG = ScoreObject.class.getSimpleName();
-    public static final int SCORE_INCREASE_DURATION = 100;
+    public static final int SCORE_INCREASE_DURATION = 1000;
     private final SharedBitmap sbmp;
     private final int digitWidth;
     private RectF rightmostRect;

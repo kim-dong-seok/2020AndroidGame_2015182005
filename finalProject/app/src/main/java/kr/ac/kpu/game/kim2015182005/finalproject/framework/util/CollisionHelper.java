@@ -1,16 +1,19 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.framework.util;
 
 import android.graphics.RectF;
+import android.util.Log;
 
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.iface.BoxCollidable;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 
 public class CollisionHelper {
+    private static final String TAG = CollisionHelper.class.getSimpleName();
     private static RectF rect1 = new RectF();
     private static RectF rect2 = new RectF();
     public static boolean collides(BoxCollidable o1, BoxCollidable o2) {
         o1.getBox(rect1);
         o2.getBox(rect2);
+
         if (rect1.left > rect2.right) {
             return false;
         }

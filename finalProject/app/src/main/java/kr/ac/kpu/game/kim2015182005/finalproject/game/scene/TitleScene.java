@@ -68,6 +68,7 @@ public class TitleScene extends GameScene {
         random=new Random();
         bgmPlayer=new BGMPlayer();
         bgmPlayer.setBGM(R.raw.main);
+        bgmPlayer.setVolume(1.0f);
         start=false;
         bgmPlayer.setloop(true);
         bgmPlayer.startBGM();
@@ -96,6 +97,8 @@ public class TitleScene extends GameScene {
             public void run() {
                 //mediaPlayer.release();
                 CharacterSelectScene scene = new CharacterSelectScene();
+                //MainScene scene=new MainScene();
+                //WinScene scene=new WinScene();
                 scene.push();
 
                 soundEffects.play(R.raw.select_button,1.0f);

@@ -63,10 +63,10 @@ public class MainCharacterInfo extends GameObject {
         sp_icon=new BitmapObject(UiBridge.x(88),UiBridge.y(67),UiBridge.x(29),UiBridge.y(14),R.mipmap.sp_icon);
         MainScene.get().getGameWorld().add( MainScene.Layer.bg.ordinal(),sp_icon);
 
-        totalSp=new TextObject("/1,000",UiBridge.x(180),UiBridge.y(66),40,"#9f9e9c",true);
+        totalSp=new TextObject("/200",UiBridge.x(180),UiBridge.y(66),40,"#9f9e9c",true);
         MainScene.get().getGameWorld().add( MainScene.Layer.bg.ordinal(), totalSp);
 
-        sp=new TextObject("1,000",UiBridge.x(135),UiBridge.y(64),44,"#FFFFFF",true);
+        sp=new TextObject("200",UiBridge.x(135),UiBridge.y(64),44,"#FFFFFF",true);
         MainScene.get().getGameWorld().add( MainScene.Layer.bg.ordinal(),sp);
 
         lv=new TextObject("LV. 1",UiBridge.x(40),UiBridge.y(90),40,"#FFFFFF",true);
@@ -88,7 +88,7 @@ public class MainCharacterInfo extends GameObject {
 
         tphp=MainScene.get().getPlayer().getTotalHp();
         php=MainScene.get().getPlayer().getHp();
-        if(php!=preHp){
+        if(php<preHp){
         preHp=php;
         hit_bg.flash(150);
         }

@@ -58,6 +58,10 @@ public class ArcObject extends GameObject {
         paint.setStrokeWidth(UiBridge.x(1));
     }
 
+    public void setColor(String color) {
+        arcPaint.setColor(Color.parseColor(color));
+    }
+
     @Override
     public void draw(Canvas canvas) {
 

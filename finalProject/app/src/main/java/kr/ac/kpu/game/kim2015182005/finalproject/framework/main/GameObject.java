@@ -42,6 +42,14 @@ public class GameObject {
         y += dy;
     }
 
+    public void setPos(float x,float y){
+        this.x = x;
+        this.y = y;
+    }
+    public void setX(float x) {
+        this.x = x;
+    }
+
     public void remove() {
         GameWorld gw = GameScene.getTop().getGameWorld();
         gw.removeObject(this);

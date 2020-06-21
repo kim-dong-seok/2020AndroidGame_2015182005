@@ -17,7 +17,7 @@ public class MikkMakk extends AnimObject implements Recyclable, BoxCollidable {
             R.mipmap.mikk_left_move,
     };
     public static final int ITEM_TYPE_COUNT = RES_IDS.length;
-    private static final String TAG = CandyItem.class.getSimpleName();
+    private static final String TAG = MikkMakk.class.getSimpleName();
     public static final int SCORE_MULTIPLIER = 10;
     private int atk;
     private boolean colidable;

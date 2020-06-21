@@ -12,41 +12,49 @@ import kr.ac.kpu.game.kim2015182005.finalproject.framework.iface.Recyclable;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameScene;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameTimer;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameWorld;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
-import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.AnimObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.obj.BitmapObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.res.bitmap.SharedBitmap;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.util.CollisionHelper;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.MainScene;
 import kr.ac.kpu.game.kim2015182005.finalproject.game.scene.TitleScene;
 
-import static kr.ac.kpu.game.kim2015182005.finalproject.game.scene.MainScene.*;
+import static kr.ac.kpu.game.kim2015182005.finalproject.game.scene.MainScene.Layer;
 
-public class Arrow extends BitmapObject implements Recyclable, BoxCollidable {
-    private static final String TAG = Arrow.class.getSimpleName();
+public class TressaCall extends BitmapObject implements Recyclable, BoxCollidable {
+    private static final String TAG = TressaCall.class.getSimpleName();
     private float dx;
-    private int hp=40;
-    public Arrow(float x, float y) {
-        super(x, y, 100, 20, R.mipmap.arrow);
-        this.dx =700;
+    private int num;
+    private int atk;
+    private static int[] CallAttack = {
+            10,15,20,25,30,40,50
+    };
+    private static final int[] RES_IDS = {
+            R.mipmap.call_priest
 
+    };
+
+    public TressaCall(float x, float y,int num) {
+        super(x, y, 100, 20,RES_IDS[num] );
+        sbmp= SharedBitmap.load(RES_IDS[num]);
+        atk=CallAttack[num];
+        dx=700;
         Log.d(TAG,"new"+this);
     }
 
-    public static Arrow get(float x, float y) {
+    public static TressaCall get(float x, float y,int num) {
         GameScene gs=GameScene.getTop();
         Resources res=UiBridge.getResources();
-        Arrow b = (Arrow) gs.getGameWorld().getRecyclePool().get(Arrow.class);
-        if(b==null) {
-            b = new Arrow(x, y);
+        TressaCall c = (TressaCall) gs.getGameWorld().getRecyclePool().get(TressaCall.class);
+        if(c==null) {
+            c = new TressaCall(x, y,num);
         }
-        b.sbmp= SharedBitmap.load(R.mipmap.arrow);
-
-        b.x=x;
-        b.y=y;
-        b.dx=700;
-        return b;
+        c.sbmp= SharedBitmap.load(RES_IDS[num]);
+        c.atk=CallAttack[num];
+        c.x=x;
+        c.y=y;
+        c.dx=700;
+        return c;
     }
 
     @Override
@@ -71,7 +79,7 @@ public class Arrow extends BitmapObject implements Recyclable, BoxCollidable {
 
     private void checkEnemyCollision() {
 
-        ArrayList<GameObject> enemys = MainScene.get().getGameWorld().objectsAtLayer(MainScene.Layer.enemy.ordinal());
+        ArrayList<GameObject> enemys = MainScene.get().getGameWorld().objectsAtLayer(Layer.enemy.ordinal());
         for (GameObject obj : enemys) {
             if (!(obj instanceof Enemy)) {
                 continue;
@@ -81,7 +89,7 @@ public class Arrow extends BitmapObject implements Recyclable, BoxCollidable {
                 Log.d(TAG,"arrow collides");
                 TitleScene.get().soundPlay(R.raw.bow_hit,0.5f);
                 int ehp=enemy.getHp();
-                ehp-=hp;
+                ehp-=atk;
                 if(ehp<=0){
                     MainScene.get().getPlayer().setATB(MainScene.get().getPlayer().getATB()+20);
                     enemy.remove();

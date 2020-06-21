@@ -17,7 +17,7 @@ public class Boss extends AnimObject implements Recyclable, BoxCollidable {
             R.mipmap.mikk_left_move,
     };
     public static final int ITEM_TYPE_COUNT = RES_IDS.length;
-    private static final String TAG = CandyItem.class.getSimpleName();
+    private static final String TAG = Boss.class.getSimpleName();
     public static final int SCORE_MULTIPLIER = 10;
     private int atk=20;
     private boolean colidable;
