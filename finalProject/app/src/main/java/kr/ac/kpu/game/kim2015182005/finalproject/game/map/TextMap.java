@@ -93,6 +93,7 @@ public class TextMap {
             case 'a':case 'b':case 'c':case 'd':case 'e':case 'f':case 'g':
                 layer = MainScene.Layer.enemy;
                 obj = Enemy.get(x, y-blockSize*2, blockSize*5, blockSize*5,ch - 'a');
+
                 break;
             case '6':
                 layer = MainScene.Layer.enemy;

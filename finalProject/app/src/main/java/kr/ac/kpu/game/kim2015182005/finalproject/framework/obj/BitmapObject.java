@@ -1,6 +1,7 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.framework.obj;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 

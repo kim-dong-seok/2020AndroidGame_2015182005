@@ -106,7 +106,10 @@ public class WinScene extends GameScene {
 
     @Override
     public void onBackPressed() {
-
+        pop();
+        pop();
+        pop();
+        pop();
     }
 
     public static WinScene get() {return instance; }

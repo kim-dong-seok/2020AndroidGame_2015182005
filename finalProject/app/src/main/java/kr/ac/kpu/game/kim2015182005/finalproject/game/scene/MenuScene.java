@@ -190,6 +190,8 @@ public class MenuScene extends GameScene {
                                                  pop();
                                                  pop();
                                                  pop();
+                                                 pop();
+
                                              }
                                          }
         );

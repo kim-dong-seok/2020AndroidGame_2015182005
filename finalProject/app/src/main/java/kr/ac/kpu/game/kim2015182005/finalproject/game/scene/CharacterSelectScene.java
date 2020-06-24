@@ -1,8 +1,13 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.game.scene;
 
+import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 import kr.ac.kpu.game.kim2015182005.finalproject.R;
+import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameObject;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameScene;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.GameTimer;
 import kr.ac.kpu.game.kim2015182005.finalproject.framework.main.UiBridge;
@@ -60,9 +65,12 @@ public class CharacterSelectScene extends GameScene {
 //            timer.reset();
 //        }
 
+       // Log.d(TAG,"isFlashOn()"+characterBackgrounds[0].isFlashOn()+"characterBackgrounds[characterSelect].isFlashOn()"+characterBackgrounds[0].isFlashDone());
         if(map.posCheck()&&!changeDone) {
+            //Log.e(TAG,"isFlashOn()"+characterBackgrounds[0].isFlashOn()+"characterBackgrounds[characterSelect].isFlashOn()"+characterBackgrounds[0].isFlashDone());
             moveDone=true;
             characterBackgrounds[characterSelect].flash();
+
             changeDone=true;
         }
 
@@ -86,10 +94,10 @@ public class CharacterSelectScene extends GameScene {
 
 
 
-
-
         //Log.d(TAG,"sadsdasdafegqwewqdad"+selectWindowOn);
     }
+
+
 
     @Override
     public void enter() {
@@ -141,18 +149,18 @@ public class CharacterSelectScene extends GameScene {
         selectBPWindow=false;
 
 
-        RotateBitmapObject sun=new RotateBitmapObject(UiBridge.x(300), UiBridge.y(70),UiBridge.x(30),UiBridge.y(30),R.mipmap.sun,0,6,true);
-        gameWorld.add(CharacterSelectScene.Layer.ui.ordinal(),sun );
+        RotateBitmapObject sun=new RotateBitmapObject(UiBridge.metrics.center.x-UiBridge.metrics.center.x/10, UiBridge.metrics.center.y/3,UiBridge.x(30),UiBridge.y(30),R.mipmap.sun,0,6,true);
+        gameWorld.add(CharacterSelectScene.Layer.ui2.ordinal(),sun );
         sun.setMax(45);
         sun.setReite(true);
-        RotateBitmapObject moon=new RotateBitmapObject(UiBridge.x(380), UiBridge.y(72),UiBridge.x(31),UiBridge.y(31),R.mipmap.moon,0,6,false);
+        RotateBitmapObject moon=new RotateBitmapObject(UiBridge.metrics.center.x+UiBridge.metrics.center.x/10, UiBridge.metrics.center.y/3,UiBridge.x(31),UiBridge.y(31),R.mipmap.moon,0,6,false);
         moon.setMax(45);
         moon.setReite(true);
-        gameWorld.add(CharacterSelectScene.Layer.ui.ordinal(),moon );
+        gameWorld.add(CharacterSelectScene.Layer.ui2.ordinal(),moon );
 
-        gameWorld.add(CharacterSelectScene.Layer.ui.ordinal(), new RotateBitmapObject(UiBridge.x(343), UiBridge.y(22),UiBridge.x(117),UiBridge.y(117),R.mipmap.compass1,0,4,true));
-        gameWorld.add(CharacterSelectScene.Layer.ui.ordinal(), new RotateBitmapObject(UiBridge.x(343), UiBridge.y(22),UiBridge.x(113),UiBridge.y(113),R.mipmap.compass2,180,4,false));
-        gameWorld.add(CharacterSelectScene.Layer.ui.ordinal(),new BitmapObject(UiBridge.x(339), UiBridge.y(32),UiBridge.x(240),UiBridge.y(60),R.mipmap.ribbon));
+        gameWorld.add(CharacterSelectScene.Layer.ui2.ordinal(), new RotateBitmapObject(UiBridge.metrics.center.x, UiBridge.metrics.center.y/10,UiBridge.x(117),UiBridge.y(117),R.mipmap.compass1,0,4,true));
+        gameWorld.add(CharacterSelectScene.Layer.ui2.ordinal(), new RotateBitmapObject(UiBridge.metrics.center.x, UiBridge.metrics.center.y/10,UiBridge.x(113),UiBridge.y(113),R.mipmap.compass2,180,4,false));
+        gameWorld.add(CharacterSelectScene.Layer.ui2.ordinal(),new BitmapObject(UiBridge.metrics.center.x, UiBridge.metrics.center.y/6,UiBridge.x(240),UiBridge.y(60),R.mipmap.ribbon));
 
 
         hint_bg1=new BGBlack(0,UiBridge.metrics.size.y-screenHight/10,UiBridge.metrics.size.x,UiBridge.metrics.size.y,"#9a958a");
@@ -183,7 +191,9 @@ public class CharacterSelectScene extends GameScene {
             public void run() {
                 if(selectWindowOn&&!selectBPWindow) {
                 if(characterBackgrounds[characterSelect].flashDone()&&changeDone){
-                    characterBackgrounds[characterSelect].flash();
+                    characterBackgrounds[characterSelect].setFlashOn(false);
+                    characterBackgrounds[characterSelect].setCBAlpha(0);
+                    characterBackgrounds[characterSelect].storyBgMove(false);
                     TitleScene.get().getSoundEffects().play(R.raw.menu_move,1.0f);
                     characterSelect-=1;
                     if(characterSelect<0) {
@@ -203,11 +213,14 @@ public class CharacterSelectScene extends GameScene {
             public void run() {
                 if(selectWindowOn&&!selectBPWindow) {
                 if(characterBackgrounds[characterSelect].flashDone()&&changeDone){
-                    characterBackgrounds[characterSelect].flash();
+                    characterBackgrounds[characterSelect].setFlashOn(false);
+                    characterBackgrounds[characterSelect].setCBAlpha(0);
+                    characterBackgrounds[characterSelect].storyBgMove(false);
                     characterSelect+=1;
                     TitleScene.get().getSoundEffects().play(R.raw.menu_move,1.0f);
                     if(characterSelect>7) {
                         characterSelect=0;
+
                     }
                     changeCB(characterSelect);
                     changeDone=false;
@@ -252,6 +265,7 @@ public class CharacterSelectScene extends GameScene {
     private void makeCB(){
         for(int i=0;i<8;++i){
             characterBackgrounds[i]=new CharacterBackground(i);
+            gameWorld.add(CharacterSelectScene.Layer.ui.ordinal(), characterBackgrounds[i]);
             characterBackgrounds[i].setCBAlpha(0);
         }
     }

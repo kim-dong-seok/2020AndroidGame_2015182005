@@ -55,25 +55,25 @@ public class StoryBackground extends GameObject {
     }
     public void update(){
         if(x>nx){
-            x-=mx/50;
+            x-=mx/20;
             if(x<=nx){
                 x=nx;
             }
         }
         if(x<nx){
-            x+=-mx/50;
+            x+=-mx/20;
             if(x>=nx){
                 x=nx;
             }
         }
         if(y>ny){
-            y-=my/50;
+            y-=my/20;
             if(y<=ny){
                 y=ny;
             }
         }
         if(y<ny){
-            y+=-my/50;
+            y+=-my/20;
             if(y>=ny){
                 y=ny;
             }
@@ -102,5 +102,11 @@ public class StoryBackground extends GameObject {
         this.ny = ny;
         mx=x-nx;
         my=y-ny;
+    }
+    public void fastSetNewPos(float nx ,float ny){
+        this.x=nx;
+        this.y = ny;
+        mx=0;
+        my=0;
     }
 }

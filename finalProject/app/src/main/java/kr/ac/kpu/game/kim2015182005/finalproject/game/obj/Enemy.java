@@ -60,19 +60,20 @@ public class Enemy extends AnimObject implements Recyclable, BoxCollidable {
     private int totalHp;
     private Paint hpPaint;
     private boolean hit;
+    private int hit_count=0;
     public void setHit(boolean hit){
         this.setColor("#9E0200");
     }
 
     protected Enemy(float x, float y, int width, int height,int typeIndex) {
-        super(x, y,width, height, RES_IDS[typeIndex], 4, 4);
+        super(x, y,width+typeIndex*UiBridge.x(10), height+typeIndex*UiBridge.y(10), RES_IDS[typeIndex], 4, 4);
         Log.d(TAG, "Creating CandyItem instance");
     }
     public static Enemy get(float x, float y, int width, int height,int typeIndex) {
         RecyclePool rpool = GameScene.getTop().getGameWorld().getRecyclePool();
         Enemy enemy = (Enemy) rpool.get(Enemy.class);
         if (enemy == null) {
-            enemy = new Enemy(x, y, width, height, typeIndex);
+            enemy = new Enemy(x, y, width+typeIndex*UiBridge.x(10), height+typeIndex*UiBridge.y(10), typeIndex);
             enemy.atk=Eattack[typeIndex];
             enemy.totalHp=Ehp[typeIndex];
             enemy.hp=enemy.totalHp;
@@ -84,8 +85,8 @@ public class Enemy extends AnimObject implements Recyclable, BoxCollidable {
             enemy.atk=Eattack[typeIndex];
             enemy.totalHp=Ehp[typeIndex];
             enemy.hp=enemy.totalHp;
-            enemy.width = width;
-            enemy.height = height;
+            enemy.width = width+typeIndex*UiBridge.x(10);
+            enemy.height = height+typeIndex*UiBridge.y(10);
             enemy.fab = new FrameAnimationBitmap(RES_IDS[typeIndex], 4, 4);
         }
         enemy.score = SCORE_MULTIPLIER ;
@@ -147,7 +148,15 @@ public class Enemy extends AnimObject implements Recyclable, BoxCollidable {
 //            Log.d(TAG, " No platform. Falling down");
             jumpCount = 10;
         }
-//
+        if(hit){
+            fab.setHit(true);
+            hit_count=10;
+        }
+        if(hit_count<0){
+            fab.setHit(false);
+            hit_count=0;
+        }
+        hit_count=-1;
     }
     public int ColiH(){
         int hw = width / 20;

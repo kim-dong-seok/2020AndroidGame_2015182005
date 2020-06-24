@@ -77,10 +77,8 @@ public class AnimObject extends GameObject {
         dstRect.top = y - halfHeight;
         dstRect.right = x + halfWidth;
         dstRect.bottom = y + halfHeight;
-        Paint pnt = new Paint();
-        pnt.setTextSize(100);
-        pnt.setColor(Color.RED);
         //canvas.drawText(String.valueOf(this.hp), this.x,this.y-height,pnt);
+        paint.setColor(Color.RED);
         fab.draw(canvas, dstRect, paint);
 
     }

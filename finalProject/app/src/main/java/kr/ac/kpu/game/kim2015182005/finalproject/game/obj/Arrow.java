@@ -26,10 +26,10 @@ import static kr.ac.kpu.game.kim2015182005.finalproject.game.scene.MainScene.*;
 public class Arrow extends BitmapObject implements Recyclable, BoxCollidable {
     private static final String TAG = Arrow.class.getSimpleName();
     private float dx;
-    private int hp=40;
+    private int hp=20;
     public Arrow(float x, float y) {
         super(x, y, 100, 20, R.mipmap.arrow);
-        this.dx =700;
+        this.dx =900;
 
         Log.d(TAG,"new"+this);
     }
@@ -45,7 +45,7 @@ public class Arrow extends BitmapObject implements Recyclable, BoxCollidable {
 
         b.x=x;
         b.y=y;
-        b.dx=700;
+        b.dx=900;
         return b;
     }
 
@@ -83,13 +83,13 @@ public class Arrow extends BitmapObject implements Recyclable, BoxCollidable {
                 int ehp=enemy.getHp();
                 ehp-=hp;
                 if(ehp<=0){
-                    MainScene.get().getPlayer().setATB(MainScene.get().getPlayer().getATB()+40);
+                    MainScene.get().getPlayer().setATB(MainScene.get().getPlayer().getATB()+20);
                     enemy.remove();
                     MainScene.get().addKillcount();
                 }else{
-                    MainScene.get().getPlayer().setATB(MainScene.get().getPlayer().getATB()+20);
+                    MainScene.get().getPlayer().setATB(MainScene.get().getPlayer().getATB()+5);
                     enemy.setHp(ehp);
-                    enemy.setX(enemy.getX()+UiBridge.x(100));
+                    enemy.setX(enemy.getX()+UiBridge.x(10));
                 }
                 this.remove();
             }

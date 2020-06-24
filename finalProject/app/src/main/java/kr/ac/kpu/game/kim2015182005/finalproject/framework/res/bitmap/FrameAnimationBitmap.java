@@ -1,8 +1,13 @@
 package kr.ac.kpu.game.kim2015182005.finalproject.framework.res.bitmap;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
@@ -18,6 +23,7 @@ public class FrameAnimationBitmap {
     private RectF dstRect = new RectF();
     private GameTimer timer;
     private Paint paint;
+    private boolean hit=false;
     private int index;
     public FrameAnimationBitmap(int resId, int framesPerSecond, int frameCount) {
         this.sbmp = SharedBitmap.load(resId);
@@ -44,15 +50,22 @@ public class FrameAnimationBitmap {
         dstRect.bottom = y + halfHeight;
         draw(canvas, dstRect, paint);
     }
+
+    public void setHit(boolean hit) {
+        this.hit = hit;
+    }
+
     public void update(){
          index= timer.getIndex();
     }
     public void draw(Canvas canvas, RectF rect, Paint paint) {
-
         srcRect.left = frameWidth * index;
         srcRect.right = srcRect.left + frameWidth;
-
-        canvas.drawBitmap(sbmp.getBitmap(), srcRect, rect, paint);
+        if(this.hit) {
+            ColorFilter colorFilter = new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+            this.paint.setColorFilter(colorFilter);
+        }
+        canvas.drawBitmap(sbmp.getBitmap(), srcRect, rect, this.paint);
     }
     public void setBitmapResource(int resId) {
         sbmp = SharedBitmap.load(resId);

@@ -52,13 +52,13 @@ public class MapBackground extends GameObject {
     }
     public void update(){
         if(ox>nx){
-            ox-=3;
+            ox-=10;
             if(ox<=nx){
                 ox=nx;
             }
         }
         if(ox<nx){
-            ox+=3;
+            ox+=10;
             if(ox>=nx){
                 ox=nx;
             }
@@ -70,7 +70,7 @@ public class MapBackground extends GameObject {
             }
         }
         if(oy<ny){
-            oy+=3;
+            oy+=10;
             if(oy>=ny){
                 oy=ny;
             }

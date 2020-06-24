@@ -85,7 +85,7 @@ public class MainScene extends GameScene {
     private TextObject speech_text,npc_speech_text;
     private TextObject speech_name,npc_speech_name;
     private ImageScrollBackground bg1,bg2,bg3;
-    private int stage_range=150;
+    private int stage_range=300;
     private boolean cheat=false;
 
     @Override
@@ -203,10 +203,17 @@ public class MainScene extends GameScene {
             super.update();
             if(end_bg.getAlpha()==255&&!cheat){
                 map = new TextMap("stage_02.txt", gameWorld);
-                map.reset();
                 bg1.setImage(R.mipmap.cave_bg2);
                 bg2.setImage(R.mipmap.cave_bg12);
                 bg3.setImage(R.mipmap.cave_bg13);
+                float dx = -10 * mdpi_100 * GameTimer.getTimeDiffSeconds();
+                map.update(dx);
+                for (int layer = Layer.platform.ordinal(); layer <= Layer.checkPoint.ordinal(); layer++) {
+                    ArrayList<GameObject> objects = gameWorld.objectsAtLayer(layer);
+                    for (GameObject obj : objects) {
+                        obj.move(dx, 0);
+                    }
+                }
                 TitleScene.get().getBgmPlayer().stopBGM();
                 TitleScene.get().getBgmPlayer().setBGM(R.raw.battle);
                 TitleScene.get().getBgmPlayer().startBGM();
@@ -241,7 +248,8 @@ public class MainScene extends GameScene {
                 scene.push();
             }
         }}
-    }else{super.update();
+    }else{
+            end_bg.update();
             if(end_bg.getAlpha()==255){
             TitleScene.get().getBgmPlayer().stopBGM();
             WinScene scene = new  WinScene();
@@ -303,8 +311,9 @@ public class MainScene extends GameScene {
         game_win=false;
 
         mdpi_100 = UiBridge.x(100);
+
         Log.d(TAG, "mdpi_100: " + mdpi_100);
-        player = new Player(UiBridge.x(100), UiBridge.y(320));
+        player = new Player(UiBridge.x(100), UiBridge.metrics.size.y/4*3-UiBridge.y(10));
         gameWorld.add(Layer.player.ordinal(),player);
         end_bg=new BGBlack(0,0, UiBridge.metrics.size.x, UiBridge.metrics.size.y,"#000000");
         end_bg.alpha(0);
@@ -350,7 +359,7 @@ public class MainScene extends GameScene {
 
 
         //end_bg.alpha(255);
-        SelectButton jumpButton = new SelectButton(UiBridge.x(60), UiBridge.metrics.size.y - UiBridge.y(60), UiBridge.x(100), UiBridge.y(100), 150, "", 10, R.mipmap.jump_btn60, R.mipmap.jump_btn100);
+        SelectButton jumpButton = new SelectButton(UiBridge.x(60), UiBridge.metrics.size.y - UiBridge.y(170), UiBridge.x(100), UiBridge.y(100), 150, "", 10, R.mipmap.jump_btn60, R.mipmap.jump_btn100);
         jumpButton.setOnClickRunnable(new Runnable() {
             @Override
             public void run() {
@@ -359,6 +368,15 @@ public class MainScene extends GameScene {
             }
         });
         gameWorld.add(Layer.ui.ordinal(), jumpButton);
+        SelectButton DjumpButton = new SelectButton(UiBridge.x(60), UiBridge.metrics.size.y - UiBridge.y(60), UiBridge.x(100), UiBridge.y(100), 150, "", 10, R.mipmap.djump_btn60, R.mipmap.djump_btn100);
+        DjumpButton.setOnClickRunnable(new Runnable() {
+            @Override
+            public void run() {
+                if(!bad_end&&!storyOn){
+                    player.djump();}
+            }
+        });
+        gameWorld.add(Layer.ui.ordinal(), DjumpButton);
         SelectButton SAButton = new SelectButton(UiBridge.metrics.size.x - UiBridge.x(50), UiBridge.metrics.size.y - UiBridge.y(150), UiBridge.x(90), UiBridge.y(90), 150, "", 10, R.mipmap.spear_btn60, R.mipmap.spear_btn100);
         SAButton.setOnClickRunnable(new Runnable() {
             @Override
@@ -367,6 +385,8 @@ public class MainScene extends GameScene {
                 player.shortAttack();}
             }
         });
+
+
         gameWorld.add(Layer.ui.ordinal(), SAButton);
         SelectButton LAButton = new SelectButton(UiBridge.metrics.size.x - UiBridge.x(50), UiBridge.metrics.size.y - UiBridge.y(50), UiBridge.x(110), UiBridge.y(110), 150, "", 10, R.mipmap.bow_btn60, R.mipmap.bow_btn100);
         LAButton.setOnClickRunnable(new Runnable() {

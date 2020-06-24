@@ -52,7 +52,7 @@ public class Player extends AnimObject implements BoxCollidable {
     float hitTime;
     private AnimState state;
     public Player(float x, float y) {
-        super(x, y, UiBridge.x(60), UiBridge.y(102), R.mipmap.tressa_right_run, 12, 6);
+        super(x, y, UiBridge.x(54), UiBridge.y(92), R.mipmap.tressa_right_run, 12, 6);
         base = y;
         originX=x;
         fabNormal = fab;
@@ -85,6 +85,7 @@ public class Player extends AnimObject implements BoxCollidable {
             }
         }
     }
+
 
     public enum AnimState {
         normal, jump, djump, sattack, lattack,hit,die
@@ -286,15 +287,15 @@ public class Player extends AnimObject implements BoxCollidable {
                 ehp-=sAtk;
                 TitleScene.get().soundPlay(R.raw.spear_hit,0.5f);
                 if(ehp<=0){
-                    ATB+=50;
+                    ATB+=30;
                     enemy.remove();
                     enemy.setHit(true);
                     MainScene.get().addKillcount();
                 }else{
                     enemy.setHp(ehp);
                     enemy.setHit(true);
-                    enemy.setX(enemy.getX()+UiBridge.x(200));
-                    ATB+=25;
+                    enemy.setX(enemy.getX()+UiBridge.x(400));
+                    ATB+=10;
                 }
             }else if(CollisionHelper.collides(this, enemy)&&state!=AnimState.sattack){
                 //Log.d(TAG,"player 하단"+(this.y+height/2)+"적 상단"+enemy.ColiH());
@@ -320,6 +321,16 @@ public class Player extends AnimObject implements BoxCollidable {
         }
     }
 
+    public void djump() {
+        if (y+UiBridge.y(200)<=UiBridge.metrics.size.y&&jumpCount==0) {
+
+            y+=UiBridge.y(30);
+//                    Log.d(TAG, " Start to fall down");
+            jumpCount = 10; // falling down
+            if((state != AnimState.sattack && state!= AnimState.lattack))
+                setAnimState(AnimState.djump);
+        }
+    }
 
 
     public void jump() {
@@ -342,7 +353,7 @@ public class Player extends AnimObject implements BoxCollidable {
             setAnimState(AnimState.sattack);
             x+=UiBridge.x(30);
             width=UiBridge.x(160);
-            saReload=30;
+            saReload=100;
             fab.reset();
             TitleScene.get().soundPlay(R.raw.spear_air_attack,1.0f);
         }}
@@ -352,7 +363,7 @@ public class Player extends AnimObject implements BoxCollidable {
         if(laReload<=0){
             TitleScene.get().soundPlay(6,0,1.0f);
             setAnimState(AnimState.lattack);
-            laReload=60;
+            laReload=30;
             fab.reset();
             MainScene scene = MainScene.get();
             scene.getGameWorld().add(MainScene.Layer.arrow.ordinal(), new Arrow(x,y));
