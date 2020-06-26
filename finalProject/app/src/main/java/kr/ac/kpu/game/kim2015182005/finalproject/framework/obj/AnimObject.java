@@ -64,6 +64,12 @@ public class AnimObject extends GameObject {
     }
 
     @Override
+    public void alpha(int x) {
+        super.alpha(x);
+        fab.setAlpha(x);
+    }
+
+    @Override
     public float getRadius() {
         return this.width / 2;
     }

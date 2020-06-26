@@ -64,7 +64,7 @@ public class MapBackground extends GameObject {
             }
         }
         if(oy>ny){
-            oy-=3;
+            oy-=10;
             if(oy<=ny){
                 oy=ny;
             }
